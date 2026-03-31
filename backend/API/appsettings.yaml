@@ -1,0 +1,22 @@
+Logging:
+  LogLevel:
+    Default: Information
+    Microsoft: Warning
+    Microsoft.Hosting.Lifetime: Information
+
+AllowedHosts: "*"
+
+JwtSettings:
+  Audience: "http://localhost:5010"
+  Issuer: "http://localhost:5010"
+  Secret: ""
+  DefaultExpirationInHours: 24
+
+SmtpSettings:
+  Host: "smtp.redmobile.com.br"
+  Port: 465
+  EnableSsl: true
+  Username: "noreply_portalred@redmobile.com.br"
+  Password: ""
+  FromName: "Portal RedMobile"
+  FromEmail: "noreply_portalred@redmobile.com.br"

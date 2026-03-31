@@ -1,0 +1,67 @@
+# ========================
+# Backend (.NET)
+# ========================
+backend/bin/
+backend/obj/
+backend/**/bin/
+backend/**/obj/
+backend/**/*.user
+backend/**/*.suo
+backend/**/*.rsuser
+backend/**/[Ll]og/
+backend/**/[Ll]ogs/
+backend/**/*.log
+backend/**/*.binlog
+backend/**/*.nupkg
+backend/**/*.snupkg
+backend/**/.vs/
+backend/**/TestResults/
+backend/**/BenchmarkDotNet.Artifacts/
+backend/**/coverage*/
+backend/**/*.coverage
+backend/**/*.coveragexml
+
+# ========================
+# Frontend (Node / Vite)
+# ========================
+frontend/node_modules/
+frontend/dist/
+frontend/.eslintcache
+frontend/*.tsbuildinfo
+frontend/.npm
+frontend/.cache
+frontend/.parcel-cache
+
+# ========================
+# Variáveis de ambiente
+# ========================
+.env
+.env.*
+!.env.example
+
+# ========================
+# IDE
+# ========================
+.idea/
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+.history/
+*.vsix
+
+# ========================
+# Sistema Operacional
+# ========================
+.DS_Store
+.AppleDouble
+Thumbs.db
+[Dd]esktop.ini
+$RECYCLE.BIN/
+*.lnk
+.Trash-*
+.fuse_hidden*
+.directory
+.nfs*
+*~

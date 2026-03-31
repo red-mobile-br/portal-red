@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        /* ========== UNIFIED STYLES (screen and print) ========== */
+        body {
+            font-family: Arial, sans-serif;
+            font-size: 12px;
+            line-height: 1.4;
+            color: #333;
+        }
+        .header {
+            background: linear-gradient(135deg, #e53935 0%, #c62828 100%);
+            color: white;
+            padding: 12px 16px;
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+        }
+        .order-number { font-size: 19px; font-weight: 700; }
+        .info-bar {
+            background: #f5f5f5;
+            border-bottom: 1px solid #ddd;
+            padding: 8px 16px;
+            display: flex;
+            gap: 20px;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .info-item { display: flex; align-items: center; gap: 6px; }
+        .info-item .label { font-size: 10px; color: #666; text-transform: uppercase; }
+        .info-item .value { font-size: 12px; font-weight: 600; }
+        .status-badge {
+            padding: 3px 10px;
+            border-radius: 10px;
+            font-size: 10px;
+            font-weight: 600;
+            color: white;
+        }
+        .content { padding: 0 10px 10px; }
+        .section {
+            background: #f8f8f8;
+            border-radius: 4px;
+            margin-bottom: 10px;
+            overflow: hidden;
+        }
+        .section-row { display: flex; gap: 10px; margin-bottom: 10px; }
+        .section.half { flex: 1; margin-bottom: 0; }
+        .section-title {
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: #333;
+            padding: 6px 10px;
+            margin: 0;
+            border-bottom: 2px solid #e53935;
+            background: #fff;
+        }
+        .section-content { padding: 8px 10px; }
+        .row { display: flex; gap: 12px; margin-bottom: 4px; }
+        .row:last-child { margin-bottom: 0; }
+        .field { display: flex; gap: 4px; align-items: baseline; }
+        .field-label { font-size: 11px; color: #333; white-space: nowrap; }
+        .field-value { font-size: 11px; color: #333; }
+        .w-12 { width: 3rem; }
+        .w-16 { width: 4rem; }
+        .w-20 { width: 5rem; }
+        .w-24 { width: 6rem; }
+        .w-28 { width: 7rem; }
+        .w-32 { width: 8rem; }
+        .w-40 { width: 10rem; }
+        .flex-1 { flex: 1; }
+        .ml-4 { margin-left: 1rem; }
+
+        .products-table { width: 100%; border-collapse: collapse; font-size: 12px; }
+        .products-table th {
+            background: #e53935;
+            color: white;
+            padding: 6px 6px;
+            font-weight: 600;
+            font-size: 10px;
+            text-transform: uppercase;
+            text-align: center;
+        }
+        .products-table th.text-left { text-align: left; }
+        .products-table th.text-right { text-align: right; }
+        .products-table td {
+            padding: 4px 6px;
+            border-bottom: 1px solid #eee;
+            font-size: 12px;
+            text-align: center;
+        }
+        .products-table tbody tr:nth-child(even) { background: #fafafa; }
+        .products-table .text-left { text-align: left; }
+        .products-table .text-right { text-align: right; }
+
+        .totals-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+        .total-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 4px 6px;
+            background: #fff;
+            border-radius: 3px;
+        }
+
+        .financial-section {
+            background: #fff;
+            border: 2px solid #e53935;
+            border-radius: 4px;
+            margin-bottom: 10px;
+        }
+        .financial-section .section-title { border-bottom-color: #e53935; }
+        .financial-grid { display: flex; gap: 8px; padding: 8px 10px; align-items: stretch; }
+        .financial-item {
+            text-align: center;
+            padding: 6px 10px;
+            background: #f8f8f8;
+            border-radius: 3px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .financial-item.large { flex: 1.2; }
+        .financial-item .label { font-size: 10px; color: #666; text-transform: uppercase; }
+        .financial-item .value { font-size: 14px; font-weight: 700; color: #333; white-space: nowrap; }
+        .financial-item.total { background: #f8f8f8; }
+        .financial-item.total .label { color: #666; }
+        .financial-item.total .value { color: #333; font-size: 14px; font-weight: 700; }
+
+        /* Taxes subsection */
+        .financial-taxes {
+            flex: 1;
+            background: #f0f0f0;
+            border-radius: 3px;
+            padding: 4px 8px;
+            text-align: center;
+        }
+        .taxes-label { font-size: 10px; color: #666; text-transform: uppercase; display: block; margin-bottom: 2px; }
+        .taxes-grid { display: flex; gap: 6px; justify-content: center; }
+        .tax-item { display: flex; gap: 2px; align-items: baseline; white-space: nowrap; }
+        .tax-name { font-size: 10px; color: #666; }
+        .tax-value { font-size: 14px; font-weight: 700; color: #333; }
+
+        .notes-block { margin-bottom: 6px; }
+        .notes-block:last-child { margin-bottom: 0; }
+        .notes-text {
+            margin: 3px 0 0;
+            padding: 6px 8px;
+            background: #fff;
+            border-left: 2px solid #e53935;
+            font-size: 12px;
+            line-height: 1.4;
+        }
+
+        /* ========== PRINT STYLES (page-break rules only) ========== */
+        @page { margin: 5mm; }
+        @media print {
+            .section { page-break-inside: avoid; }
+            .products-table { page-break-inside: auto; }
+            .products-table tr { page-break-inside: avoid; }
+            .products-table thead { display: table-header-group; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Logo Header -->
+    <div style="padding: 10px 16px; display: flex; align-items: center;">
+        <svg width="46" height="20" viewBox="0 0 23 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M2.98236 6.47085C3.09818 6.19835 3.19764 5.96128 3.29029 5.72692C3.48785 5.23233 3.85846 5.00343 4.38983 4.9721C5.38447 4.91759 6.07117 4.205 6.05073 3.27305C6.03166 2.38333 5.32452 1.7157 4.3367 1.68164C3.86118 1.66529 3.38294 1.70071 2.90742 1.66937C2.52592 1.64485 2.4142 1.76884 2.41828 2.15306C2.43736 4.02651 2.42918 5.89996 2.41828 7.77205C2.41828 8.67812 2.00953 9.04872 1.12663 8.99831C0.886824 8.98468 0.803711 8.90975 0.803711 8.66858C0.809161 5.94356 0.809161 3.21855 0.803711 0.493529C0.803711 0.221027 0.899087 0.146089 1.15933 0.148814C2.2834 0.159714 3.40747 0.139276 4.53017 0.161076C5.21614 0.188321 5.87661 0.428472 6.41987 0.848188C6.96313 1.2679 7.36223 1.84635 7.56176 2.50323C7.74265 3.15662 7.70306 3.85143 7.4491 4.48003C7.19514 5.10864 6.741 5.63597 6.15701 5.98035C5.83273 6.18064 5.82728 6.29509 6.03438 6.58122C6.52216 7.25702 6.9677 7.96144 7.43913 8.65087C7.60672 8.8934 7.59582 8.97651 7.26882 9.00648C6.29326 9.09232 5.47575 8.89612 5.01795 7.91648C4.9244 7.75454 4.81776 7.60052 4.69912 7.45595C4.08054 6.55533 4.08055 6.55533 2.98236 6.47085Z" fill="#2B2626"/>
+            <path d="M20.4293 3.11739C20.4293 2.43614 20.4211 1.85026 20.4293 1.25893C20.4416 0.474124 21.0097 0.0244956 21.7918 0.137584C22.1256 0.186634 22.0316 0.418261 22.033 0.598112C22.0411 1.85843 22.033 3.11875 22.033 4.37771C22.033 5.77428 22.0221 7.17085 22.033 8.56606C22.033 8.97482 21.8831 9.0334 21.5438 8.9353C21.2286 8.85206 20.949 8.66828 20.7477 8.41182C20.5463 8.15536 20.434 7.84022 20.4279 7.51421C20.4116 6.9365 20.4429 6.35607 20.4129 5.77837C20.4082 5.42534 20.2951 5.0823 20.0889 4.7957C19.8827 4.50909 19.5935 4.29278 19.2603 4.17606C18.5109 3.88312 17.7806 3.97577 17.1702 4.53713C16.9134 4.75236 16.7275 5.04007 16.6368 5.36265C16.5461 5.68523 16.5549 6.02766 16.662 6.34517C16.7797 6.71223 17.0096 7.03312 17.3192 7.26264C17.6289 7.49216 18.0028 7.61875 18.3883 7.62457C19.0096 7.64228 19.3911 7.91478 19.6377 8.48295C19.7998 8.85355 19.6622 8.95847 19.3488 9.0443C17.8501 9.45306 16.2518 8.86445 15.467 7.59868C15.0922 6.98375 14.9234 6.26524 14.9851 5.54772C15.0469 4.83019 15.336 4.1511 15.8104 3.60926C16.3208 3.05357 16.9982 2.67902 17.7402 2.54211C18.4822 2.40521 19.2487 2.5134 19.9238 2.85034C20.0601 2.928 20.1922 2.99476 20.4293 3.11739Z" fill="#2B2626"/>
+            <path d="M11.1105 2.49881C11.6219 2.49409 12.1283 2.59917 12.5956 2.80695C13.0629 3.01474 13.4801 3.32039 13.8192 3.70327C14.0576 3.95942 14.0522 4.12156 13.7865 4.36681C12.7632 5.31239 11.7618 6.28386 10.7549 7.24852C10.6745 7.32482 10.5219 7.38477 10.5696 7.52102C10.6173 7.65727 10.7685 7.62184 10.8843 7.63138C11.7781 7.70768 12.4676 7.318 12.845 6.48551C12.9435 6.24934 13.1058 6.04523 13.3137 5.89604C13.5216 5.74685 13.7669 5.65846 14.0222 5.64076C14.6176 5.56854 14.7034 5.65847 14.5972 6.26751C14.371 7.54554 13.6243 8.423 12.4471 8.91078C10.5968 9.67787 8.43863 8.75954 7.75874 6.95149C6.93305 4.76057 8.6321 2.50426 11.1105 2.49881Z" fill="#2B2626"/>
+            <path d="M9.37074 6.34103L11.8233 4.02477C11.8233 4.02477 10.597 3.63645 9.7795 4.44987C8.96199 5.26329 9.37074 6.34103 9.37074 6.34103Z" fill="#E31E26"/>
+        </svg>
+    </div>
+
+    <div class="header">
+        <span class="order-number">Pedido #{{IdPedido}}</span>
+    </div>
+
+    <div class="info-bar">
+        <div class="info-item">
+            <span class="label">Tipo:</span>
+            <span class="value">{{TipoPedido}}</span>
+        </div>
+        <div class="info-item">
+            <span class="label">Status:</span>
+            <span class="status-badge" style="background-color: {{CorStatus}};">{{TextoStatus}}</span>
+        </div>
+        <div class="info-item">
+            <span class="label">Emissão:</span>
+            <span class="value">{{formatDate DataEmissao}}</span>
+        </div>
+        <div class="info-item">
+            <span class="label">Representante:</span>
+            <span class="value">{{NomeRepresentante}}</span>
+        </div>
+    </div>
+
+    <div class="content">
+        <div class="section">
+            <h3 class="section-title">Cliente</h3>
+            <div class="section-content">
+                <div class="row">
+                    <div class="field w-28"><span class="field-label"><b>Código:</b></span><span class="field-value">{{formatClientCode Cliente.Id}}</span></div>
+                    <div class="field"><span class="field-label"><b>CNPJ:</b></span><span class="field-value">{{Cliente.Cnpj}}</span></div>
+                    <div class="field flex-1 ml-4"><span class="field-label"><b>Razão Social:</b></span><span class="field-value">{{Cliente.RazaoSocial}}</span></div>
+                </div>
+                <div class="row">
+                    <div class="field flex-1"><span class="field-label"><b>Fantasia:</b></span><span class="field-value">{{Cliente.NomeFantasia}}</span></div>
+                </div>
+                <div class="row">
+                    <div class="field w-24"><span class="field-label"><b>CEP:</b></span><span class="field-value">{{formatCep Cliente.Endereco.Cep}}</span></div>
+                    <div class="field flex-1"><span class="field-label"><b>End:</b></span><span class="field-value">{{Cliente.Endereco.Logradouro}}, {{Cliente.Endereco.Numero}}{{#if Cliente.Endereco.Complemento}} - {{Cliente.Endereco.Complemento}}{{/if}}</span></div>
+                </div>
+                <div class="row">
+                    <div class="field"><span class="field-label"><b>Bairro:</b></span><span class="field-value">{{Cliente.Endereco.Bairro}}</span></div>
+                    <div class="field ml-4"><span class="field-label"><b>Cidade:</b></span><span class="field-value">{{Cliente.Endereco.Cidade}}</span></div>
+                    <div class="field ml-4"><span class="field-label"><b>UF:</b></span><span class="field-value">{{Cliente.Endereco.Estado}}</span></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-row">
+            {{#if TemDadosAgendamento}}
+            <div class="section half">
+                <h3 class="section-title">Agendamento</h3>
+                <div class="section-content">
+                    <div class="field"><span class="field-label"><b>E-mail:</b></span><span class="field-value">{{DadosAgendamento.Email}}</span></div>
+                    <div class="field"><span class="field-label"><b>Tel:</b></span><span class="field-value">{{DadosAgendamento.Telefone}}</span></div>
+                </div>
+            </div>
+            {{/if}}
+            <div class="section half">
+                <h3 class="section-title">Faturamento</h3>
+                <div class="section-content">
+                    <div class="field"><span class="field-label"><b>Frete:</b></span><span class="field-value">{{ModoFrete}}</span></div>
+                    <div class="field"><span class="field-label"><b>Prazo:</b></span><span class="field-value">{{PlanoPagamento}}</span></div>
+                    <div class="field"><span class="field-label"><b>Data:</b></span><span class="field-value">{{formatDate DataLancamento}}</span></div>
+                    <div class="field"><span class="field-label"><b>OC:</b></span><span class="field-value">{{NumeroPedidoCompra}}</span></div>
+                </div>
+            </div>
+        </div>
+
+        {{#if TemEnderecoEntrega}}
+        <div class="section">
+            <h3 class="section-title">Endereço de Entrega</h3>
+            <div class="section-content">
+                <div class="row">
+                    <div class="field w-24"><span class="field-label"><b>CEP:</b></span><span class="field-value">{{formatCep EnderecoEntrega.Cep}}</span></div>
+                    <div class="field flex-1"><span class="field-label"><b>End:</b></span><span class="field-value">{{EnderecoEntrega.Logradouro}}, {{EnderecoEntrega.Numero}}{{#if EnderecoEntrega.Complemento}} - {{EnderecoEntrega.Complemento}}{{/if}}</span></div>
+                </div>
+                <div class="row">
+                    <div class="field"><span class="field-label"><b>Bairro:</b></span><span class="field-value">{{EnderecoEntrega.Bairro}}</span></div>
+                    <div class="field ml-4"><span class="field-label"><b>Cidade:</b></span><span class="field-value">{{EnderecoEntrega.Cidade}}</span></div>
+                    <div class="field ml-4"><span class="field-label"><b>UF:</b></span><span class="field-value">{{EnderecoEntrega.Estado}}</span></div>
+                </div>
+            </div>
+        </div>
+        {{/if}}
+
+        <div class="section">
+            <h3 class="section-title">Produtos ({{TotalProdutos}} itens)</h3>
+            <table class="products-table">
+                <thead>
+                    <tr>
+                        <th style="width: 22px;">#</th>
+                        <th style="width: 80px;">Cód</th>
+                        <th class="text-left">Descrição</th>
+                        <th style="width: 32px;">Qtd</th>
+                        <th class="text-right" style="width: 72px;">Unit.</th>
+                        <th style="width: 32px;">IPI</th>
+                        <th style="width: 38px;">ICMS</th>
+                        <th style="width: 32px;">ST</th>
+                        <th class="text-right" style="width: 85px;">Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#each Produtos}}
+                    <tr>
+                        <td>{{Indice}}</td>
+                        <td>{{Id}}</td>
+                        <td class="text-left">{{Descricao}}</td>
+                        <td>{{Quantidade}}</td>
+                        <td class="text-right">{{currency ValorUnitario}}</td>
+                        <td>{{PercentualIPI}}%</td>
+                        <td>{{PercentualICMS}}%</td>
+                        <td>{{PercentualICMSST}}%</td>
+                        <td class="text-right">{{currency ValorTotal}}</td>
+                    </tr>
+                    {{/each}}
+                </tbody>
+            </table>
+        </div>
+
+        <div class="section-row">
+            <div class="section half">
+                <h3 class="section-title">Totais</h3>
+                <div class="section-content">
+                    <div class="totals-grid">
+                        <div class="total-item"><span class="field-label"><b>Itens:</b></span><span class="field-value">{{TotalProdutos}}</span></div>
+                        <div class="total-item"><span class="field-label"><b>Peças:</b></span><span class="field-value">{{TotalVolumes}}</span></div>
+                        <div class="total-item"><span class="field-label"><b>P.Líq:</b></span><span class="field-value">{{formatDecimal TotalPesoLiquido}}kg</span></div>
+                        <div class="total-item"><span class="field-label"><b>P.Bruto:</b></span><span class="field-value">{{formatDecimal TotalPesoBruto}}kg</span></div>
+                    </div>
+                </div>
+            </div>
+            <div class="financial-section" style="flex: 2; margin-bottom: 0;">
+                <h3 class="section-title">Resumo Financeiro</h3>
+                <div class="financial-grid">
+                    <div class="financial-taxes">
+                        <span class="taxes-label">Impostos</span>
+                        <div class="taxes-grid">
+                            <div class="tax-item"><span class="tax-name">ICMS:</span><span class="tax-value">{{currency ValorICMS}}</span></div>
+                            <div class="tax-item"><span class="tax-name">ST:</span><span class="tax-value">{{currency ValorICMSST}}</span></div>
+                            <div class="tax-item"><span class="tax-name">IPI:</span><span class="tax-value">{{currency ValorIPI}}</span></div>
+                        </div>
+                    </div>
+                    <div class="financial-item large"><div class="label">Produtos</div><div class="value">{{currency ValorProdutos}}</div></div>
+                    <div class="financial-item large total"><div class="label">Total</div><div class="value">{{currency ValorNota}}</div></div>
+                </div>
+            </div>
+        </div>
+
+        {{#if TemNotas}}
+        <div class="section" style="margin-top: 6px;">
+            <h3 class="section-title">Observações</h3>
+            <div class="section-content">
+                {{#if InformacoesNota}}
+                <div class="notes-block"><span class="field-label"><b>NF:</b></span><p class="notes-text">{{InformacoesNota}}</p></div>
+                {{/if}}
+                {{#if ObservacoesPedido}}
+                <div class="notes-block"><span class="field-label"><b>Pedido:</b></span><p class="notes-text">{{ObservacoesPedido}}</p></div>
+                {{/if}}
+            </div>
+        </div>
+        {{/if}}
+    </div>
+</body>
+</html>

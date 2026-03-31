@@ -1,0 +1,28 @@
+name: portalred-hml
+
+networks:
+  portalred-hml-net:
+    driver: bridge
+
+services:
+  backend:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      - JwtSettings__Secret=${JWT_SECRET}
+      - SmtpSettings__Password=${SMTP_PASSWORD}
+    ports:
+      - "127.0.0.1:5010:8080"
+    networks:
+      - portalred-hml-net
+
+  frontend:
+    build:
+      args:
+        VITE_API_URL: ${VITE_API_URL}
+        VITE_MAPBOX: ${VITE_MAPBOX}
+    ports:
+      - "127.0.0.1:3010:80"
+    depends_on:
+      - backend
+    networks:
+      - portalred-hml-net

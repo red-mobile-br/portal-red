@@ -1,0 +1,32 @@
+name: portalred
+
+networks:
+  portalred-net:
+    driver: bridge
+
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: infra/backend/Dockerfile
+    restart: unless-stopped
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      - JwtSettings__Secret=${JWT_SECRET}
+      - SmtpSettings__Password=${SMTP_PASSWORD}
+    networks:
+      - portalred-net
+
+  frontend:
+    build:
+      context: .
+      dockerfile: infra/frontend/Dockerfile
+      args:
+        VITE_API_URL: ${VITE_API_URL}
+        VITE_MAPBOX: ${VITE_MAPBOX}
+
+    restart: unless-stopped
+    depends_on:
+      - backend
+    networks:
+      - portalred-net

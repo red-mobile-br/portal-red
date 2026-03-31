@@ -1,0 +1,30 @@
+# Git
+.git
+**/.git
+
+# IDE
+.idea/
+.vscode/
+
+# Backend — artefatos de build
+backend/bin/
+backend/obj/
+backend/**/bin/
+backend/**/obj/
+
+# Frontend — dependências e build
+frontend/node_modules/
+frontend/dist/
+
+# Logs e temporários
+*.log
+*.tmp
+*.swp
+
+# Variáveis de ambiente locais
+.env
+.env.*
+
+# Documentação
+*.md
+LICENSE
