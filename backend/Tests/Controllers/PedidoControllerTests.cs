@@ -38,11 +38,12 @@ public class PedidoControllerTests : BaseControllerTests
     {
         return new PedidoController(
             factory,
-            _mockLogger.Object,
             _mockEmailService.Object,
             _mockPdfService.Object,
             _mockOrderReportService.Object,
-            _mockEmailTemplateService.Object
+            _mockEmailTemplateService.Object,
+            ProtheusSettingsTeste,
+            _mockLogger.Object
         );
     }
     [Fact]

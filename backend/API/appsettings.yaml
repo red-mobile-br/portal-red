@@ -6,6 +6,11 @@ Logging:
 
 AllowedHosts: "*"
 
+ProtheusSettings:
+  BaseUrl: ""
+  Usuario: ""
+  Senha: ""
+
 JwtSettings:
   Audience: "http://localhost:5010"
   Issuer: "http://localhost:5010"

@@ -1,3 +1,5 @@
+using Microsoft.Extensions.Options;
+using RedMobilePedidos.API.Settings;
 using System.Collections.Specialized;
 using Microsoft.AspNetCore.Mvc;
 using RedMobilePedidos.API.Models.Responses.TabelaPrecoss;
@@ -5,7 +7,7 @@ using RedMobilePedidos.API.Models.Responses.TabelaPrecoss;
 namespace RedMobilePedidos.API.Controllers;
 
 [Route("api/tabelaPrecos")]
-public class TabelaPrecosController(IHttpClientFactory httpClientFactory, ILogger<TabelaPrecosController> logger) : BaseApiController(httpClientFactory, logger)
+public class TabelaPrecosController(IHttpClientFactory httpClientFactory, IOptions<ProtheusSettings> protheusOptions, ILogger<TabelaPrecosController> logger) : BaseApiController(httpClientFactory, protheusOptions, logger)
 {
     [HttpGet("{estado}")]
     public async Task<TabelaPrecos> ObterTabelaPrecos([FromRoute] string estado, CancellationToken cancellationToken)
@@ -14,7 +16,7 @@ public class TabelaPrecosController(IHttpClientFactory httpClientFactory, ILogge
         return await ObterAsync<TabelaPrecos>(url, cancellationToken);
     }
 
-    private static string ConstruirUrlTabelaPrecos(string estado)
+    private string ConstruirUrlTabelaPrecos(string estado)
     {
         var dict = new NameValueCollection
         {

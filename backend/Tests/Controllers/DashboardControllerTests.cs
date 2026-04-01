@@ -28,7 +28,7 @@ public class DashboardControllerTests : BaseControllerTests
     private readonly Mock<ILogger<DashboardController>> _mockLogger = new();
 
     private DashboardController CreateController(MockHttpClientFactory factory)
-        => new(factory, _mockLogger.Object);
+        => new(factory, ProtheusSettingsTeste, _mockLogger.Object);
     [Fact]
     public async Task GetDashboard_ShouldReturnCombinedDashboardData()
     {

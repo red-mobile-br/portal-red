@@ -54,7 +54,8 @@ builder.Services.AddCors(options =>
 });
 
 // Serviços
-builder.Services.AddSingleton(jwtSettings);
+builder.Services.Configure<JwtSettings>(builder.Configuration.GetSection(nameof(JwtSettings)));
+builder.Services.Configure<ProtheusSettings>(builder.Configuration.GetSection(nameof(ProtheusSettings)));
 builder.Services.AddHttpClient();
 builder.Services.Configure<SmtpSettings>(builder.Configuration.GetSection("SmtpSettings"));
 builder.Services.AddMemoryCache();

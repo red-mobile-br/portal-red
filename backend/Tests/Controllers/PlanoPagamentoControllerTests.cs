@@ -24,7 +24,7 @@ public class PlanoPagamentoControllerTests : BaseControllerTests
     private readonly Mock<ILogger<PlanoPagamentoController>> _mockLogger = new();
 
     private PlanoPagamentoController CreateController(MockHttpClientFactory factory)
-        => new(factory, _mockLogger.Object);
+        => new(factory, ProtheusSettingsTeste, _mockLogger.Object);
     [Fact]
     public async Task ObterTodos_DeveRetornarTodosPlanosPagamento()
     {

@@ -10,6 +10,7 @@ using System.Text.Json;
 using RedMobilePedidos.API.Controllers;
 using RedMobilePedidos.API.Models.Requests;
 using RedMobilePedidos.API.Models.Responses.Common;
+using Microsoft.Extensions.Options;
 using RedMobilePedidos.API.Settings;
 using RedMobilePedidos.Tests.Builders;
 using RedMobilePedidos.Tests.Helpers;
@@ -25,21 +26,21 @@ public class LoginControllerTests : BaseControllerTests
         PropertyNameCaseInsensitive = true
     };
 
-    private readonly JwtSettings _jwtSettings;
+    private readonly IOptions<JwtSettings> _jwtOptions;
     private readonly Mock<ILogger<LoginController>> _mockLogger = new();
 
     private LoginController CreateController(MockHttpClientFactory fabrica)
-        => new(_jwtSettings, fabrica, _mockLogger.Object);
+        => new(fabrica, _jwtOptions, ProtheusSettingsTeste, _mockLogger.Object);
 
     public LoginControllerTests()
     {
-        _jwtSettings = new JwtSettings
+        _jwtOptions = Options.Create(new JwtSettings
         {
             Secret = "ThisIsAVerySecretKeyForJwtTokenGenerationWithAtLeast256Bits!",
             Issuer = "RedMobileAPI",
             Audience = "RedMobileClients",
             DefaultExpirationInHours = 8
-        };
+        });
     }
 
     [Fact]

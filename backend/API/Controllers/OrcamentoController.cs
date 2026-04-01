@@ -1,3 +1,5 @@
+using Microsoft.Extensions.Options;
+using RedMobilePedidos.API.Settings;
 using Microsoft.AspNetCore.Mvc;
 using RedMobilePedidos.API.Models.Requests;
 using RedMobilePedidos.API.Models.Responses.Common;
@@ -11,7 +13,7 @@ namespace RedMobilePedidos.API.Controllers;
 /// Orçamentos podem ser convertidos em pedidos ao serem aprovados.
 /// </summary>
 [Route("api/orcamento")]
-public class OrcamentoController(IHttpClientFactory httpClientFactory, ILogger<OrcamentoController> logger) : BaseApiController(httpClientFactory, logger)
+public class OrcamentoController(IHttpClientFactory httpClientFactory, IOptions<ProtheusSettings> protheusOptions, ILogger<OrcamentoController> logger) : BaseApiController(httpClientFactory, protheusOptions, logger)
 {
     private const string Recurso = "Orcamento";
 

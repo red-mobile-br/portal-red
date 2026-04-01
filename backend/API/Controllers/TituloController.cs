@@ -1,3 +1,5 @@
+using Microsoft.Extensions.Options;
+using RedMobilePedidos.API.Settings;
 using Microsoft.AspNetCore.Mvc;
 using RedMobilePedidos.API.Models.Requests;
 using RedMobilePedidos.API.Models.Responses.Common;
@@ -6,7 +8,7 @@ using RedMobilePedidos.API.Models.Responses.Titulos;
 namespace RedMobilePedidos.API.Controllers;
 
 [Route("api/titulo")]
-public class TituloController(IHttpClientFactory httpClientFactory, ILogger<TituloController> logger) : BaseApiController(httpClientFactory, logger)
+public class TituloController(IHttpClientFactory httpClientFactory, IOptions<ProtheusSettings> protheusOptions, ILogger<TituloController> logger) : BaseApiController(httpClientFactory, protheusOptions, logger)
 {
     [HttpGet]
     public async Task<RespostaPaginada<TituloListaItem>> ObterTitulos([FromQuery] FiltroPadraoQuery queryObject, CancellationToken cancellationToken)
@@ -22,9 +24,9 @@ public class TituloController(IHttpClientFactory httpClientFactory, ILogger<Titu
         return await ObterAsync<DashboardTitulos>(url, cancellationToken);
     }
 
-    private static string ConstruirUrlTitulos(string usuarioLogado, FiltroPadraoQuery queryObject)
+    private string ConstruirUrlTitulos(string usuarioLogado, FiltroPadraoQuery queryObject)
         => string.Join('/', CaminhoApiPadrao, "Titulo") + ConstruirQueryString(ObterDicionarioQueryString(usuarioLogado, queryObject));
 
-    private static string ConstruirUrlDashboardTitulos(string usuarioLogado, FiltroPadraoQuery queryObject)
+    private string ConstruirUrlDashboardTitulos(string usuarioLogado, FiltroPadraoQuery queryObject)
         => ObterCaminhoDashboard(string.Join('/', CaminhoApiPadrao, "Titulo")) + ConstruirQueryString(ObterDicionarioQueryString(usuarioLogado, queryObject));
 }

@@ -1,3 +1,5 @@
+using Microsoft.Extensions.Options;
+using RedMobilePedidos.API.Settings;
 using Microsoft.AspNetCore.Mvc;
 using RedMobilePedidos.API.Models.Requests;
 using RedMobilePedidos.API.Models.Responses.Common;
@@ -9,7 +11,7 @@ using RedMobilePedidos.API.Models.Responses.Dashboard;
 namespace RedMobilePedidos.API.Controllers;
 
 [Route("api/dashboard")]
-public class DashboardController(IHttpClientFactory httpClientFactory, ILogger<DashboardController> logger) : BaseApiController(httpClientFactory, logger)
+public class DashboardController(IHttpClientFactory httpClientFactory, IOptions<ProtheusSettings> protheusOptions, ILogger<DashboardController> logger) : BaseApiController(httpClientFactory, protheusOptions, logger)
 {
     [HttpGet]
     public async Task<DashboardGeralDto> ObterDashboard([FromQuery] FiltroPadraoQuery queryObject, CancellationToken cancellationToken)
@@ -34,12 +36,12 @@ public class DashboardController(IHttpClientFactory httpClientFactory, ILogger<D
         return resultado;
     }
 
-    private static string ConstruirUrlDashboardPedidos(string usuarioLogado, FiltroPadraoQuery queryObject)
+    private string ConstruirUrlDashboardPedidos(string usuarioLogado, FiltroPadraoQuery queryObject)
         => ObterCaminhoDashboard(string.Join('/', CaminhoApiPadrao, "Pedido")) + ConstruirQueryString(ObterDicionarioQueryString(usuarioLogado, queryObject));
 
-    private static string ConstruirUrlDashboardComissoes(string usuarioLogado, FiltroPadraoQuery queryObject)
+    private string ConstruirUrlDashboardComissoes(string usuarioLogado, FiltroPadraoQuery queryObject)
         => ObterCaminhoDashboard(string.Join('/', CaminhoApiPadrao, "Comissao")) + ConstruirQueryString(ObterDicionarioQueryString(usuarioLogado, queryObject));
 
-    private static string ConstruirUrlDashboardClientes(string usuarioLogado, FiltroPadraoQuery queryObject)
+    private string ConstruirUrlDashboardClientes(string usuarioLogado, FiltroPadraoQuery queryObject)
         => ObterCaminhoDashboard(string.Join('/', CaminhoApiPadrao, "Cliente")) + ConstruirQueryString(ObterDicionarioQueryString(usuarioLogado, queryObject));
 }

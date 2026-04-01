@@ -1,3 +1,5 @@
+using Microsoft.Extensions.Options;
+using RedMobilePedidos.API.Settings;
 using Microsoft.AspNetCore.Mvc;
 using RedMobilePedidos.API.Models.Email;
 using RedMobilePedidos.API.Models.Requests;
@@ -13,11 +15,12 @@ namespace RedMobilePedidos.API.Controllers;
 [Route("api/pedido")]
 public class PedidoController(
     IHttpClientFactory httpClientFactory,
-    ILogger<PedidoController> logger,
     IEmailService emailService,
     IPdfService pdfService,
     IRelatorioPedidoService servicoRelatorioPedido,
-    IEmailTemplateService emailTemplateService) : BaseApiController(httpClientFactory, logger)
+    IEmailTemplateService emailTemplateService,
+    IOptions<ProtheusSettings> protheusOptions,
+    ILogger<PedidoController> logger) : BaseApiController(httpClientFactory, protheusOptions, logger)
 {
     private const string Recurso = "Pedido";
 

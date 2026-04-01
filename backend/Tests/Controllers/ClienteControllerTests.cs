@@ -32,7 +32,7 @@ public class ClienteControllerTests : BaseControllerTests
     private readonly Mock<ILogger<ClienteController>> _mockLogger = new();
 
     private ClienteController CreateController(MockHttpClientFactory fabrica)
-        => new(fabrica, _mockLogger.Object);
+        => new(fabrica, ProtheusSettingsTeste, _mockLogger.Object);
 
     [Fact]
     public async Task ObterClientes_DeveRetornarClientesPaginados()

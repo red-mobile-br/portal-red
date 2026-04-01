@@ -1,3 +1,5 @@
+using Microsoft.Extensions.Options;
+using RedMobilePedidos.API.Settings;
 using Microsoft.AspNetCore.Mvc;
 using RedMobilePedidos.API.Models.Requests;
 using RedMobilePedidos.API.Models.Responses.Common;
@@ -6,7 +8,7 @@ using RedMobilePedidos.API.Models.Responses.DashboardFaturamentos;
 namespace RedMobilePedidos.API.Controllers;
 
 [Route("api/faturamento")]
-public class DashboardFaturamentoController(IHttpClientFactory httpClientFactory, ILogger<DashboardFaturamentoController> logger) : BaseApiController(httpClientFactory, logger)
+public class DashboardFaturamentoController(IHttpClientFactory httpClientFactory, IOptions<ProtheusSettings> protheusOptions, ILogger<DashboardFaturamentoController> logger) : BaseApiController(httpClientFactory, protheusOptions, logger)
 {
     [HttpGet]
     public async Task<RespostaPaginada<FaturamentoItem>> ObterFaturamentos([FromQuery] FiltroPadraoQuery queryObject, CancellationToken cancellationToken)
@@ -22,9 +24,9 @@ public class DashboardFaturamentoController(IHttpClientFactory httpClientFactory
         return await ObterAsync<DashboardFaturamento>(url, cancellationToken);
     }
 
-    private static string ConstruirUrlFaturamentos(string usuarioLogado, FiltroPadraoQuery queryObject)
+    private string ConstruirUrlFaturamentos(string usuarioLogado, FiltroPadraoQuery queryObject)
         => string.Join('/', CaminhoApiPadrao, "Faturamento") + ConstruirQueryString(ObterDicionarioQueryString(usuarioLogado, queryObject));
 
-    private static string ConstruirUrlDashboardFaturamentos(string usuarioLogado, FiltroPadraoQuery queryObject)
+    private string ConstruirUrlDashboardFaturamentos(string usuarioLogado, FiltroPadraoQuery queryObject)
         => ObterCaminhoDashboard(string.Join('/', CaminhoApiPadrao, "Faturamento")) + ConstruirQueryString(ObterDicionarioQueryString(usuarioLogado, queryObject));
 }

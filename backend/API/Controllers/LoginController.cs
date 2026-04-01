@@ -1,3 +1,4 @@
+using Microsoft.Extensions.Options;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
@@ -11,8 +12,10 @@ using System.Text;
 namespace RedMobilePedidos.API.Controllers;
 
 [Route("api/login")]
-public class LoginController(JwtSettings jwtSettings, IHttpClientFactory httpClientFactory, ILogger<LoginController> logger) : BaseApiController(httpClientFactory, logger)
+public class LoginController(IHttpClientFactory httpClientFactory, IOptions<JwtSettings> jwtOptions, IOptions<ProtheusSettings> protheusOptions, ILogger<LoginController> logger) : BaseApiController(httpClientFactory, protheusOptions, logger)
 {
+    private JwtSettings Jwt => jwtOptions.Value;
+
     [HttpPost]
     [AllowAnonymous]
     public async Task<ActionResult> Login([FromBody] LoginModel loginModel, CancellationToken cancellationToken)
@@ -42,16 +45,16 @@ public class LoginController(JwtSettings jwtSettings, IHttpClientFactory httpCli
             new Claim("tipoUsuario", usuario.TipoUsuario.ToString())
         };
 
-        var segredo = Encoding.UTF8.GetBytes(jwtSettings.Secret);
+        var segredo = Encoding.UTF8.GetBytes(Jwt.Secret);
         var chave = new SymmetricSecurityKey(segredo);
         const string algoritmo = SecurityAlgorithms.HmacSha256;
         var credenciaisAssinatura = new SigningCredentials(chave, algoritmo);
         var inicio = DateTime.Now;
-        var expiracao = inicio.AddHours(jwtSettings.DefaultExpirationInHours);
+        var expiracao = inicio.AddHours(Jwt.DefaultExpirationInHours);
 
         var tokenJwt = new JwtSecurityToken(
-            jwtSettings.Audience,
-            jwtSettings.Issuer,
+            Jwt.Audience,
+            Jwt.Issuer,
             claims,
             inicio,
             expiracao,
@@ -68,7 +71,7 @@ public class LoginController(JwtSettings jwtSettings, IHttpClientFactory httpCli
         };
     }
 
-    private static string ConstruirUrlLogin() => string.Join('/', CaminhoApiPadrao, "Login");
+    private string ConstruirUrlLogin() => string.Join('/', CaminhoApiPadrao, "Login");
 
-    private static string ConstruirUrlDadosUsuario(string nomeUsuario) => string.Join('/', CaminhoApiPadrao, "DadosUsuario", nomeUsuario);
+    private string ConstruirUrlDadosUsuario(string nomeUsuario) => string.Join('/', CaminhoApiPadrao, "DadosUsuario", nomeUsuario);
 }

@@ -27,7 +27,7 @@ public class FaturamentoControllerTests : BaseControllerTests
     private readonly Mock<ILogger<DashboardFaturamentoController>> _mockLogger = new();
 
     private DashboardFaturamentoController CreateController(MockHttpClientFactory factory)
-        => new(factory, _mockLogger.Object);
+        => new(factory, ProtheusSettingsTeste, _mockLogger.Object);
     [Fact]
     public async Task ObterFaturamentos_DeveRetornarFaturamentosPaginados()
     {

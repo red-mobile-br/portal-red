@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 using System.Text.Json;
 using RedMobilePedidos.API.Exceptions;
 using RedMobilePedidos.API.Models.Requests;
@@ -19,12 +20,14 @@ using RedMobilePedidos.API.Models.Responses.Titulos;
 namespace RedMobilePedidos.API.Controllers;
 
 [ApiController]
-public abstract class BaseApiController(IHttpClientFactory httpClientFactory, ILogger logger) : ControllerBase
+public abstract class BaseApiController(IHttpClientFactory httpClientFactory, IOptions<ProtheusSettings> protheusOptions, ILogger logger) : ControllerBase
 {
-    private static readonly AuthenticationHeaderValue CabecalhoAuth = new(nameof(AuthenticationSchemes.Basic),
-        Convert.ToBase64String("red-api:!ok$$L8GRb"u8.ToArray()));
+    private ProtheusSettings Protheus => protheusOptions.Value;
 
-    protected const string CaminhoApiPadrao = "http://187.45.183.238:8090/rest";
+    private AuthenticationHeaderValue CabecalhoAuth => new(nameof(AuthenticationSchemes.Basic),
+        Convert.ToBase64String(Encoding.UTF8.GetBytes($"{Protheus.Usuario}:{Protheus.Senha}")));
+
+    protected string CaminhoApiPadrao => Protheus.BaseUrl;
     private const string FormatoDataProtheus = "yyyyMMdd";
 
     protected string UsuarioLogado => ObterIdentificador();

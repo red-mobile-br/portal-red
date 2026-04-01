@@ -27,7 +27,7 @@ public class ComissaoControllerTests : BaseControllerTests
     private readonly Mock<ILogger<ComissaoController>> _mockLogger = new();
 
     private ComissaoController CreateController(MockHttpClientFactory factory)
-        => new(factory, _mockLogger.Object);
+        => new(factory, ProtheusSettingsTeste, _mockLogger.Object);
     [Theory]
     [InlineData("0")]
     [InlineData("1")]

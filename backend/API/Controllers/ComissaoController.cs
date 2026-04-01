@@ -1,3 +1,5 @@
+using Microsoft.Extensions.Options;
+using RedMobilePedidos.API.Settings;
 using Microsoft.AspNetCore.Mvc;
 using RedMobilePedidos.API.Models.Requests;
 using RedMobilePedidos.API.Models.Responses.Common;
@@ -6,7 +8,7 @@ using RedMobilePedidos.API.Models.Responses.Comissao;
 namespace RedMobilePedidos.API.Controllers;
 
 [Route("api/comissao")]
-public class ComissaoController(IHttpClientFactory httpClientFactory, ILogger<ComissaoController> logger) : BaseApiController(httpClientFactory, logger)
+public class ComissaoController(IHttpClientFactory httpClientFactory, IOptions<ProtheusSettings> protheusOptions, ILogger<ComissaoController> logger) : BaseApiController(httpClientFactory, protheusOptions, logger)
 {
     private static readonly string[] StatusValidos = ["0", "1", "2"];
 
@@ -34,9 +36,9 @@ public class ComissaoController(IHttpClientFactory httpClientFactory, ILogger<Co
         return await ObterAsync<DashboardComissoes>(url, cancellationToken);
     }
 
-    private static string ConstruirUrlComissoes(string usuarioLogado, FiltroPadraoQuery queryObject)
+    private string ConstruirUrlComissoes(string usuarioLogado, FiltroPadraoQuery queryObject)
         => string.Join('/', CaminhoApiPadrao, "Comissao") + ConstruirQueryString(ObterDicionarioQueryString(usuarioLogado, queryObject));
 
-    private static string ConstruirUrlDashboardComissoes(string usuarioLogado, FiltroPadraoQuery queryObject)
+    private string ConstruirUrlDashboardComissoes(string usuarioLogado, FiltroPadraoQuery queryObject)
         => ObterCaminhoDashboard(string.Join('/', CaminhoApiPadrao, "Comissao")) + ConstruirQueryString(ObterDicionarioQueryString(usuarioLogado, queryObject));
 }

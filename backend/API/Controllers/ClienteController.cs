@@ -1,3 +1,4 @@
+using Microsoft.Extensions.Options;
 using System.Collections.Specialized;
 using Microsoft.AspNetCore.Mvc;
 using RedMobilePedidos.API.Models.Requests;
@@ -12,7 +13,7 @@ using ArquivoInfo = RedMobilePedidos.API.Models.Responses.Common.ArquivoInfo;
 namespace RedMobilePedidos.API.Controllers;
 
 [Route("api/cliente")]
-public class ClienteController(IHttpClientFactory httpClientFactory, ILogger<ClienteController> logger) : BaseApiController(httpClientFactory, logger)
+public class ClienteController(IHttpClientFactory httpClientFactory, IOptions<ProtheusSettings> protheusOptions, ILogger<ClienteController> logger) : BaseApiController(httpClientFactory, protheusOptions, logger)
 {
     [HttpGet]
     public async Task<RespostaPaginada<ClienteListaItem>> ObterClientes([FromQuery] FiltroPadraoQuery queryObject, CancellationToken cancellationToken)
@@ -198,17 +199,17 @@ public class ClienteController(IHttpClientFactory httpClientFactory, ILogger<Cli
         };
     }
 
-    private static string ConstruirUrlClientesParaPedido(string usuarioLogado, FiltroPadraoQuery queryObject)
+    private string ConstruirUrlClientesParaPedido(string usuarioLogado, FiltroPadraoQuery queryObject)
         => string.Join('/', CaminhoApiPadrao, "Cliente") + ConstruirQueryString(ObterDicionarioQueryString(usuarioLogado, queryObject));
 
-    private static string ConstruirUrlProdutos(string idCliente, FiltroPadraoQuery queryObject)
+    private string ConstruirUrlProdutos(string idCliente, FiltroPadraoQuery queryObject)
     {
         var dict = ObterDicionarioQueryString(null, queryObject);
         dict.Add("IdCliente", idCliente);
         return string.Join('/', CaminhoApiPadrao, "Produto") + ConstruirQueryString(dict);
     }
 
-    private static string ConstruirUrlProduto(string idCliente, string codigoProduto)
+    private string ConstruirUrlProduto(string idCliente, string codigoProduto)
     {
         var dict = new NameValueCollection
         {
@@ -217,7 +218,7 @@ public class ClienteController(IHttpClientFactory httpClientFactory, ILogger<Cli
         return string.Join('/', CaminhoApiPadrao, "Produto", codigoProduto) + ConstruirQueryString(dict);
     }
 
-    private static string ConstruirUrlImpostoProduto(ConsultaImpostoProdutoInterno model)
+    private string ConstruirUrlImpostoProduto(ConsultaImpostoProdutoInterno model)
     {
         var dict = new NameValueCollection
         {
@@ -239,15 +240,15 @@ public class ClienteController(IHttpClientFactory httpClientFactory, ILogger<Cli
         return $"{CaminhoApiPadrao}/Produto" + ConstruirQueryString(dict);
     }
 
-    private static string ConstruirUrlClientePorCnpj(string usuarioLogado, string cnpj)
+    private string ConstruirUrlClientePorCnpj(string usuarioLogado, string cnpj)
         => string.Join('/', CaminhoApiPadrao, "Cliente", cnpj) + ConstruirQueryString(ObterDicionarioQueryString(usuarioLogado, null));
 
-    private static string ConstruirUrlPedidosCliente(string usuarioLogado, string cnpj)
+    private string ConstruirUrlPedidosCliente(string usuarioLogado, string cnpj)
         => string.Join('/', CaminhoApiPadrao, "Cliente", cnpj, "pedidos") + ConstruirQueryString(ObterDicionarioQueryString(usuarioLogado, null));
 
-    private static string ConstruirUrlDashboardClientes(string usuarioLogado, FiltroPadraoQuery queryObject)
+    private string ConstruirUrlDashboardClientes(string usuarioLogado, FiltroPadraoQuery queryObject)
         => ObterCaminhoDashboard(string.Join('/', CaminhoApiPadrao, "Cliente")) + ConstruirQueryString(ObterDicionarioQueryString(usuarioLogado, queryObject));
 
-    private static string ConstruirUrlCriarCliente(string usuarioLogado)
+    private string ConstruirUrlCriarCliente(string usuarioLogado)
         => string.Join('/', CaminhoApiPadrao, "Cliente") + ConstruirQueryString(ObterDicionarioQueryString(usuarioLogado, null));
 }

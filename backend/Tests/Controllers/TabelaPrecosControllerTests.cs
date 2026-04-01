@@ -26,7 +26,7 @@ public class TabelaPrecosControllerTests : BaseControllerTests
     private readonly Mock<ILogger<TabelaPrecosController>> _mockLogger = new();
 
     private TabelaPrecosController CreateController(MockHttpClientFactory factory)
-        => new(factory, _mockLogger.Object);
+        => new(factory, ProtheusSettingsTeste, _mockLogger.Object);
     [Fact]
     public async Task ObterTabelaPrecos_DeveRetornarTabelaPrecosParaEstado()
     {

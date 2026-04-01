@@ -27,7 +27,7 @@ public class RepresentanteControllerTests : BaseControllerTests
     private readonly Mock<ILogger<RepresentantesController>> _mockLogger = new();
 
     private RepresentantesController CreateController(MockHttpClientFactory factory)
-        => new(factory, _mockLogger.Object);
+        => new(factory, ProtheusSettingsTeste, _mockLogger.Object);
     [Fact]
     public async Task ObterRepresentantes_DeveRetornarRepresentantesPaginados()
     {

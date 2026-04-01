@@ -26,7 +26,7 @@ public class GerenteControllerTests : BaseControllerTests
     private readonly Mock<ILogger<GerentesController>> _mockLogger = new();
 
     private GerentesController CreateController(MockHttpClientFactory factory)
-        => new(factory, _mockLogger.Object);
+        => new(factory, ProtheusSettingsTeste, _mockLogger.Object);
     [Fact]
     public async Task ObterGerentes_DeveRetornarGerentesPaginados()
     {

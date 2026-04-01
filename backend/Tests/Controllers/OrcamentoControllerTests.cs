@@ -30,7 +30,7 @@ public class OrcamentoControllerTests : BaseControllerTests
     private readonly Mock<ILogger<OrcamentoController>> _mockLogger = new();
 
     private OrcamentoController CreateController(MockHttpClientFactory factory)
-        => new(factory, _mockLogger.Object);
+        => new(factory, ProtheusSettingsTeste, _mockLogger.Object);
     [Fact]
     public async Task OrcamentoDetalhados_DeveRetornarOrcamentosPaginados()
     {

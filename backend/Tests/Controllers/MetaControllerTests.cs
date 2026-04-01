@@ -28,7 +28,7 @@ public class MetaControllerTests : BaseControllerTests
     private readonly Mock<ILogger<MetaController>> _mockLogger = new();
 
     private MetaController CreateController(MockHttpClientFactory factory)
-        => new(factory, _mockLogger.Object);
+        => new(factory, ProtheusSettingsTeste, _mockLogger.Object);
     [Fact]
     public async Task ObterMetasVigentes_DeveRetornarMetas()
     {

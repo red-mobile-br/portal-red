@@ -14,6 +14,9 @@ services:
       - ASPNETCORE_ENVIRONMENT=Production
       - JwtSettings__Secret=${JWT_SECRET}
       - SmtpSettings__Password=${SMTP_PASSWORD}
+      - ProtheusSettings__BaseUrl=${PROTHEUS_BASE_URL}
+      - ProtheusSettings__Usuario=${PROTHEUS_USUARIO}
+      - ProtheusSettings__Senha=${PROTHEUS_SENHA}
     networks:
       - portalred-net
 
