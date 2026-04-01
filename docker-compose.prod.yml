@@ -1,5 +1,7 @@
 name: portalred
 
+env_file: .env.prod
+
 networks:
   portalred-net:
     driver: bridge
@@ -17,6 +19,8 @@ services:
       - ProtheusSettings__BaseUrl=${PROTHEUS_BASE_URL}
       - ProtheusSettings__Usuario=${PROTHEUS_USUARIO}
       - ProtheusSettings__Senha=${PROTHEUS_SENHA}
+    volumes:
+      - ./logs-prod:/app/logs
     ports:
       - "127.0.0.1:5000:8080"
     networks:

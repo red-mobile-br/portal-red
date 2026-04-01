@@ -5,6 +5,7 @@ using RedMobilePedidos.API.Middlewares;
 using RedMobilePedidos.API.Models.Settings;
 using RedMobilePedidos.API.Services;
 using RedMobilePedidos.API.Settings;
+using Serilog;
 using System.Text;
 using System.Text.Json;
 
@@ -17,6 +18,10 @@ builder.Configuration
     .AddYamlFile($"appsettings.{builder.Environment.EnvironmentName}.yaml", optional: true, reloadOnChange: true)
     .AddEnvironmentVariables()
     .AddCommandLine(args);
+
+// Serilog
+builder.Host.UseSerilog((contexto, configuracao) =>
+    configuracao.ReadFrom.Configuration(contexto.Configuration));
 
 // Autenticação JWT
 var jwtSettings = builder.Configuration.GetSection(nameof(JwtSettings)).Get<JwtSettings>()!;

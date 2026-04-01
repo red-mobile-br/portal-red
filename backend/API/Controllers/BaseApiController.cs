@@ -118,11 +118,15 @@ public abstract class BaseApiController(IHttpClientFactory httpClientFactory, IO
         var requisicao = new HttpRequestMessage(metodo, url);
         requisicao.Headers.Authorization = CabecalhoAuth;
 
+        string? corpoSerializado = null;
         if (corpo != null)
         {
-            var corpoSerializado = JsonSerializer.Serialize(corpo, JsonOpcoes.Padrao);
+            corpoSerializado = JsonSerializer.Serialize(corpo, JsonOpcoes.Padrao);
             requisicao.Content = new StringContent(corpoSerializado, Encoding.UTF8, "application/json");
         }
+
+        logger.LogDebug("Protheus Request: {Metodo} {Url}\n{Corpo}",
+            metodo, url, corpoSerializado ?? "(sem corpo)");
 
         var cronometro = Stopwatch.StartNew();
         var client = httpClientFactory.CreateClient();
@@ -130,10 +134,13 @@ public abstract class BaseApiController(IHttpClientFactory httpClientFactory, IO
         var conteudo = await resposta.Content.ReadAsStringAsync(cancellationToken);
         cronometro.Stop();
 
+        logger.LogDebug("Protheus Response: {Metodo} {Url} → {CodigoStatus} em {Duracao}ms\n{Corpo}",
+            metodo, url, (int)resposta.StatusCode, cronometro.ElapsedMilliseconds, conteudo);
+
         if (!resposta.IsSuccessStatusCode)
         {
-            logger.LogWarning("Protheus {Metodo} {Url} falhou com {CodigoStatus} em {Duracao}ms",
-                metodo, url, (int)resposta.StatusCode, cronometro.ElapsedMilliseconds);
+            logger.LogWarning("Protheus {Metodo} {Url} falhou com {CodigoStatus} em {Duracao}ms\n{Corpo}",
+                metodo, url, (int)resposta.StatusCode, cronometro.ElapsedMilliseconds, conteudo);
         }
 
         return resposta.IsSuccessStatusCode

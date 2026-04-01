@@ -33,6 +33,13 @@ frontend/.cache
 frontend/.parcel-cache
 
 # ========================
+# Logs (volumes Docker)
+# ========================
+logs-dev/
+logs-hml/
+logs-prod/
+
+# ========================
 # Variáveis de ambiente
 # ========================
 .env
