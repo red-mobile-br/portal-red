@@ -1,7 +1,7 @@
-name: portalred-hml
+name: portalred
 
 networks:
-  portalred-hml-net:
+  portalred-net:
     driver: bridge
 
 services:
@@ -18,9 +18,9 @@ services:
       - ProtheusSettings__Usuario=${PROTHEUS_USUARIO}
       - ProtheusSettings__Senha=${PROTHEUS_SENHA}
     ports:
-      - "127.0.0.1:5010:8080"
+      - "127.0.0.1:5000:8080"
     networks:
-      - portalred-hml-net
+      - portalred-net
 
   frontend:
     build:
@@ -33,6 +33,6 @@ services:
     depends_on:
       - backend
     ports:
-      - "127.0.0.1:3010:80"
+      - "127.0.0.1:3000:80"
     networks:
-      - portalred-hml-net
+      - portalred-net

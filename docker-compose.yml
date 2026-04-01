@@ -1,7 +1,7 @@
-name: portalred
+name: portalred-dev
 
 networks:
-  portalred-net:
+  portalred-dev-net:
     driver: bridge
 
 services:
@@ -9,16 +9,17 @@ services:
     build:
       context: .
       dockerfile: infra/backend/Dockerfile
-    restart: unless-stopped
     environment:
-      - ASPNETCORE_ENVIRONMENT=Production
+      - ASPNETCORE_ENVIRONMENT=Development
       - JwtSettings__Secret=${JWT_SECRET}
       - SmtpSettings__Password=${SMTP_PASSWORD}
       - ProtheusSettings__BaseUrl=${PROTHEUS_BASE_URL}
       - ProtheusSettings__Usuario=${PROTHEUS_USUARIO}
       - ProtheusSettings__Senha=${PROTHEUS_SENHA}
+    ports:
+      - "127.0.0.1:5000:8080"
     networks:
-      - portalred-net
+      - portalred-dev-net
 
   frontend:
     build:
@@ -27,9 +28,9 @@ services:
       args:
         VITE_API_URL: ${VITE_API_URL}
         VITE_MAPBOX: ${VITE_MAPBOX}
-
-    restart: unless-stopped
     depends_on:
       - backend
+    ports:
+      - "127.0.0.1:3000:80"
     networks:
-      - portalred-net
+      - portalred-dev-net
