@@ -1,7 +1,5 @@
 name: portalred
 
-env_file: .env.prod
-
 networks:
   portalred-net:
     driver: bridge

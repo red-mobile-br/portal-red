@@ -1,7 +1,5 @@
 name: portalred-hml
 
-env_file: .env.hml
-
 networks:
   portalred-hml-net:
     driver: bridge
