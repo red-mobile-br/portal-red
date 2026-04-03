@@ -152,8 +152,8 @@ const imprimir = () => {
 const buscarRepresentante = async () => {
     const representante = await refModalBuscarRepresentante.value?.search();
     if(representante) {
-        filtros.idRepresentante = representante.id;
-        filtros.nomeRepresentante = representante.nome;
+        filtros.idRepresentante = representante.id ?? '';
+        filtros.nomeRepresentante = representante.nome ?? '';
         aplicarFiltrosEReiniciar(carregarDados);
     }
 };
@@ -162,8 +162,8 @@ const buscarRepresentante = async () => {
 const buscarGerente = async () => {
     const gerente = await refModalBuscarGerente.value?.search();
     if(gerente) {
-        filtros.idGerente = gerente.id;
-        filtros.nomeGerente = gerente.nome;
+        filtros.idGerente = gerente.id ?? '';
+        filtros.nomeGerente = gerente.nome ?? '';
         aplicarFiltrosEReiniciar(carregarDados);
     }
 };
@@ -216,7 +216,7 @@ onMounted(() => carregarDados());
                     Valor total base
                 </RmText>
                 <p class="font-semibold text-2xl text-primary-light">
-                    R$ {{ formatarDecimal(state.dashboard.totalBase) }}
+                    R$ {{ formatarDecimal(state.dashboard.totalBase ?? 0) }}
                 </p>
                 <RmDivider class="mb-2 my-3" />
                 <RmText type="label-small">
@@ -231,7 +231,7 @@ onMounted(() => carregarDados());
                     Valor total NF
                 </RmText>
                 <p class="font-semibold text-2xl text-accent">
-                    R$ {{ formatarDecimal(state.dashboard.totalFaturado) }}
+                    R$ {{ formatarDecimal(state.dashboard.totalFaturado ?? 0) }}
                 </p>
                 <RmDivider class="mb-2 my-3" />
                 <RmText type="label-small">
@@ -259,7 +259,7 @@ onMounted(() => carregarDados());
                     Vendas por categoria
                 </RmText>
                 <div class="h-80 relative">
-                    <RmDonutChart :items="state.dashboard.vendasPorCategoria" :display-legend="true" />
+                    <RmDonutChart :items="state.dashboard.vendasPorCategoria ?? []" :display-legend="true" />
                 </div>
             </RmCard>
 
@@ -281,7 +281,7 @@ onMounted(() => carregarDados());
                     </p>
                 </div>
                 <div class="h-[10.5rem] relative">
-                    <RmMultiChart :types="['line', 'line']" :items="state.dashboard.vendasPorDia" />
+                    <RmMultiChart :types="['line', 'line']" :items="state.dashboard.vendasPorDia ?? []" />
                 </div>
 
             </RmCard>
@@ -312,7 +312,7 @@ onMounted(() => carregarDados());
                 <RmText type="headline-small" class="mb-4">
                     Produtos mais vendidos
                 </RmText>
-                <ItemListaMaisVendidos v-for="(item, index) in state.dashboard.produtosMaisVendidos"
+                <ItemListaMaisVendidos v-for="(item, index) in state.dashboard.produtosMaisVendidos ?? []"
                                   :key="index"
                                   :item="item" />
 

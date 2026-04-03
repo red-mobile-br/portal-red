@@ -4,8 +4,8 @@ namespace RedMobilePedidos.API.Models.Responses.Clientes;
 
 public sealed record DashboardClientes
 {
-    public required List<ClientesPorEstado> ClientesPorEstado { get; init; }
-    public required List<ItemGrafico> ClientesPorEstatus { get; init; }
-    public required List<MelhorCliente> MelhoresClientesPorPedidos { get; init; }
-    public required List<MelhorCliente> MelhoresClientesPorFaturamento { get; init; }
+    public List<ClientesPorEstado>? ClientesPorEstado { get; init; }
+    public List<ItemGrafico>? ClientesPorEstatus { get; init; }
+    public List<MelhorCliente>? MelhoresClientesPorPedidos { get; init; }
+    public List<MelhorCliente>? MelhoresClientesPorFaturamento { get; init; }
 }

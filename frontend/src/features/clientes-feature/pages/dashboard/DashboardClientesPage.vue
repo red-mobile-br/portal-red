@@ -71,8 +71,8 @@ const opcoesStatus = Object.entries(statusClienteEnum).map<{ name: string, value
 });
 
 // Propriedades computadas
-const totalClientes = computed(() => state.dashboard.clientesPorEstado.reduce((acc, el) => acc += el.quantidadeClientes, 0));
-const melhoresClientes = computed(() => state.tipoMelhoresClientes == 'orders' ? state.dashboard.melhoresClientesPorPedidos : state.dashboard.melhoresClientesPorFaturamento);
+const totalClientes = computed(() => (state.dashboard.clientesPorEstado ?? []).reduce((acc, el) => acc += (el.quantidadeClientes ?? 0), 0));
+const melhoresClientes = computed(() => state.tipoMelhoresClientes == 'orders' ? (state.dashboard.melhoresClientesPorPedidos ?? []) : (state.dashboard.melhoresClientesPorFaturamento ?? []));
 
 
 // Métodos
@@ -153,8 +153,8 @@ const imprimir = () => {
 const buscarRepresentante = async () => {
     const representante = await refModalBuscarRepresentante.value?.search();
     if(representante) {
-        filtros.idRepresentante = representante.id;
-        filtros.nomeRepresentante = representante.nome;
+        filtros.idRepresentante = representante.id ?? '';
+        filtros.nomeRepresentante = representante.nome ?? '';
         aplicarFiltrosEReiniciar(carregarDados);
     }
 };
@@ -202,7 +202,7 @@ onMounted(() => carregarDados());
             </div>
 
             <RmCard class="overflow-hidden !p-0 relative">
-                <MapaClientes :clients="state.dashboard.clientesPorEstado" />
+                <MapaClientes :clients="(state.dashboard.clientesPorEstado ?? []).map(e => ({ estado: e.estado ?? '', quantidadeClientes: e.quantidadeClientes ?? 0 }))" />
 
                 <div class="w-2/3 absolute top-0 left-0 h-full bg-gradient-to-r from-white to-transparent opacity-80 pointer-events-none" />
                 <div class="absolute top-4 left-4">
@@ -224,7 +224,7 @@ onMounted(() => carregarDados());
                     Status clientes
                 </RmText>
                 <div class="flex-1 relative">
-                    <RmDonutChart :items="state.dashboard.clientesPorEstatus" :display-legend="true" />
+                    <RmDonutChart :items="state.dashboard.clientesPorEstatus ?? []" :display-legend="true" />
                 </div>
             </RmCard>
 
@@ -297,7 +297,7 @@ onMounted(() => carregarDados());
                                            :is-revenue="state.tipoMelhoresClientes == 'revenues'"
                                            :index="index"
                                            :client="cliente"
-                                           @click="$router.push({ name: 'consultar-cliente', params: {cnpj: cliente.cnpj}})" />
+                                           @click="$router.push({ name: 'consultar-cliente', params: {cnpj: cliente.cnpj ?? ''}})" />
 
                     <tr v-if="melhoresClientes.length == 0">
                         <td colspan="2">

@@ -41,8 +41,8 @@ public class LoginController(IHttpClientFactory httpClientFactory, IOptions<JwtS
     {
         var claims = new[]
         {
-            new Claim(JwtRegisteredClaimNames.Sub, usuario.IdRepresentante),
-            new Claim("tipoUsuario", usuario.TipoUsuario.ToString())
+            new Claim(JwtRegisteredClaimNames.Sub, usuario.IdRepresentante ?? string.Empty),
+            new Claim("tipoUsuario", usuario.TipoUsuario?.ToString() ?? string.Empty)
         };
 
         var segredo = Encoding.UTF8.GetBytes(Jwt.Secret);

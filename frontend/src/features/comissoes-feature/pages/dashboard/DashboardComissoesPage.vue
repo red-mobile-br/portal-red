@@ -148,8 +148,8 @@ const imprimir = () => {
 const buscarRepresentante = async () => {
     const representante = await refModalBuscarRepresentante.value?.search();
     if(representante) {
-        filtros.idRepresentante = representante.id;
-        filtros.nomeRepresentante = representante.nome;
+        filtros.idRepresentante = representante.id ?? '';
+        filtros.nomeRepresentante = representante.nome ?? '';
         aplicarFiltrosEReiniciar(carregarDados);
     }
 };
@@ -197,7 +197,7 @@ onMounted(() => carregarDados());
                     Valor total de comissão
                 </RmText>
                 <p class="font-semibold text-2xl text-primary-light">
-                    R$ {{ formatarDecimal(state.dashboard.totalComissaoPeriodo) }}
+                    R$ {{ formatarDecimal(state.dashboard.totalComissaoPeriodo ?? 0) }}
                 </p>
                 <RmDivider class="mb-2 my-3" />
                 <RmText type="label-small">
@@ -211,7 +211,7 @@ onMounted(() => carregarDados());
                     Porcentagem média
                 </RmText>
                 <p class="font-semibold text-2xl text-accent">
-                    {{ formatarDecimal(arredondarPreco(state.dashboard.percentualComissaoPeriodo)) }}%
+                    {{ formatarDecimal(arredondarPreco(state.dashboard.percentualComissaoPeriodo ?? 0)) }}%
                 </p>
                 <RmDivider class="mb-2 my-3" />
                 <RmText type="label-small">
@@ -225,7 +225,7 @@ onMounted(() => carregarDados());
                     Desempenho no período
                 </RmText>
                 <div class="flex-1 transition-opacity duration-300 relative">
-                    <RmAreaChart :items="state.dashboard.comissoesPeriodo" />
+                    <RmAreaChart :items="state.dashboard.comissoesPeriodo ?? []" />
                 </div>
             </RmCard>
 
@@ -235,7 +235,7 @@ onMounted(() => carregarDados());
                     Maiores comissões no período
                 </RmText>
                 <div class="flex-1 transition-opacity duration-300 relative">
-                    <RmBarChart :items="state.dashboard.maioresComissoesPeriodo" :step-size="50" />
+                    <RmBarChart :items="state.dashboard.maioresComissoesPeriodo ?? []" :step-size="50" />
                 </div>
             </RmCard>
 

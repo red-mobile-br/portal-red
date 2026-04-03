@@ -231,8 +231,8 @@ const imprimir = () => {
 const buscarRepresentante = async () => {
     const representante = await refModalBuscarRepresentante.value?.search();
     if(representante) {
-        filtros.idRepresentante = representante.id;
-        filtros.nomeRepresentante = representante.nome;
+        filtros.idRepresentante = representante.id ?? '';
+        filtros.nomeRepresentante = representante.nome ?? '';
         aplicarFiltrosEReiniciar(carregarDados);
     }
 };
@@ -241,8 +241,8 @@ const buscarRepresentante = async () => {
 const buscarGerente = async () => {
     const gerente = await refModalBuscarGerente.value?.search();
     if(gerente) {
-        filtros.idGerente = gerente.id;
-        filtros.nomeGerente = gerente.nome;
+        filtros.idGerente = gerente.id ?? '';
+        filtros.nomeGerente = gerente.nome ?? '';
         aplicarFiltrosEReiniciar(carregarDados);
     }
 };
@@ -332,7 +332,7 @@ onMounted(() => carregarDados());
                     Valor total de {{ titulo.toLowerCase() }}
                 </RmText>
                 <p class="font-semibold text-2xl text-accent mb-2.5">
-                    R$ {{ formatarDecimal(state.dashboard.valorTotalPedidos) }}
+                    R$ {{ formatarDecimal(state.dashboard.valorTotalPedidos ?? 0) }}
                 </p>
                 <RmDivider class="mb-1" />
                 <RmText type="label-small">
@@ -346,7 +346,7 @@ onMounted(() => carregarDados());
                     {{ titulo }} durante o período
                 </RmText>
                 <div class="flex-1 relative">
-                    <RmBarChart :items="state.dashboard.pedidosPorPeriodo" />
+                    <RmBarChart :items="state.dashboard.pedidosPorPeriodo ?? []" />
                 </div>
             </RmCard>
 
@@ -355,7 +355,7 @@ onMounted(() => carregarDados());
                     {{ titulo }} por status
                 </RmText>
                 <div class="flex-1 relative">
-                    <RmDonutChart :items="state.dashboard.pedidosPorTipo" />
+                    <RmDonutChart :items="state.dashboard.pedidosPorTipo ?? []" />
                 </div>
             </RmCard>
 

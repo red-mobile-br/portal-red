@@ -4,9 +4,9 @@ namespace RedMobilePedidos.API.Models.Responses.Common;
 
 public sealed record Usuario
 {
-    public required string IdRepresentante { get; init; }
-    public required string NomeUsuario { get; init; }
-    public required string Nome { get; init; }
-    public required string UrlFoto { get; init; }
-    public required TipoUsuario TipoUsuario { get; init; }
+    public string? IdRepresentante { get; init; }
+    public string? Nome { get; init; }
+    public string? NomeUsuario { get; init; }
+    public string? UrlFoto { get; init; }
+    public TipoUsuario? TipoUsuario { get; init; }
 }

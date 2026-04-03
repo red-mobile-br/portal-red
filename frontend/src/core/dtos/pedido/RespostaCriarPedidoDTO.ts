@@ -1,5 +1,5 @@
 export default interface RespostaCriarPedidoDTO {
     sucesso: boolean;
-    detalhes: string;
-    id: string;
+    detalhes?: string;
+    id?: string;
 }

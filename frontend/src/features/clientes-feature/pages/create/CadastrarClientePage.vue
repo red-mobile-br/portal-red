@@ -17,8 +17,19 @@ import RmFilePicker from '@/components/RmFilePicker.vue';
 import ValidacoesCliente from './components/ValidacoesCliente.vue';
 
 // Services e DTOS
-import { ClienteDetalhadoDTO } from '@/core/dtos/cliente/ClienteDetalhadoDTO';
+import { ClienteDetalhadoDTO, SocioInfoDTO, ReferenciaComercialDTO, DadosBancariosDTO } from '@/core/dtos/cliente/ClienteDetalhadoDTO';
+import type EnderecoDTO from '@/core/dtos/endereco/EnderecoDTO';
 import CepService from '@/services/cep-service';
+
+type ClienteFormulario = Required<Omit<ClienteDetalhadoDTO, 'comprovantes' | 'contratoSocial' | 'documentoSintegra' | 'notasComerciais' | 'idGerente' | 'nomeGerente' | 'endereco' | 'enderecoEntrega' | 'socios' | 'referenciasComerciais' | 'dadosBancarios'>> & {
+    endereco: Required<EnderecoDTO>;
+    enderecoEntrega: Required<EnderecoDTO>;
+    socios: Required<SocioInfoDTO>[];
+    referenciasComerciais: Required<ReferenciaComercialDTO>[];
+    dadosBancarios: Required<DadosBancariosDTO>[];
+    idGerente: string | null;
+    nomeGerente: string | null;
+};
 
 import RmBuscarRepresentanteModal from '@/components/RmBuscarRepresentanteModal.vue';
 import { BuscarRepresentanteModalInstancia } from '@/components/RmBuscarRepresentanteModal.vue';
@@ -51,7 +62,7 @@ const refModalBuscarGerente = ref<BuscarGerenteModalInstancia | null>(null);
 
 const alert = useAlert();
 
-const form = reactive<ClienteDetalhadoDTO>({
+const form = reactive<ClienteFormulario>({
     ramoAtividade: '',
     endereco: {
         cep: '',
@@ -130,13 +141,15 @@ function adicionarDadosBancarios() {
 
 function limparFormulario() {
     form.ramoAtividade = '';
-    form.endereco.cep = '';
-    form.endereco.cidade = '';
-    form.endereco.complemento = '';
-    form.endereco.bairro = '';
-    form.endereco.numero = '';
-    form.endereco.estado = '';
-    form.endereco.logradouro = '';
+    form.endereco = {
+        cep: '',
+        cidade: '',
+        complemento: '',
+        bairro: '',
+        numero: '',
+        estado: '',
+        logradouro: ''
+    };
     form.telefoneCobranca = '';
     form.cnae = '';
     form.cnpj = '';
@@ -150,13 +163,15 @@ function limparFormulario() {
     form.socios = [];
     form.telefone = '';
     form.capitalSocial = '';
-    form.enderecoEntrega.cep = '';
-    form.enderecoEntrega.cidade = '';
-    form.enderecoEntrega.complemento = '';
-    form.enderecoEntrega.bairro = '';
-    form.enderecoEntrega.numero = '';
-    form.enderecoEntrega.estado = '';
-    form.enderecoEntrega.logradouro = '';
+    form.enderecoEntrega = {
+        cep: '',
+        cidade: '',
+        complemento: '',
+        bairro: '',
+        numero: '',
+        estado: '',
+        logradouro: ''
+    };
     form.nomeContatoEntrega = '';
     form.emailEntrega = '';
     form.telefoneEntrega = '';
@@ -176,8 +191,8 @@ function limparFormulario() {
 const buscarRepresentante = async () => {
     const representante = await refModalBuscarRepresentante.value?.search();
     if(representante) {
-        form.idRepresentante = representante.id;
-        form.nomeRepresentante = representante.nome;
+        form.idRepresentante = representante.id ?? '';
+        form.nomeRepresentante = representante.nome ?? '';
     }
 };
 
@@ -185,8 +200,8 @@ const buscarRepresentante = async () => {
 const buscarGerente = async () => {
     const gerente = await refModalBuscarGerente.value?.search();
     if(gerente) {
-        form.idGerente = gerente.id;
-        form.nomeGerente = gerente.nome;
+        form.idGerente = gerente.id ?? null;
+        form.nomeGerente = gerente.nome ?? null;
     }
 };
 
@@ -202,6 +217,7 @@ async function enviar(e: {isValid: boolean }) {
         const dadosFormulario = new FormData();
 
         for (const [chave, valor] of Object.entries(form)) {
+            if(valor == null) continue;
             if(typeof valor == 'object') {
                 dadosFormulario.append(chave, JSON.stringify(valor));
             }

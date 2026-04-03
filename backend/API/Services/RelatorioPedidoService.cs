@@ -16,43 +16,43 @@ internal sealed class RelatorioPedidoService(IEmailTemplateService templateServi
     private static RelatorioPedidoModel MapearParaModeloRelatorio(PedidoDetalhado pedido)
     {
         var statusInfo = ParserStatusPedido.ObterStatus(pedido.Status);
-        var totalVolumes = pedido.Produtos.Sum(p => p.Quantidade);
-        var totalPesoLiquido = pedido.PesoLiquido;
-        var totalPesoBruto = pedido.PesoBruto;
+        var totalVolumes = pedido.Produtos?.Sum(p => p.Quantidade ?? 0) ?? 0;
+        var totalPesoLiquido = pedido.PesoLiquido ?? 0;
+        var totalPesoBruto = pedido.PesoBruto ?? 0;
 
         return new RelatorioPedidoModel
         {
-            IdPedido = pedido.Id,
-            TipoPedido = ObterTipoPedido(pedido.TipoPedido),
+            IdPedido = pedido.Id ?? string.Empty,
+            TipoPedido = ObterTipoPedido(pedido.TipoPedido ?? Enums.TipoPedido.Venda),
             TextoStatus = statusInfo.Titulo,
             CorStatus = statusInfo.Cor,
-            DataLancamento = pedido.DataLancamento,
-            NomeRepresentante = pedido.NomeRepresentante,
+            DataLancamento = pedido.DataLancamento ?? DateTime.MinValue,
+            NomeRepresentante = pedido.NomeRepresentante ?? string.Empty,
 
             Cliente = new RelatorioClientePedidoModel
             {
-                Id = pedido.Cliente.Id,
-                RazaoSocial = pedido.Cliente.RazaoSocial,
-                NomeFantasia = pedido.Cliente.NomeFantasia,
-                Cnpj = FormatarCnpj(pedido.Cliente.Cnpj),
+                Id = pedido.Cliente?.Id ?? string.Empty,
+                RazaoSocial = pedido.Cliente?.RazaoSocial ?? string.Empty,
+                NomeFantasia = pedido.Cliente?.NomeFantasia ?? string.Empty,
+                Cnpj = FormatarCnpj(pedido.Cliente?.Cnpj ?? string.Empty),
                 Endereco = new RelatorioEnderecoPedidoModel
                 {
-                    Cep = pedido.Cliente.Endereco?.Cep ?? string.Empty,
-                    Logradouro = pedido.Cliente.Endereco?.Logradouro ?? string.Empty,
-                    Numero = pedido.Cliente.Endereco?.Numero ?? string.Empty,
-                    Complemento = pedido.Cliente.Endereco?.Complemento,
-                    Bairro = pedido.Cliente.Endereco?.Bairro ?? string.Empty,
-                    Cidade = pedido.Cliente.Endereco?.Cidade ?? string.Empty,
-                    Estado = pedido.Cliente.Endereco?.Estado ?? string.Empty
+                    Cep = pedido.Cliente?.Endereco?.Cep ?? string.Empty,
+                    Logradouro = pedido.Cliente?.Endereco?.Logradouro ?? string.Empty,
+                    Numero = pedido.Cliente?.Endereco?.Numero ?? string.Empty,
+                    Complemento = pedido.Cliente?.Endereco?.Complemento,
+                    Bairro = pedido.Cliente?.Endereco?.Bairro ?? string.Empty,
+                    Cidade = pedido.Cliente?.Endereco?.Cidade ?? string.Empty,
+                    Estado = pedido.Cliente?.Endereco?.Estado ?? string.Empty
                 }
             },
 
-            ModoFrete = ObterModoFrete(pedido.ModoFrete),
+            ModoFrete = ObterModoFrete(pedido.ModoFrete ?? Enums.ModoFrete.CIF),
             TemDadosAgendamento = pedido.DadosAgendamento != null && !string.IsNullOrEmpty(pedido.DadosAgendamento.Email),
             DadosAgendamento = pedido.DadosAgendamento != null ? new RelatorioAgendamentoPedidoModel
             {
-                Email = pedido.DadosAgendamento.Email,
-                Telefone = FormatarTelefone(pedido.DadosAgendamento.Telefone)
+                Email = pedido.DadosAgendamento.Email ?? string.Empty,
+                Telefone = FormatarTelefone(pedido.DadosAgendamento.Telefone ?? string.Empty)
             } : null,
 
             TemEnderecoEntrega = pedido.EnderecoEntrega != null && !string.IsNullOrEmpty(pedido.EnderecoEntrega.Cep),
@@ -67,33 +67,33 @@ internal sealed class RelatorioPedidoService(IEmailTemplateService templateServi
                 Estado = pedido.EnderecoEntrega.Estado ?? string.Empty
             } : null,
 
-            Produtos = pedido.Produtos.Select((p, indice) => new RelatorioProdutoPedidoModel
+            Produtos = (pedido.Produtos ?? []).Select((p, indice) => new RelatorioProdutoPedidoModel
             {
                 Indice = indice + 1,
-                Id = p.Id,
-                Descricao = p.Descricao,
-                Quantidade = p.Quantidade,
-                ValorUnitario = p.ValorUnitario,
-                PercentualIPI = p.PercentualIPI,
-                PercentualICMS = p.PercentualICMS,
-                PercentualICMSST = p.PercentualICMSST,
-                ValorTotal = p.ValorTotal
+                Id = p.Id ?? string.Empty,
+                Descricao = p.Descricao ?? string.Empty,
+                Quantidade = p.Quantidade ?? 0,
+                ValorUnitario = p.ValorUnitario ?? 0,
+                PercentualIPI = p.PercentualIPI ?? 0,
+                PercentualICMS = p.PercentualICMS ?? 0,
+                PercentualICMSST = p.PercentualICMSST ?? 0,
+                ValorTotal = p.ValorTotal ?? 0
             }).ToList(),
 
             NumeroPedidoCompra = string.IsNullOrEmpty(pedido.NumeroPedidoCompra) ? "-" : pedido.NumeroPedidoCompra,
-            PlanoPagamento = pedido.PlanoPagamento,
-            DataEmissao = pedido.DataEmissao,
+            PlanoPagamento = pedido.PlanoPagamento ?? string.Empty,
+            DataEmissao = pedido.DataEmissao ?? DateTime.MinValue,
 
-            TotalProdutos = pedido.Produtos.Count,
+            TotalProdutos = pedido.Produtos?.Count ?? 0,
             TotalVolumes = totalVolumes,
             TotalPesoLiquido = totalPesoLiquido,
             TotalPesoBruto = totalPesoBruto,
 
-            ValorProdutos = pedido.ValorProdutos,
-            ValorICMS = pedido.ValorICMS,
-            ValorICMSST = pedido.ValorICMSST,
-            ValorIPI = pedido.ValorIPI,
-            ValorNota = pedido.ValorNota,
+            ValorProdutos = pedido.ValorProdutos ?? 0,
+            ValorICMS = pedido.ValorICMS ?? 0,
+            ValorICMSST = pedido.ValorICMSST ?? 0,
+            ValorIPI = pedido.ValorIPI ?? 0,
+            ValorNota = pedido.ValorNota ?? 0,
 
             TemNotas = !string.IsNullOrEmpty(pedido.InformacoesNota) || !string.IsNullOrEmpty(pedido.ObservacoesPedido),
             InformacoesNota = pedido.InformacoesNota,

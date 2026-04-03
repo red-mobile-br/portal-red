@@ -61,7 +61,7 @@ onMounted(() => {
                     </div>
                     <div class="info-item">
                         <span class="info-label">Emissão:</span>
-                        <span class="info-value">{{ formatarData(state.pedidoSelecionado.dataEmissao) }}</span>
+                        <span class="info-value">{{ formatarData(state.pedidoSelecionado.dataEmissao ?? '') }}</span>
                     </div>
                     <div class="info-item">
                         <span class="info-label">Representante:</span>
@@ -74,27 +74,27 @@ onMounted(() => {
                     <h3 class="section-title">Cliente</h3>
                     <div class="section-content">
                         <div class="row">
-                            <div class="field w-28"><span class="field-label"><b>Código:</b></span><span class="field-value">{{ mascaraCodigoCliente(state.pedidoSelecionado.cliente.id) }}</span></div>
-                            <div class="field"><span class="field-label"><b>CNPJ:</b></span><span class="field-value">{{ mascaraCnpj(state.pedidoSelecionado.cliente.cnpj) }}</span></div>
-                            <div class="field flex-1 ml-4"><span class="field-label"><b>Razão Social:</b></span><span class="field-value">{{ state.pedidoSelecionado.cliente.razaoSocial }}</span></div>
+                            <div class="field w-28"><span class="field-label"><b>Código:</b></span><span class="field-value">{{ mascaraCodigoCliente(state.pedidoSelecionado.cliente?.id ?? '') }}</span></div>
+                            <div class="field"><span class="field-label"><b>CNPJ:</b></span><span class="field-value">{{ mascaraCnpj(state.pedidoSelecionado.cliente?.cnpj ?? '') }}</span></div>
+                            <div class="field flex-1 ml-4"><span class="field-label"><b>Razão Social:</b></span><span class="field-value">{{ state.pedidoSelecionado.cliente?.razaoSocial }}</span></div>
                         </div>
                         <div class="row">
-                            <div class="field flex-1"><span class="field-label"><b>Fantasia:</b></span><span class="field-value">{{ state.pedidoSelecionado.cliente.nomeFantasia }}</span></div>
+                            <div class="field flex-1"><span class="field-label"><b>Fantasia:</b></span><span class="field-value">{{ state.pedidoSelecionado.cliente?.nomeFantasia }}</span></div>
                         </div>
                         <div class="row">
-                            <div class="field w-24"><span class="field-label"><b>CEP:</b></span><span class="field-value">{{ mascaraCep(state.pedidoSelecionado.cliente.endereco.cep) }}</span></div>
+                            <div class="field w-24"><span class="field-label"><b>CEP:</b></span><span class="field-value">{{ mascaraCep(state.pedidoSelecionado.cliente?.endereco?.cep ?? '') }}</span></div>
                             <div class="field flex-1">
                                 <span class="field-label"><b>End:</b></span>
                                 <span class="field-value">
-                                    {{ state.pedidoSelecionado.cliente.endereco.logradouro }}, {{ state.pedidoSelecionado.cliente.endereco.numero }}
-                                    <template v-if="state.pedidoSelecionado.cliente.endereco.complemento"> - {{ state.pedidoSelecionado.cliente.endereco.complemento }}</template>
+                                    {{ state.pedidoSelecionado.cliente?.endereco?.logradouro }}, {{ state.pedidoSelecionado.cliente?.endereco?.numero }}
+                                    <template v-if="state.pedidoSelecionado.cliente?.endereco?.complemento"> - {{ state.pedidoSelecionado.cliente?.endereco?.complemento }}</template>
                                 </span>
                             </div>
                         </div>
                         <div class="row">
-                            <div class="field"><span class="field-label"><b>Bairro:</b></span><span class="field-value">{{ state.pedidoSelecionado.cliente.endereco.bairro }}</span></div>
-                            <div class="field ml-4"><span class="field-label"><b>Cidade:</b></span><span class="field-value">{{ state.pedidoSelecionado.cliente.endereco.cidade }}</span></div>
-                            <div class="field ml-4"><span class="field-label"><b>UF:</b></span><span class="field-value">{{ state.pedidoSelecionado.cliente.endereco.estado }}</span></div>
+                            <div class="field"><span class="field-label"><b>Bairro:</b></span><span class="field-value">{{ state.pedidoSelecionado.cliente?.endereco?.bairro }}</span></div>
+                            <div class="field ml-4"><span class="field-label"><b>Cidade:</b></span><span class="field-value">{{ state.pedidoSelecionado.cliente?.endereco?.cidade }}</span></div>
+                            <div class="field ml-4"><span class="field-label"><b>UF:</b></span><span class="field-value">{{ state.pedidoSelecionado.cliente?.endereco?.estado }}</span></div>
                         </div>
                     </div>
                 </div>
@@ -105,15 +105,15 @@ onMounted(() => {
                         <h3 class="section-title">Agendamento</h3>
                         <div class="section-content">
                             <div class="field"><span class="field-label"><b>E-mail:</b></span><span class="field-value">{{ state.pedidoSelecionado.dadosAgendamento.email }}</span></div>
-                            <div class="field"><span class="field-label"><b>Tel:</b></span><span class="field-value">{{ mascaraTelefone(state.pedidoSelecionado.dadosAgendamento.telefone) }}</span></div>
+                            <div class="field"><span class="field-label"><b>Tel:</b></span><span class="field-value">{{ mascaraTelefone(state.pedidoSelecionado.dadosAgendamento?.telefone ?? '') }}</span></div>
                         </div>
                     </div>
                     <div class="section half">
                         <h3 class="section-title">Faturamento</h3>
                         <div class="section-content">
-                            <div class="field"><span class="field-label"><b>Frete:</b></span><span class="field-value">{{ interpretarModoFrete(state.pedidoSelecionado.modoFrete) }}</span></div>
+                            <div class="field"><span class="field-label"><b>Frete:</b></span><span class="field-value">{{ interpretarModoFrete(state.pedidoSelecionado.modoFrete ?? 0) }}</span></div>
                             <div class="field"><span class="field-label"><b>Prazo:</b></span><span class="field-value">{{ planoPagamento }}</span></div>
-                            <div class="field"><span class="field-label"><b>Data:</b></span><span class="field-value">{{ formatarData(state.pedidoSelecionado.dataLancamento) }}</span></div>
+                            <div class="field"><span class="field-label"><b>Data:</b></span><span class="field-value">{{ formatarData(state.pedidoSelecionado.dataLancamento ?? '') }}</span></div>
                             <div class="field"><span class="field-label"><b>OC:</b></span><span class="field-value">{{ state.pedidoSelecionado.numeroPedidoCompra || '-' }}</span></div>
                         </div>
                     </div>
@@ -143,7 +143,7 @@ onMounted(() => {
 
                 <!-- Produtos -->
                 <div class="section">
-                    <h3 class="section-title">Produtos ({{ state.pedidoSelecionado.produtos.length }} itens)</h3>
+                    <h3 class="section-title">Produtos ({{ (state.pedidoSelecionado.produtos ?? []).length }} itens)</h3>
                     <table class="products-table">
                         <thead>
                             <tr>
@@ -159,16 +159,16 @@ onMounted(() => {
                             </tr>
                         </thead>
                         <tbody>
-                            <tr v-for="(product, index) in state.pedidoSelecionado.produtos" :key="index">
+                            <tr v-for="(product, index) in (state.pedidoSelecionado.produtos ?? [])" :key="index">
                                 <td>{{ index + 1 }}</td>
                                 <td>{{ product.id }}</td>
                                 <td class="text-left">{{ product.descricao }}</td>
                                 <td>{{ product.quantidade }}</td>
-                                <td class="text-right">R$ {{ formatarDecimal(product.valorUnitario) }}</td>
+                                <td class="text-right">R$ {{ formatarDecimal(product.valorUnitario ?? 0) }}</td>
                                 <td>{{ formatarDecimal(product.percentualIPI ?? 0) }}%</td>
                                 <td>{{ formatarDecimal(product.percentualICMS ?? 0) }}%</td>
                                 <td>{{ formatarDecimal(product.percentualICMSST ?? 0) }}%</td>
-                                <td class="text-right">R$ {{ formatarDecimal(product.valorTotal) }}</td>
+                                <td class="text-right">R$ {{ formatarDecimal(product.valorTotal ?? 0) }}</td>
                             </tr>
                         </tbody>
                     </table>
@@ -180,7 +180,7 @@ onMounted(() => {
                         <h3 class="section-title">Totais</h3>
                         <div class="section-content">
                             <div class="totals-grid">
-                                <div class="total-item"><span class="field-label"><b>Itens:</b></span><span class="field-value">{{ state.pedidoSelecionado.produtos.length }}</span></div>
+                                <div class="total-item"><span class="field-label"><b>Itens:</b></span><span class="field-value">{{ (state.pedidoSelecionado.produtos ?? []).length }}</span></div>
                                 <div class="total-item"><span class="field-label"><b>Peças:</b></span><span class="field-value">{{ totalVolumes }}</span></div>
                                 <div class="total-item"><span class="field-label"><b>P.Líq:</b></span><span class="field-value">{{ totalPesoLiquido }}kg</span></div>
                                 <div class="total-item"><span class="field-label"><b>P.Bruto:</b></span><span class="field-value">{{ totalPesoBruto }}kg</span></div>
@@ -193,13 +193,13 @@ onMounted(() => {
                             <div class="financial-taxes">
                                 <span class="taxes-label">Impostos</span>
                                 <div class="taxes-grid">
-                                    <div class="tax-item"><span class="tax-name">ICMS:</span><span class="tax-value">R$ {{ formatarDecimal(state.pedidoSelecionado.valorICMS) }}</span></div>
-                                    <div class="tax-item"><span class="tax-name">ST:</span><span class="tax-value">R$ {{ formatarDecimal(state.pedidoSelecionado.valorICMSST) }}</span></div>
-                                    <div class="tax-item"><span class="tax-name">IPI:</span><span class="tax-value">R$ {{ formatarDecimal(state.pedidoSelecionado.valorIPI) }}</span></div>
+                                    <div class="tax-item"><span class="tax-name">ICMS:</span><span class="tax-value">R$ {{ formatarDecimal(state.pedidoSelecionado.valorICMS ?? 0) }}</span></div>
+                                    <div class="tax-item"><span class="tax-name">ST:</span><span class="tax-value">R$ {{ formatarDecimal(state.pedidoSelecionado.valorICMSST ?? 0) }}</span></div>
+                                    <div class="tax-item"><span class="tax-name">IPI:</span><span class="tax-value">R$ {{ formatarDecimal(state.pedidoSelecionado.valorIPI ?? 0) }}</span></div>
                                 </div>
                             </div>
                             <div class="financial-item large"><span class="financial-label">Produtos</span><span class="financial-value">R$ {{ totalProdutos }}</span></div>
-                            <div class="financial-item large total"><span class="financial-label">Total</span><span class="financial-value">R$ {{ formatarDecimal(state.pedidoSelecionado.valorNota) }}</span></div>
+                            <div class="financial-item large total"><span class="financial-label">Total</span><span class="financial-value">R$ {{ formatarDecimal(state.pedidoSelecionado.valorNota ?? 0) }}</span></div>
                         </div>
                     </div>
                 </div>

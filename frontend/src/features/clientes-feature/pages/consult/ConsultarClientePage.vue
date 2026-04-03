@@ -44,7 +44,7 @@ async function obterDetalheCliente() {
             if(!cliente) {
                 return;
             }
-            cnpj = cliente.cnpj;
+            cnpj = cliente.cnpj ?? '';
         }
 
         const [ requisicaoCliente ] = clienteService.obterDetalheCliente(cnpj);
@@ -133,10 +133,10 @@ onMounted(() => {
 
                     <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
                         <RmTextField label="Cód. Representante">
-                            {{ state.clienteSelecionado.idRepresentante }}
+                            {{ state.clienteSelecionado.idRepresentante ?? '' }}
                         </RmTextField>
                         <RmTextField label="Nome representante" class="sm:col-span-2">
-                            {{ state.clienteSelecionado.nomeRepresentante }}
+                            {{ state.clienteSelecionado.nomeRepresentante ?? '' }}
                         </RmTextField>
                     </div>
                 </RmCard>
@@ -148,34 +148,34 @@ onMounted(() => {
 
                     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
                         <RmTextField label="Razão social" class="sm:col-span-2 lg:col-span-4">
-                            {{ state.clienteSelecionado.razaoSocial }}
+                            {{ state.clienteSelecionado.razaoSocial ?? '' }}
                         </RmTextField>
                         <RmTextField label="Nome fantasia" class="sm:col-span-2 lg:col-span-4">
-                            {{ state.clienteSelecionado.nomeFantasia }}
+                            {{ state.clienteSelecionado.nomeFantasia ?? '' }}
                         </RmTextField>
                         <RmTextField label="CNPJ">
-                            {{ mascaraCnpj(state.clienteSelecionado.cnpj) }}
+                            {{ mascaraCnpj(state.clienteSelecionado.cnpj ?? '') }}
                         </RmTextField>
                         <RmTextField label="Ramo de atividade">
-                            {{ state.clienteSelecionado.ramoAtividade }}
+                            {{ state.clienteSelecionado.ramoAtividade ?? '' }}
                         </RmTextField>
                         <RmTextField label="Capital social">
-                            {{ state.clienteSelecionado.capitalSocial }}
+                            {{ state.clienteSelecionado.capitalSocial ?? '' }}
                         </RmTextField>
                         <RmTextField label="Suframa">
-                            {{ state.clienteSelecionado.suframa }}
+                            {{ state.clienteSelecionado.suframa ?? '' }}
                         </RmTextField>
                         <RmTextField label="Data de fundação">
-                            {{ state.clienteSelecionado.dataFundacao }}
+                            {{ state.clienteSelecionado.dataFundacao ?? '' }}
                         </RmTextField>
                         <RmTextField label="CNAE">
-                            {{ state.clienteSelecionado.cnae }}
+                            {{ state.clienteSelecionado.cnae ?? '' }}
                         </RmTextField>
                         <RmTextField label="Inscrição estadual">
-                            {{ state.clienteSelecionado.inscricaoEstadual }}
+                            {{ state.clienteSelecionado.inscricaoEstadual ?? '' }}
                         </RmTextField>
                         <RmTextField label="Telefone faturamento">
-                            {{ state.clienteSelecionado.telefoneCobranca }}
+                            {{ state.clienteSelecionado.telefoneCobranca ?? '' }}
                         </RmTextField>
                     </div>
                 </RmCard>
@@ -188,22 +188,22 @@ onMounted(() => {
 
                     <div class="grid grid-cols-1 sm:grid-cols-4 gap-3">
                         <RmTextField label="Nome do contato" class="sm:col-span-2">
-                            {{ state.clienteSelecionado.nomeContato }}
+                            {{ state.clienteSelecionado.nomeContato ?? '' }}
                         </RmTextField>
                         <RmTextField label="Email" class="sm:col-span-2">
-                            {{ state.clienteSelecionado.email }}
+                            {{ state.clienteSelecionado.email ?? '' }}
                         </RmTextField>
                         <RmTextField label="Celular">
-                            {{ mascaraTelefone(state.clienteSelecionado.celular) }}
+                            {{ mascaraTelefone(state.clienteSelecionado.celular ?? '') }}
                         </RmTextField>
                         <RmTextField label="Telefone">
-                            {{ mascaraTelefone(state.clienteSelecionado.telefone) }}
+                            {{ mascaraTelefone(state.clienteSelecionado.telefone ?? '') }}
                         </RmTextField>
                         <RmTextField label="Fax">
-                            {{ mascaraTelefone(state.clienteSelecionado.fax) }}
+                            {{ mascaraTelefone(state.clienteSelecionado.fax ?? '') }}
                         </RmTextField>
                         <RmTextField label="Site">
-                            {{ state.clienteSelecionado.website }}
+                            {{ state.clienteSelecionado.website ?? '' }}
                         </RmTextField>
                     </div>
                 </RmCard>
@@ -214,31 +214,31 @@ onMounted(() => {
                     </RmText>
                     <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
                         <RmTextField label="Cep">
-                            {{ state.clienteSelecionado.endereco.cep }}
+                            {{ state.clienteSelecionado.endereco?.cep ?? '' }}
                         </RmTextField>
 
                         <RmTextField label="Logradouro" class="sm:col-span-2">
-                            {{ state.clienteSelecionado.endereco.logradouro }}
+                            {{ state.clienteSelecionado.endereco?.logradouro ?? '' }}
                         </RmTextField>
 
                         <RmTextField label="Número">
-                            {{ state.clienteSelecionado.endereco.numero }}
+                            {{ state.clienteSelecionado.endereco?.numero ?? '' }}
                         </RmTextField>
 
                         <RmTextField label="Complemento" class="sm:col-span-2">
-                            {{ state.clienteSelecionado.endereco.complemento }}
+                            {{ state.clienteSelecionado.endereco?.complemento ?? '' }}
                         </RmTextField>
 
                         <RmTextField label="Bairro">
-                            {{ state.clienteSelecionado.endereco.bairro }}
+                            {{ state.clienteSelecionado.endereco?.bairro ?? '' }}
                         </RmTextField>
 
                         <RmTextField label="Cidade">
-                            {{ state.clienteSelecionado.endereco.cidade }}
+                            {{ state.clienteSelecionado.endereco?.cidade ?? '' }}
                         </RmTextField>
 
                         <RmTextField label="Estado">
-                            {{ state.clienteSelecionado.endereco.estado }}
+                            {{ state.clienteSelecionado.endereco?.estado ?? '' }}
                         </RmTextField>
                     
                     </div>
@@ -251,13 +251,13 @@ onMounted(() => {
                     </RmText>
                     <div v-for="(partner, index) in state.clienteSelecionado.socios ?? []" :key="index" class="flex items-center gap-4">
                         <RmTextField label="Nome do sócio" class="flex-[2]">
-                            {{ partner.nome }}
+                            {{ partner.nome ?? '' }}
                         </RmTextField>
                         <RmTextField label="Porcentagem" class="flex-1">
-                            {{ partner.percentual }}
+                            {{ partner.percentual ?? '' }}
                         </RmTextField>
                         <RmTextField label="CPF" class="flex-1">
-                            {{ partner.cpf }}
+                            {{ partner.cpf ?? '' }}
                         </RmTextField>
                     </div>
                     <p v-if="!state.clienteSelecionado.socios?.length" type="" class="text-center text-sm">
@@ -274,13 +274,13 @@ onMounted(() => {
 
                     <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
                         <RmTextField label="Nome do contato" class="col-span-3">
-                            {{ state.clienteSelecionado.nomeContatoEntrega }}
+                            {{ state.clienteSelecionado.nomeContatoEntrega ?? '' }}
                         </RmTextField>
                         <RmTextField label="Telefone">
-                            {{ state.clienteSelecionado.telefoneEntrega }}
+                            {{ state.clienteSelecionado.telefoneEntrega ?? '' }}
                         </RmTextField>
                         <RmTextField label="E-mail NFe" class="col-span-2">
-                            {{ state.clienteSelecionado.emailEntrega }}
+                            {{ state.clienteSelecionado.emailEntrega ?? '' }}
                         </RmTextField>
                         <RmTextField label="CEP">
                             {{ state.clienteSelecionado.enderecoEntrega?.cep }}
@@ -313,7 +313,7 @@ onMounted(() => {
 
                     <div>
                         <RmTextField label="Telefone">
-                            {{ state.clienteSelecionado.telefoneCobranca }}
+                            {{ state.clienteSelecionado.telefoneCobranca ?? '' }}
                         </RmTextField>
                     </div>
                 </RmCard>
@@ -323,20 +323,20 @@ onMounted(() => {
                         Referências comerciais
                     </RmText>
 
-                    <div v-for="(reference, index) in state.clienteSelecionado.referenciasComerciais"
+                    <div v-for="(reference, index) in state.clienteSelecionado.referenciasComerciais ?? []"
                          :key="index"
                          class="grid grid-cols-4 gap-4 flex-1 border-b last:border-b-0 border-gray-200">
                         <RmTextField label="Nome">
-                            {{ reference.nomeContato }}
+                            {{ reference.nomeContato ?? '' }}
                         </RmTextField>
                         <RmTextField label="Empresa">
-                            {{ reference.razaoSocial }}
+                            {{ reference.razaoSocial ?? '' }}
                         </RmTextField>
                         <RmTextField label="Celular">
-                            {{ reference.telefone }}
+                            {{ reference.telefone ?? '' }}
                         </RmTextField>
                         <RmTextField label="Telefone">
-                            {{ reference.celular }}
+                            {{ reference.celular ?? '' }}
                         </RmTextField>
                     </div>
                     <p v-if="!state.clienteSelecionado.referenciasComerciais?.length" type="" class="text-center text-sm">
@@ -374,19 +374,19 @@ onMounted(() => {
                          :key="index"
                          class="grid grid-cols-4 gap-4 flex-1 border-b last:border-b-0 border-gray-300">
                         <RmTextField label="Nome do banco" class="col-span-4">
-                            {{ bankData.nomeBanco }}
+                            {{ bankData.nomeBanco ?? '' }}
                         </RmTextField>
                         <RmTextField label="Nº do banco">
-                            {{ bankData.numeroBanco }}
+                            {{ bankData.numeroBanco ?? '' }}
                         </RmTextField>
                         <RmTextField label="Nome da agência">
-                            {{ bankData.nomeAgencia }}
+                            {{ bankData.nomeAgencia ?? '' }}
                         </RmTextField>
                         <RmTextField label="Nº da agência">
-                            {{ bankData.numeroAgencia }}
+                            {{ bankData.numeroAgencia ?? '' }}
                         </RmTextField>
                         <RmTextField label="Nº da conta">
-                            {{ bankData.numeroConta }}
+                            {{ bankData.numeroConta ?? '' }}
                         </RmTextField>
                     </div>
                     <p v-if="!state.clienteSelecionado.dadosBancarios?.length" class="text-center text-sm">
@@ -394,7 +394,7 @@ onMounted(() => {
                     </p>
                 </RmCard>
 
-                <UltimosPedidosCliente :cnpj="state.clienteSelecionado.cnpj" />
+                <UltimosPedidosCliente :cnpj="state.clienteSelecionado.cnpj ?? ''" />
             </div>
         </Transition>
         <!-- Modal de busca de cliente -->

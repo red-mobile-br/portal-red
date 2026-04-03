@@ -110,7 +110,7 @@ onMounted(() => carregarDados());
                                 Valor Recebido:
                             </RmText>
                             <RmText type="display-medium">
-                                R$ {{ formatarDecimal(state.dashboard.valorRecebido) }}
+                                R$ {{ formatarDecimal(state.dashboard.valorRecebido ?? 0) }}
                             </RmText>
                         </div>
                         <div class="mx-5 w-px bg-gray-300" />
@@ -119,7 +119,7 @@ onMounted(() => carregarDados());
                                 Valor a Receber
                             </RmText>
                             <RmText type="display-medium">
-                                R$ {{ formatarDecimal(state.dashboard.valorAReceber) }}
+                                R$ {{ formatarDecimal(state.dashboard.valorAReceber ?? 0) }}
                             </RmText>
                         </div>
                     </div>
@@ -139,7 +139,7 @@ onMounted(() => carregarDados());
                         Desempenho no período
                     </RmText>
                     <div class="h-64">
-                        <GraficoDesempenho :items="state.dashboard.desempenhoPeriodo" />
+                        <GraficoDesempenho :items="state.dashboard.desempenhoPeriodo ?? []" />
                     </div>
 
                     <!-- Titulos -->
@@ -186,13 +186,13 @@ onMounted(() => carregarDados());
                             <td class="!text-left">
                                 {{ titulo.nomeCliente }}
                             </td>
-                            <td>{{ mascaraCnpj(titulo.cnpj) }}</td>
+                            <td>{{ mascaraCnpj(titulo.cnpj ?? '') }}</td>
                             <td>{{ titulo.dataVencimentoOriginal ? formatarData(titulo.dataVencimentoOriginal) : '-' }}</td>
                             <td>{{ titulo.dataVencimento ? formatarData(titulo.dataVencimento) : '-' }}</td>
                             <td>{{ titulo.dataPagamento ? formatarData(titulo.dataPagamento) : '-' }}</td>
-                            <td>R$ {{ formatarDecimal(titulo.valorTitulo) }}</td>
+                            <td>R$ {{ formatarDecimal(titulo.valorTitulo ?? 0) }}</td>
                             <td>
-                                {{ statusTituloEnumParser.get(titulo.status.toString())?.titulo }}
+                                {{ statusTituloEnumParser.get((titulo.status ?? '').toString())?.titulo }}
                             </td>
                         </tr>
                     </table>

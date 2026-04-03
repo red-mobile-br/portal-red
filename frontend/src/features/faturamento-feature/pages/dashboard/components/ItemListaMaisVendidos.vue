@@ -4,7 +4,7 @@ import product from '@/assets/img/product.jpg';
 
 defineProps({
     item: {
-        type: Object as PropType<{ urlImagem: string; nome: string; unidades: number}>,
+        type: Object as PropType<{ urlImagem?: string; nome?: string; unidades?: number }>,
         required: true
     }
 });

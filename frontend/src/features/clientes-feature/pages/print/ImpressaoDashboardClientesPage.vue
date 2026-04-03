@@ -10,7 +10,8 @@ import {
     RmText,
     RmDivider,
     RmTextField,
-    RmLoading
+    RmLoading,
+    RmDonutChart
 } from '@/components';
 import ItemListaMelhoresClientes from '../dashboard/components/ItemListaMelhoresClientes.vue';
 
@@ -48,8 +49,8 @@ const state = reactive<EstadoImpressaoClientes>({
 
 const nomeUsuario = computed(() => filtros.nomeRepresentante || nome.value);
 
-const totalClientes = computed(() => state.dashboard.clientesPorEstado.reduce((acc, el) => acc += el.quantidadeClientes, 0));
-const melhoresClientes = computed(() => state.tipoMelhoresClientes == 'orders' ? state.dashboard.melhoresClientesPorPedidos : state.dashboard.melhoresClientesPorFaturamento);
+const totalClientes = computed(() => (state.dashboard.clientesPorEstado ?? []).reduce((acc, el) => acc += (el.quantidadeClientes ?? 0), 0));
+const melhoresClientes = computed(() => state.tipoMelhoresClientes == 'orders' ? (state.dashboard.melhoresClientesPorPedidos ?? []) : (state.dashboard.melhoresClientesPorFaturamento ?? []));
 
 
 const carregarDados = async () => {
@@ -134,7 +135,7 @@ onMounted(() => carregarDados());
                         Clientes por status
                     </RmText>
                     <div class="h-72 relative">
-                        <RmDonutChart :items="state.dashboard.clientesPorEstatus" :display-legend="true" />
+                        <RmDonutChart :items="state.dashboard.clientesPorEstatus ?? []" :display-legend="true" />
                     </div>
 
                     <RmDivider class="mb-5" />
@@ -201,17 +202,17 @@ onMounted(() => carregarDados());
                             </th>
                         </tr>
                         <tr v-for="(cliente, index) in state.clientes" :key="index">
-                            <td>{{ cliente.id.substr(0,6) }}</td>
-                            <td>{{ cliente.id.substr(6,2) }}</td>
+                            <td>{{ (cliente.id ?? '').substr(0,6) }}</td>
+                            <td>{{ (cliente.id ?? '').substr(6,2) }}</td>
                             <td class="!text-left">
-                                {{ cliente.nome }}
+                                {{ cliente.nome ?? '' }}
                             </td>
-                            <td>{{ mascaraCnpj(cliente.cnpj) }}</td>
-                            <td>{{ formatarTitulo(cliente.cidade) }}</td>
-                            <td>{{ cliente.uf }}</td>
-                            <td>{{ statusCliente(cliente.status) }}</td>
+                            <td>{{ mascaraCnpj(cliente.cnpj ?? '') }}</td>
+                            <td>{{ formatarTitulo(cliente.cidade ?? '') }}</td>
+                            <td>{{ cliente.uf ?? '' }}</td>
+                            <td>{{ statusCliente(cliente.status ?? 0) }}</td>
                             <td>{{ cliente.ultimaCompra ? formatarData(cliente.ultimaCompra) : '-' }}</td>
-                            <td>{{ cliente.diasSemComprar }}</td>
+                            <td>{{ cliente.diasSemComprar ?? 0 }}</td>
                         </tr>
                     </table>
                 </div>

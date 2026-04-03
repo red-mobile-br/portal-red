@@ -18,7 +18,7 @@ export function useFormStatus(form: ClienteDetalhadoDTO) {
 
         if(!isValid) return "invalid";
 
-        return  "done"; 
+        return  "done";
     };
 
     /**
@@ -27,19 +27,19 @@ export function useFormStatus(form: ClienteDetalhadoDTO) {
     const customerDataStatus = computed<FormGroupStatus>(() => {
         return _validate(
             [
-                form.razaoSocial,
-                form.nomeFantasia,
-                form.cnpj,
-                form.capitalSocial,
-                form.suframa,
-                form.dataFundacao,
-                form.cnae,
-                form.inscricaoEstadual,
-                form.telefoneCobranca,
+                form.razaoSocial ?? '',
+                form.nomeFantasia ?? '',
+                form.cnpj ?? '',
+                form.capitalSocial ?? '',
+                form.suframa ?? '',
+                form.dataFundacao ?? '',
+                form.cnae ?? '',
+                form.inscricaoEstadual ?? '',
+                form.telefoneCobranca ?? '',
             ],
             [
-                !cnpjValido(form.cnpj).length,
-                !telefoneValido(form.telefoneCobranca).length
+                !cnpjValido(form.cnpj ?? '').length,
+                !telefoneValido(form.telefoneCobranca ?? '').length
             ]
         );
     });
@@ -47,17 +47,17 @@ export function useFormStatus(form: ClienteDetalhadoDTO) {
     const contactsDataStatus = computed<FormGroupStatus>(() => {
         return _validate(
             [
-                form.nomeContato,
-                form.celular,
-                form.email,
-                form.telefone,
-                form.fax,
-                form.website,
+                form.nomeContato ?? '',
+                form.celular ?? '',
+                form.email ?? '',
+                form.telefone ?? '',
+                form.fax ?? '',
+                form.website ?? '',
             ],
             [
-                !telefoneValido(form.celular).length,
-                !emailValido(form.email).length,
-                !telefoneValido(form.telefone).length,
+                !telefoneValido(form.celular ?? '').length,
+                !emailValido(form.email ?? '').length,
+                !telefoneValido(form.telefone ?? '').length,
             ]
         );
     });
@@ -65,12 +65,12 @@ export function useFormStatus(form: ClienteDetalhadoDTO) {
     const billingAddressStatus = computed<FormGroupStatus>(() => {
         return _validate(
             [
-                form.endereco.cep,
-                form.endereco.logradouro,
-                form.endereco.numero,
-                form.endereco.bairro,
-                form.endereco.cidade,
-                form.endereco.estado,
+                form.endereco?.cep ?? '',
+                form.endereco?.logradouro ?? '',
+                form.endereco?.numero ?? '',
+                form.endereco?.bairro ?? '',
+                form.endereco?.cidade ?? '',
+                form.endereco?.estado ?? '',
             ],
             [
             ]
@@ -79,46 +79,46 @@ export function useFormStatus(form: ClienteDetalhadoDTO) {
 
     const partnersStatus = computed<FormGroupStatus>(() => {
         return _validate(
-            form.socios.flatMap(p => {
-                return [p.cpf, p.nome, p.percentual];
+            (form.socios ?? []).flatMap(p => {
+                return [p.cpf ?? '', p.nome ?? '', p.percentual ?? ''];
             }),
-            form.socios.flatMap(p => [!cpfValido(p.cpf).length])
+            (form.socios ?? []).flatMap(p => [!cpfValido(p.cpf ?? '').length])
         );
     });
 
     const shippingStatus = computed<FormGroupStatus>(() => {
         return _validate(
             [
-                form.nomeContatoEntrega,
-                form.telefoneEntrega,
-                form.emailEntrega,
-                form.enderecoEntrega.cep,
-                form.enderecoEntrega.logradouro,
-                form.enderecoEntrega.numero,
-                form.enderecoEntrega.bairro,
-                form.enderecoEntrega.cidade,
-                form.enderecoEntrega.estado
+                form.nomeContatoEntrega ?? '',
+                form.telefoneEntrega ?? '',
+                form.emailEntrega ?? '',
+                form.enderecoEntrega?.cep ?? '',
+                form.enderecoEntrega?.logradouro ?? '',
+                form.enderecoEntrega?.numero ?? '',
+                form.enderecoEntrega?.bairro ?? '',
+                form.enderecoEntrega?.cidade ?? '',
+                form.enderecoEntrega?.estado ?? ''
             ],
             [
-                !telefoneValido(form.telefoneEntrega).length,
-                !cepValido(form.enderecoEntrega.cep)
+                !telefoneValido(form.telefoneEntrega ?? '').length,
+                !cepValido(form.enderecoEntrega?.cep ?? '')
             ]
         );
     });
 
     const referencesStatus = computed<FormGroupStatus>(() => {
         return _validate(
-            form.referenciasComerciais.flatMap(reference => {
+            (form.referenciasComerciais ?? []).flatMap(reference => {
                 return [
-                    reference.nomeContato,
-                    reference.razaoSocial,
-                    reference.celular,
-                    reference.telefone
+                    reference.nomeContato ?? '',
+                    reference.razaoSocial ?? '',
+                    reference.celular ?? '',
+                    reference.telefone ?? ''
                 ];
             }),
-            form.referenciasComerciais.flatMap(reference => [
-                !telefoneValido(reference.celular).length,
-                !telefoneValido(reference.telefone).length
+            (form.referenciasComerciais ?? []).flatMap(reference => [
+                !telefoneValido(reference.celular ?? '').length,
+                !telefoneValido(reference.telefone ?? '').length
             ])
         );
     });

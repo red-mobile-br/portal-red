@@ -49,8 +49,8 @@ async function carregarMetas() {
 const buscarRepresentante = async () => {
     const representante = await refModalBuscarRepresentante.value?.search();
     if(representante) {
-        filtros.idRepresentante = representante.id;
-        filtros.nomeRepresentante = representante.nome;
+        filtros.idRepresentante = representante.id ?? '';
+        filtros.nomeRepresentante = representante.nome ?? '';
         aplicarFiltros();
         carregarMetas();
     }

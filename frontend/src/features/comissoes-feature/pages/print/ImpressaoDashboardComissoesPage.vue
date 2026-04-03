@@ -112,7 +112,7 @@ onMounted(() => carregarDados());
                                 Valor total de comissão:
                             </RmText>
                             <RmText type="display-medium">
-                                R$ {{ formatarDecimal(state.dashboard.totalComissaoPeriodo) }}
+                                R$ {{ formatarDecimal(state.dashboard.totalComissaoPeriodo ?? 0) }}
                             </RmText>
                         </div>
                         <div class="mx-5 w-px bg-gray-300" />
@@ -121,7 +121,7 @@ onMounted(() => carregarDados());
                                 Porcentagem média
                             </RmText>
                             <RmText type="display-medium">
-                                {{ formatarDecimal(arredondarPreco(state.dashboard.percentualComissaoPeriodo)) }}%
+                                {{ formatarDecimal(arredondarPreco(state.dashboard.percentualComissaoPeriodo ?? 0)) }}%
                             </RmText>
                         </div>
                     </div>
@@ -140,7 +140,7 @@ onMounted(() => carregarDados());
                         Desempenho no período
                     </RmText>
                     <div class="h-64 relative">
-                        <RmAreaChart :items="state.dashboard.comissoesPeriodo" />
+                        <RmAreaChart :items="state.dashboard.comissoesPeriodo ?? []" />
                     </div>
 
                     <!-- Maiores comissões no período-->
@@ -149,7 +149,7 @@ onMounted(() => carregarDados());
                         Maiores comissões no período
                     </RmText>
                     <div class="h-64 relative">
-                        <RmBarChart :items="state.dashboard.maioresComissoesPeriodo" :step-size="50" />
+                        <RmBarChart :items="state.dashboard.maioresComissoesPeriodo ?? []" :step-size="50" />
                     </div>
 
                     <RmDivider class="mb-5" />
@@ -190,18 +190,18 @@ onMounted(() => carregarDados());
                             </th>
                         </tr>
                         <tr v-for="(comissao, index) in state.comissoes" :key="index">
-                            <td>{{ comissao.pedido }}</td>
+                            <td>{{ comissao?.pedido ?? '' }}</td>
                             <td class="!text-left">
-                                {{ comissao.nomeCliente }}
+                                {{ comissao?.nomeCliente ?? '' }}
                             </td>
-                            <td>{{ comissao.titulo }}</td>
-                            <td>{{ comissao.parcela }}</td>
-                            <td>{{ comissao.dataVencimento ? formatarData(comissao.dataVencimento) : '-' }}</td>
-                            <td>{{ comissao.dataBaixa ? formatarData(comissao.dataBaixa) : '-' }}</td>
-                            <td>R$ {{ formatarDecimal(comissao.valorTitulo) }}</td>
-                            <td>R$ {{ formatarDecimal(comissao.valorBase) }}</td>
-                            <td>{{ formatarDecimal(comissao.percentualComissao) }}%</td>
-                            <td>R$ {{ formatarDecimal(comissao.valorComissao) }}</td>
+                            <td>{{ comissao?.titulo ?? '' }}</td>
+                            <td>{{ comissao?.parcela ?? '' }}</td>
+                            <td>{{ comissao?.dataVencimento ? formatarData(comissao.dataVencimento) : '-' }}</td>
+                            <td>{{ comissao?.dataBaixa ? formatarData(comissao.dataBaixa) : '-' }}</td>
+                            <td>R$ {{ formatarDecimal(comissao?.valorTitulo ?? 0) }}</td>
+                            <td>R$ {{ formatarDecimal(comissao?.valorBase ?? 0) }}</td>
+                            <td>{{ formatarDecimal(comissao?.percentualComissao ?? 0) }}%</td>
+                            <td>R$ {{ formatarDecimal(comissao?.valorComissao ?? 0) }}</td>
                         </tr>
                     </table>
 

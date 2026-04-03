@@ -129,7 +129,7 @@ defineExpose({ search });
                                             <td class="!text-left !px-3">
                                                 {{ manager.nome }}
                                             </td>
-                                            <td>{{ mascaraCnpj(manager.cnpj) }}</td>
+                                            <td>{{ mascaraCnpj(manager.cnpj ?? '') }}</td>
                                         </tr>
     
                                         <!-- Nenhum gerente -->

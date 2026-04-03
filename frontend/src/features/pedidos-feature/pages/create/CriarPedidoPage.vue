@@ -245,8 +245,8 @@ const aplicarImpostosProduto = (produto: ProdutoDTO, taxes: import('@/core/dtos/
     produto.quantidade = produto.quantidade ?? 1;
     produto.percentualDesconto = produto.percentualDesconto ?? 0;
     produto.valorUnitario = produto.valorUnitario ?? produto.precoBase;
-    produto.margem = taxes.margem;
-    produto.valorTotal = taxes.valorTotal;
+    produto.margem = taxes.margem ?? 0;
+    produto.valorTotal = taxes.valorTotal ?? 0;
 };
 
 /** Cancelador de request anterior */
@@ -268,7 +268,7 @@ const recalcularImpostos = async (produtoPendente?: ProdutoDTO): Promise<boolean
             : state.produtos;
 
         const payload: ConsultaImpostoLoteDTO = {
-            idCliente: state.clienteSelecionado.id,
+            idCliente: state.clienteSelecionado.id ?? '',
             idRepresentante: state.idRepresentante,
             idGerente: state.idGerente,
             tipoPedido: state.form.tipoPedido,
@@ -276,11 +276,11 @@ const recalcularImpostos = async (produtoPendente?: ProdutoDTO): Promise<boolean
             modoFrete: state.form.modoFrete,
             idPedido: params.id?.toString(),
             itens: todosItens.map(produto => ({
-                idProduto: produto.id,
-                precoBase: produto.precoBase,
-                precoVenda: produto.valorUnitario ?? produto.precoBase,
+                idProduto: produto.id ?? '',
+                precoBase: produto.precoBase ?? 0,
+                precoVenda: produto.valorUnitario ?? produto.precoBase ?? 0,
                 quantidade: produto.quantidade ?? 1,
-                comissao: produto.comissao,
+                comissao: produto.comissao ?? 0,
             })),
         };
 
@@ -288,12 +288,14 @@ const recalcularImpostos = async (produtoPendente?: ProdutoDTO): Promise<boolean
         canceladorImpostoLote = canceler;
         const resposta = await request;
 
-        if (resposta.itens.length !== todosItens.length) {
-            throw new Error(`Tax response length mismatch: expected ${todosItens.length}, got ${resposta.itens.length}`);
+        const itensResposta = resposta.itens ?? [];
+
+        if (itensResposta.length !== todosItens.length) {
+            throw new Error(`Tax response length mismatch: expected ${todosItens.length}, got ${itensResposta.length}`);
         }
 
         // Aplicar impostos nos itens já na lista
-        resposta.itens.forEach((impostos, index) => {
+        itensResposta.forEach((impostos, index) => {
             if (state.produtos[index]) {
                 aplicarImpostosProduto(state.produtos[index], impostos);
             }
@@ -301,23 +303,23 @@ const recalcularImpostos = async (produtoPendente?: ProdutoDTO): Promise<boolean
 
         // Aplicar impostos no produto pendente (último item da resposta)
         if (produtoPendente) {
-            const impostoPendente = resposta.itens[resposta.itens.length - 1];
+            const impostoPendente = itensResposta[itensResposta.length - 1];
             if (impostoPendente) {
                 aplicarImpostosProduto(produtoPendente, impostoPendente);
             }
         }
 
         state.resumoPedido = {
-            totalProdutos: resposta.totalProdutos,
-            totalICMS: resposta.totalICMS,
-            totalIPI: resposta.totalIPI,
-            totalICMSST: resposta.totalICMSST,
-            totalNF: resposta.totalNF,
-            pesoLiquido: resposta.pesoLiquido,
-            pesoBruto: resposta.pesoBruto,
-            margemPedido: resposta.margemPedido,
-            totalVolumes: resposta.totalItens,
-            totalItens: resposta.totalItens,
+            totalProdutos: resposta.totalProdutos ?? 0,
+            totalICMS: resposta.totalICMS ?? 0,
+            totalIPI: resposta.totalIPI ?? 0,
+            totalICMSST: resposta.totalICMSST ?? 0,
+            totalNF: resposta.totalNF ?? 0,
+            pesoLiquido: resposta.pesoLiquido ?? 0,
+            pesoBruto: resposta.pesoBruto ?? 0,
+            margemPedido: resposta.margemPedido ?? 0,
+            totalVolumes: resposta.totalItens ?? 0,
+            totalItens: resposta.totalItens ?? 0,
         };
 
         dismissToast(idToast);
@@ -361,7 +363,7 @@ const obterDetalheCliente = async() => {
             if(!cliente) {
                 return;
             }
-            cnpj = cliente.cnpj;
+            cnpj = cliente.cnpj ?? '';
         }
 
         const [ requisicaoCliente ] = clienteService.obterDetalheCliente(cnpj);
@@ -377,16 +379,16 @@ const obterDetalheCliente = async() => {
         state.planosPagamento = respostaPlanos;
 
         // Adicionar campos do cliente no agendamento
-        state.form.dadosAgendamento.email = respostaCliente.email;
-        state.form.dadosAgendamento.telefone = mascaraTelefone(respostaCliente.telefone);
+        state.form.dadosAgendamento.email = respostaCliente.email ?? '';
+        state.form.dadosAgendamento.telefone = mascaraTelefone(respostaCliente.telefone ?? '');
 
         state.buscaCliente = '';
 
-        state.idRepresentante = respostaCliente.idRepresentante;
-        state.nomeRepresentante = respostaCliente.nomeRepresentante;
+        state.idRepresentante = respostaCliente.idRepresentante ?? null;
+        state.nomeRepresentante = respostaCliente.nomeRepresentante ?? null;
 
-        state.idGerente = respostaCliente.idGerente;
-        state.nomeGerente = respostaCliente.nomeGerente;
+        state.idGerente = respostaCliente.idGerente ?? null;
+        state.nomeGerente = respostaCliente.nomeGerente ?? null;
     } catch (e) {
         const error = e as ErroDTO;
         const mensagem = error.codigo == 404 ? 'Não foi encontrando nenhum cliente com o CNPJ informado' : error.mensagem;
@@ -418,12 +420,12 @@ const obterProduto = async () => {
             if(!produto) {
                 return;
             }
-            idProduto = produto.id;
+            idProduto = produto.id ?? '';
         }
 
         const produtoExistente = state.produtos.find(el => el.id == idProduto.padStart(6, '0'));
         if(produtoExistente) {
-            const quantidadeOriginal = produtoExistente.quantidade;
+            const quantidadeOriginal = produtoExistente.quantidade ?? 0;
             produtoExistente.quantidade = quantidadeOriginal + 1;
             const sucesso = await recalcularImpostos();
             if (!sucesso) {
@@ -434,7 +436,7 @@ const obterProduto = async () => {
             }
         }
         else {
-            const [ requisicaoProduto ] = clienteService.obterDetalheProduto(state.clienteSelecionado!.id, idProduto);
+            const [ requisicaoProduto ] = clienteService.obterDetalheProduto(state.clienteSelecionado!.id ?? '', idProduto);
             const resp = await requisicaoProduto;
             if(!resp) {
                 return alert({ mensagem: "Produto não encontrado" });
@@ -627,15 +629,24 @@ const submeter = async () => {
 
         state.enviandoPedido = true;
 
+        const clienteEndereco = state.clienteSelecionado!.endereco;
         const form: CriarPedidoDTO = {
             numeroPedidoCompra: state.form.numeroPedidoCompra,
-            idCliente: state.clienteSelecionado!.id,
+            idCliente: state.clienteSelecionado!.id ?? '',
             dataEmissao: dataParaIso(state.form.dataFaturamento),
             modoFrete: state.form.modoFrete,
             tipoPedido: state.form.tipoPedido,
             dadosAgendamento: state.form.agendado ? { email: state.form.dadosAgendamento.email, telefone: state.form.dadosAgendamento.telefone } : undefined,
             enderecoEntrega: state.form.entregarNoEnderecoCliente
-                ? state.clienteSelecionado!.endereco
+                ? {
+                    logradouro: clienteEndereco?.logradouro ?? '',
+                    numero: clienteEndereco?.numero ?? '',
+                    complemento: clienteEndereco?.complemento ?? '',
+                    bairro: clienteEndereco?.bairro ?? '',
+                    cidade: clienteEndereco?.cidade ?? '',
+                    estado: clienteEndereco?.estado ?? '',
+                    cep: clienteEndereco?.cep ?? '',
+                }
                 : {
                     logradouro: state.form.enderecoEntrega.logradouro,
                     numero: state.form.enderecoEntrega.numero,
@@ -650,10 +661,10 @@ const submeter = async () => {
             idGerente: state.idGerente,
             produtos: state.produtos.map(produto => {
                 return {
-                    id: produto.id,
-                    quantidade: produto.quantidade,
-                    valorUnitario: produto.valorUnitario,
-                    comissao: produto.comissao
+                    id: produto.id ?? '',
+                    quantidade: produto.quantidade ?? 0,
+                    valorUnitario: produto.valorUnitario ?? 0,
+                    comissao: produto.comissao ?? 0
                 };
             }),
             informacoesNota: state.form.informacoesNota,
@@ -723,38 +734,38 @@ const carregarParaEdicao = async () => {
         state.planosPagamento = [...planosPagamento];
 
         // Mapear produtos
-        state.produtos = [...pedido.produtos];
+        state.produtos = [...(pedido.produtos ?? [])];
 
         // Mapear cliente
-        state.clienteSelecionado = { ...pedido.cliente } as ClienteDetalhadoDTO;
+        state.clienteSelecionado = { ...(pedido.cliente ?? {}) } as ClienteDetalhadoDTO;
 
         // Mapear propriedades
         state.idGerente = pedido.idGerente ?? '-';
         state.nomeGerente = pedido.nomeGerente ?? '-';
         state.nomeRepresentante = pedido.nomeRepresentante ?? '-';
         state.idRepresentante = pedido.idRepresentante ?? '-';
-        state.statusPedido = statusPedidoEnumParser.get(pedido.status)!.titulo;
-        state.form.tipoPedido = pedido.tipoPedido;
+        state.statusPedido = statusPedidoEnumParser.get(pedido.status ?? '')?.titulo ?? '-';
+        state.form.tipoPedido = pedido.tipoPedido ?? 0;
         state.form.agendado = (pedido.dadosAgendamento?.email?.length ?? 0) > 0 || (pedido.dadosAgendamento?.telefone?.length ?? 0) > 0;
 
 
-        state.form.enderecoEntrega.logradouro = pedido.enderecoEntrega.logradouro;
-        state.form.enderecoEntrega.numero = pedido.enderecoEntrega.numero;
-        state.form.enderecoEntrega.complemento = pedido.enderecoEntrega.complemento;
-        state.form.enderecoEntrega.bairro = pedido.enderecoEntrega.bairro;
-        state.form.enderecoEntrega.cidade = pedido.enderecoEntrega.cidade;
-        state.form.enderecoEntrega.estado = pedido.enderecoEntrega.estado;
-        state.form.enderecoEntrega.cep = pedido.enderecoEntrega.cep;
+        state.form.enderecoEntrega.logradouro = pedido.enderecoEntrega?.logradouro ?? '';
+        state.form.enderecoEntrega.numero = pedido.enderecoEntrega?.numero ?? '';
+        state.form.enderecoEntrega.complemento = pedido.enderecoEntrega?.complemento ?? '';
+        state.form.enderecoEntrega.bairro = pedido.enderecoEntrega?.bairro ?? '';
+        state.form.enderecoEntrega.cidade = pedido.enderecoEntrega?.cidade ?? '';
+        state.form.enderecoEntrega.estado = pedido.enderecoEntrega?.estado ?? '';
+        state.form.enderecoEntrega.cep = pedido.enderecoEntrega?.cep ?? '';
 
-        state.form.numeroPedidoCompra = pedido.numeroPedidoCompra;
-        state.form.dataFaturamento = format(new Date(pedido.dataEmissao), 'dd/MM/yyyy');
-        state.form.modoFrete = pedido.modoFrete;
+        state.form.numeroPedidoCompra = pedido.numeroPedidoCompra ?? '';
+        state.form.dataFaturamento = format(new Date(pedido.dataEmissao ?? ''), 'dd/MM/yyyy');
+        state.form.modoFrete = pedido.modoFrete ?? 0;
         state.form.dadosAgendamento.email = pedido.dadosAgendamento?.email ?? '';
         state.form.dadosAgendamento.telefone = pedido.dadosAgendamento?.telefone ?? '';
-        state.form.informacoesNota = pedido.informacoesNota;
-        state.form.observacoesPedido = pedido.observacoesPedido;
+        state.form.informacoesNota = pedido.informacoesNota ?? '';
+        state.form.observacoesPedido = pedido.observacoesPedido ?? '';
 
-        await mudarPlanoPagamento(pedido.planoPagamento);
+        await mudarPlanoPagamento(pedido.planoPagamento ?? '');
 
     }
     catch(e) {
@@ -767,8 +778,8 @@ const carregarParaEdicao = async () => {
 const buscarRepresentante = async () => {
     const representante = await refModalBuscarRepresentante.value?.search();
     if(representante) {
-        state.idRepresentante = representante.id;
-        state.nomeRepresentante = representante.nome;
+        state.idRepresentante = representante.id ?? null;
+        state.nomeRepresentante = representante.nome ?? null;
         await recalcularImpostos();
     }
 };
@@ -784,8 +795,8 @@ const limparGerente = async () => {
 const buscarGerente = async () => {
     const gerente = await refModalBuscarGerente.value?.search();
     if(gerente) {
-        state.idGerente = gerente.id;
-        state.nomeGerente = gerente.nome;
+        state.idGerente = gerente.id ?? null;
+        state.nomeGerente = gerente.nome ?? null;
         await recalcularImpostos();
     }
 };
@@ -805,7 +816,7 @@ const calcularImpostosDebounced = (_produto?: ProdutoDTO, delay = 500) => {
 };
 
 const definirComissaoProduto = async (comissao: number, produto: ProdutoDTO) => {
-    produto.comissao = Math.max(0, Math.min(produto.comissaoMaxima, comissao));
+    produto.comissao = Math.max(0, Math.min(produto.comissaoMaxima ?? 0, comissao));
     calcularImpostosDebounced(produto);
 };
 const definirQuantidadeProduto = async (quantidade: number, produto: ProdutoDTO) => {
@@ -956,31 +967,31 @@ onBeforeRouteLeave((_, __, next) => {
                         {{ state.clienteSelecionado.razaoSocial }}
                     </RmTextField>
                     <RmTextField label="CNPJ">
-                        {{ mascaraCnpj(state.clienteSelecionado.cnpj) }}
+                        {{ mascaraCnpj(state.clienteSelecionado.cnpj ?? '') }}
                     </RmTextField>
                     <RmTextField label="Nome fantasia" class="sm:col-span-2">
                         {{ state.clienteSelecionado.nomeFantasia }}
                     </RmTextField>
                     <RmTextField label="Cep">
-                        {{ state.clienteSelecionado.endereco.cep }}
+                        {{ state.clienteSelecionado.endereco?.cep }}
                     </RmTextField>
                     <RmTextField label="Logradouro" class="sm:col-span-2">
-                        {{ state.clienteSelecionado.endereco.logradouro }}
+                        {{ state.clienteSelecionado.endereco?.logradouro }}
                     </RmTextField>
                     <RmTextField label="Número">
-                        {{ state.clienteSelecionado.endereco.numero }}
+                        {{ state.clienteSelecionado.endereco?.numero }}
                     </RmTextField>
                     <RmTextField label="Complemento" class="sm:col-span-2">
-                        {{ state.clienteSelecionado.endereco.complemento || '-' }}
+                        {{ state.clienteSelecionado.endereco?.complemento || '-' }}
                     </RmTextField>
                     <RmTextField label="Bairro">
-                        {{ state.clienteSelecionado.endereco.bairro }}
+                        {{ state.clienteSelecionado.endereco?.bairro }}
                     </RmTextField>
                     <RmTextField label="Município">
-                        {{ state.clienteSelecionado.endereco.cidade }}
+                        {{ state.clienteSelecionado.endereco?.cidade }}
                     </RmTextField>
                     <RmTextField label="Estado">
-                        {{ state.clienteSelecionado.endereco.estado }}
+                        {{ state.clienteSelecionado.endereco?.estado }}
                     </RmTextField>
                 </div>
 
@@ -1098,7 +1109,7 @@ onBeforeRouteLeave((_, __, next) => {
                                     @input="definirQuantidadeProduto(+($event.target as HTMLInputElement).value, produto)">
                             </td>
                             <td>
-                                <RmMoneyInput :model-value="produto.valorUnitario"
+                                <RmMoneyInput :model-value="produto.valorUnitario ?? 0"
                                               prefix="R$ "
                                               :precision="2"
                                               :min="0"
@@ -1106,11 +1117,11 @@ onBeforeRouteLeave((_, __, next) => {
                                               @update:model-value="(e) => definirValorUnitarioProduto(e, produto)" />
                             </td>
                             <td>
-                                {{ formatarDecimal(calcularPercentualDesconto(produto.valorUnitario, produto.precoBase)) }}%
+                                {{ formatarDecimal(calcularPercentualDesconto(produto.valorUnitario ?? 0, produto.precoBase ?? 0)) }}%
                             </td>
-                            <td>R$ {{ formatarDecimal(produto.precoBase) }}</td>
+                            <td>R$ {{ formatarDecimal(produto.precoBase ?? 0) }}</td>
                             <td>
-                                <RmMoneyInput :model-value="produto.comissao"
+                                <RmMoneyInput :model-value="produto.comissao ?? 0"
                                               prefix=""
                                               suffix="%"
                                               :precision="2"
@@ -1121,13 +1132,13 @@ onBeforeRouteLeave((_, __, next) => {
 
                             </td>
 
-                            <td>{{ formatarDecimal(produto.percentualIPI) }}%</td>
-                            <td>{{ formatarDecimal(produto.percentualICMS) }}%</td>
-                            <td>{{ formatarDecimal(produto.percentualICMSST) }}%</td>
+                            <td>{{ formatarDecimal(produto.percentualIPI ?? 0) }}%</td>
+                            <td>{{ formatarDecimal(produto.percentualICMS ?? 0) }}%</td>
+                            <td>{{ formatarDecimal(produto.percentualICMSST ?? 0) }}%</td>
                             <td v-if="eGerente">
-                                {{ formatarDecimal(produto.margem) }}%
+                                {{ formatarDecimal(produto.margem ?? 0) }}%
                             </td>
-                            <td>R$ {{ formatarDecimal(arredondarPreco(state.produtos[index].valorTotal)) }}</td>
+                            <td>R$ {{ formatarDecimal(arredondarPreco(state.produtos[index].valorTotal ?? 0)) }}</td>
                             <td>
                                 <RmIconButton icon="TrashIcon"
                                               icon-class="w-6 fill-primary w-[1.15rem]"

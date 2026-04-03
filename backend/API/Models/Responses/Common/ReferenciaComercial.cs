@@ -2,8 +2,8 @@ namespace RedMobilePedidos.API.Models.Responses.Common;
 
 public sealed record ReferenciaComercial
 {
-    public required string RazaoSocial { get; init; }
-    public required string Telefone { get; init; }
-    public required string Celular { get; init; }
-    public required string NomeContato { get; init; }
+    public string? RazaoSocial { get; init; }
+    public string? Telefone { get; init; }
+    public string? Celular { get; init; }
+    public string? NomeContato { get; init; }
 }

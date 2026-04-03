@@ -20,7 +20,7 @@ const chart = ref<HTMLCanvasElement>();
 function loadChart() {
     const ctx = chart.value as HTMLCanvasElement;
     const labels = props.items.map(i => i.rotulo);
-    const values = props.items.flatMap(({ series }) => series[0].valor);
+    const values = props.items.flatMap(({ series }) => series?.[0]?.valor ?? 0);
     
     const chartEl = new Chart(ctx, {
         type: 'bar',

@@ -16,7 +16,7 @@ const props = defineProps({
     }
 });
 const { eGerente } = useAutorizacao();
-const tipoPedido = computed(() => statusTituloEnumParser.get(props.title.status.toString().toUpperCase())!);
+const tipoPedido = computed(() => statusTituloEnumParser.get((props.title.status ?? '').toString().toUpperCase())!);
 const icon = computed(() => icons[tipoPedido.value.icon]);
 
 </script>
@@ -29,18 +29,18 @@ const icon = computed(() => icons[tipoPedido.value.icon]);
         <td class="!text-left">
             {{ title.nomeCliente }}
         </td>
-        <td>{{ mascaraCnpj(title.cnpj) }}</td>
+        <td>{{ mascaraCnpj(title.cnpj ?? '') }}</td>
         <td>{{ title.dataVencimentoOriginal ? formatarData(title.dataVencimentoOriginal) : '-' }}</td>
         <td>{{ title.dataVencimento ? formatarData(title.dataVencimento) : '-' }}</td>
         <td>{{ title.dataPagamento ? formatarData(title.dataPagamento) : '-' }}</td>
-        <td>R$ {{ formatarDecimal(title.valorTitulo) }}</td>
+        <td>R$ {{ formatarDecimal(title.valorTitulo ?? 0) }}</td>
         <td v-if="eGerente">
-            <RmTooltip :text="title.nomeRepresentante">
+            <RmTooltip :text="title.nomeRepresentante ?? ''">
                 {{ title.representante }}
             </RmTooltip>
         </td>
         <td>
-            <RmTooltip :text="statusTituloEnumParser.get(title.status.toString())!.titulo">
+            <RmTooltip :text="statusTituloEnumParser.get((title.status ?? '').toString())!.titulo">
                 <component :is="icon"
                            :style="{'fill': tipoPedido.color}"
                            class="w-6 mx-auto" />

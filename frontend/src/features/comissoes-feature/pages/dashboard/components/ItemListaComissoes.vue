@@ -18,22 +18,22 @@ const { eGerente } = useAutorizacao();
 
 <template>
     <tr>
-        <td>{{ commission.pedido }}</td>
+        <td>{{ commission?.pedido ?? '' }}</td>
         <td class="!text-left">
-            {{ commission.nomeCliente }}
+            {{ commission?.nomeCliente ?? '' }}
         </td>
-        <td>{{ commission.titulo }}</td>
-        <td>{{ commission.parcela }}</td>
-        <td>{{ commission.dataVencimento ? formatarData(commission.dataVencimento) : '-' }}</td>
-        <td>{{ commission.dataBaixa ? formatarData(commission.dataBaixa) : '-' }}</td>
-        <td>R$ {{ formatarDecimal(commission.valorTitulo) }}</td>
-        <td>R$ {{ formatarDecimal(commission.valorBase) }}</td>
-        <td>{{ formatarDecimal(commission.percentualComissao) }}%</td>
+        <td>{{ commission?.titulo ?? '' }}</td>
+        <td>{{ commission?.parcela ?? '' }}</td>
+        <td>{{ commission?.dataVencimento ? formatarData(commission.dataVencimento) : '-' }}</td>
+        <td>{{ commission?.dataBaixa ? formatarData(commission.dataBaixa) : '-' }}</td>
+        <td>R$ {{ formatarDecimal(commission?.valorTitulo ?? 0) }}</td>
+        <td>R$ {{ formatarDecimal(commission?.valorBase ?? 0) }}</td>
+        <td>{{ formatarDecimal(commission?.percentualComissao ?? 0) }}%</td>
         <td v-if="eGerente">
-            <RmTooltip :text="commission.nomeRepresentante">
-                {{ commission.representante }}
+            <RmTooltip :text="commission?.nomeRepresentante ?? ''">
+                {{ commission?.representante ?? '' }}
             </RmTooltip>
         </td>
-        <td>R$ {{ formatarDecimal(commission.valorComissao) }}</td>
+        <td>R$ {{ formatarDecimal(commission?.valorComissao ?? 0) }}</td>
     </tr>
 </template>

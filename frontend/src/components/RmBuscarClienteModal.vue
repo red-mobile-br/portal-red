@@ -129,7 +129,7 @@ defineExpose({ search });
                                             <td class="!text-left !px-3">
                                                 {{ cliente.nome }}
                                             </td>
-                                            <td>{{ mascaraCnpj(cliente.cnpj) }}</td>
+                                            <td>{{ mascaraCnpj(cliente.cnpj ?? '') }}</td>
                                         </tr>
 
                                         <!-- Nenhum cliente -->

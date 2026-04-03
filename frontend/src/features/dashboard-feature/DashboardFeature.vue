@@ -33,8 +33,8 @@ const carregando = ref(true);
 const buscarRepresentante = async () => {
     const representante = await refModalBuscarRepresentante.value?.search();
     if(representante) {
-        filtros.idRepresentante = representante.id;
-        filtros.nomeRepresentante = representante.nome;
+        filtros.idRepresentante = representante.id ?? '';
+        filtros.nomeRepresentante = representante.nome ?? '';
         aplicarFiltrosEReiniciar(carregarDados);
     }
 };
@@ -63,8 +63,8 @@ async function carregarDados() {
 const clientesPorEstadoParaGrafico = computed(() => {
     if (!dadosDashboard.value?.clientesPorEstado) return [];
     return dadosDashboard.value.clientesPorEstado.map(item => ({
-        rotulo: item.estado,
-        series: [{ nome: item.estado, valor: item.quantidadeClientes }]
+        rotulo: item.estado ?? '',
+        series: [{ nome: item.estado ?? '', valor: item.quantidadeClientes ?? 0 }]
     }));
 });
 
@@ -103,7 +103,7 @@ onMounted(() => carregarDados());
                         Valor total de comissão
                     </RmText>
                     <p class="font-semibold text-2xl text-primary-light">
-                        R$ {{ formatarDecimal(dadosDashboard.totalComissaoPeriodo) }}
+                        R$ {{ formatarDecimal(dadosDashboard.totalComissaoPeriodo ?? 0) }}
                     </p>
                     <RmDivider class="mb-2 my-3" />
                     <RmText type="label-small">
@@ -120,7 +120,7 @@ onMounted(() => carregarDados());
                         Total de pedidos
                     </RmText>
                     <p class="font-semibold text-2xl text-primary-light">
-                        {{ dadosDashboard.totalPedidosPeriodo }}
+                        {{ dadosDashboard.totalPedidosPeriodo ?? 0 }}
                     </p>
                     <RmDivider class="mb-2 my-3" />
                     <RmText type="label-small">
@@ -138,7 +138,7 @@ onMounted(() => carregarDados());
                         Pedidos em aberto
                     </RmText>
                     <p class="font-semibold text-2xl text-accent">
-                        {{ dadosDashboard.pedidosAbertosPeriodo }}
+                        {{ dadosDashboard.pedidosAbertosPeriodo ?? 0 }}
                     </p>
                     <RmDivider class="mb-2 my-3" />
                     <RmText type="label-small">
@@ -168,7 +168,7 @@ onMounted(() => carregarDados());
                         Desempenho no período
                     </RmText>
                     <div class="flex-1 transition-opacity duration-300 relative">
-                        <RmAreaChart :items="dadosDashboard.comissoesPeriodo" />
+                        <RmAreaChart :items="dadosDashboard.comissoesPeriodo ?? []" />
                     </div>
                 </RmCard>
             </Transition>

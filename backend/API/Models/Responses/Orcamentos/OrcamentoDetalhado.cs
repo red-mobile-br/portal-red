@@ -4,6 +4,6 @@ namespace RedMobilePedidos.API.Models.Responses.Orcamentos;
 
 public sealed record OrcamentoDetalhado : PedidoDetalhado
 {
-    public required DateTime DataImplementacao { get; init; }
-    public required DateTime DataCancelamento { get; init; }
+    public DateTime? DataImplementacao { get; init; }
+    public DateTime? DataCancelamento { get; init; }
 }

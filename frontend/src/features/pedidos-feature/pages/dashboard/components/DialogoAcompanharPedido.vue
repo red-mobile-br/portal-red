@@ -56,9 +56,9 @@ const title = props.isQuotePage ? 'orçamento' : 'pedido';
     
                             <div v-if="order.notas && order.notas.length > 0" class="h-96 p-4 light-scroll overflow-auto">
                                 <RmTimelineItem v-for="(note, index) in order.notas" :key="index"
-                                                :date="note.dataHora"
-                                                :title="note.atividade"
-                                                :subtitle="note.detalhe">
+                                                :date="note.dataHora ?? ''"
+                                                :title="note.atividade ?? ''"
+                                                :subtitle="note.detalhe ?? ''">
                                     <p class="text-sm">
                                         {{ note.autor }}
                                     </p>

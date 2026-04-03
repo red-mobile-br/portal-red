@@ -1,4 +1,4 @@
 export default interface PlanoPagamentoDTO {
-    codigo: string;
-    descricao: string;
+    codigo?: string;
+    descricao?: string;
 }

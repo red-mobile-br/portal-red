@@ -14,9 +14,9 @@ const props = defineProps({
 });
 const { eGerente } = useAutorizacao();
 
-const date = computed(() => formatarData(props.revenue.dataHora));
-const orderValue = computed(() => formatarDecimal(props.revenue.valorPedido));
-const baseValue = computed(() => formatarDecimal(props.revenue.valorBase));
+const date = computed(() => formatarData(props.revenue.dataHora ?? ''));
+const orderValue = computed(() => formatarDecimal(props.revenue.valorPedido ?? 0));
+const baseValue = computed(() => formatarDecimal(props.revenue.valorBase ?? 0));
 </script>
 
 <template>
@@ -30,7 +30,7 @@ const baseValue = computed(() => formatarDecimal(props.revenue.valorBase));
         <td>R$ {{ baseValue }}</td>
         <td>R$ {{ orderValue }}</td>
         <td v-if="eGerente">
-            <RmTooltip :text="revenue.nomeRepresentante">
+            <RmTooltip :text="revenue.nomeRepresentante ?? ''">
                 {{ revenue.representante }}
             </RmTooltip>
         </td>

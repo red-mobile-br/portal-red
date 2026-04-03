@@ -96,13 +96,13 @@ onMounted(() => loadData());
                         Informações gerais
                     </RmText>
                     <RmTextField class="mb-2" label="Últimas atualizações">
-                        {{ formatarData(state.priceTable.dataAtualizacao) }}
+                        {{ formatarData(state.priceTable.dataAtualizacao ?? '') }}
                     </RmTextField>
                     <RmTextField class="mb-2" label="Prazo">
-                        {{ formatarData(state.priceTable.prazo) }}
+                        {{ formatarData(state.priceTable.prazo ?? '') }}
                     </RmTextField>
                     <RmTextField class="mb-2" label="Frete CIF">
-                        A partir de  R$ {{ state.priceTable.valorMinimoFreteCif.toFixed(2) }}
+                        A partir de  R$ {{ (state.priceTable.valorMinimoFreteCif ?? 0).toFixed(2) }}
                     </RmTextField>
                     <RmTextField class="mb-10" label="ICMS">
                         {{ state.priceTable.icms }}%

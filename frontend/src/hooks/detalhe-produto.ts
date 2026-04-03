@@ -47,7 +47,7 @@ export function useDetalheProduto() {
                     const pedido = await dialogoBuscarPedido.value.search(consulta);
                     if(!pedido) return;
 
-                    consulta = pedido.id;
+                    consulta = pedido.id ?? '';
                 }
 
 
@@ -86,13 +86,13 @@ export function useDetalheProduto() {
     // Propriedades computadas
     const statusPedido = computed(() =>
         state.pedidoSelecionado
-            ? statusPedidoEnumParser.get(state.pedidoSelecionado.status)?.titulo ?? ''
+            ? statusPedidoEnumParser.get(state.pedidoSelecionado.status ?? '')?.titulo ?? ''
             : ''
     );
 
     const tipoPedido = computed(() => state.pedidoSelecionado?.tipoPedido == 0 ? 'Venda' : 'Bonificação');
 
-    const totalVolumes = computed(() => state.pedidoSelecionado?.produtos.reduce<number>((acc, p) => acc += p.quantidade, 0));
+    const totalVolumes = computed(() => (state.pedidoSelecionado?.produtos ?? []).reduce<number>((acc, p) => acc += (p.quantidade ?? 0), 0));
 
     const totalProdutos = computed(() => formatarDecimal(state.pedidoSelecionado?.valorProdutos || 0));
 
@@ -102,7 +102,7 @@ export function useDetalheProduto() {
 
     const nomeUsuario = computed(() => nome.value);
 
-    const planoPagamento = computed(() => state.pedidoSelecionado != null ? state.planosPagamento.find(el => el.codigo == state.pedidoSelecionado!.planoPagamento)?.descricao || '': '');
+    const planoPagamento = computed(() => state.pedidoSelecionado != null ? state.planosPagamento.find(el => el.codigo == state.pedidoSelecionado!.planoPagamento)?.descricao ?? '': '');
 
     return { state, obterDetalhePedido, interpretarModoFrete, totalVolumes, totalProdutos, totalPesoBruto, totalPesoLiquido, statusPedido, nomeUsuario, planoPagamento, tipoPedido, dialogoBuscarPedido };
 }

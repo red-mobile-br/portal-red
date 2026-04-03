@@ -8,7 +8,7 @@ export const mapearRotulosGrafico = (items:ItemGraficoDTO[]) => {
 };
 
 export const mapearSeriesRosca = (items: ItemGraficoDTO[]) => {
-    return items.map(el => el.series[0].valor);
+    return items.map(el => el.series?.[0]?.valor ?? 0);
 };
 
 export function useGradienteRadial() {

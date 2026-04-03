@@ -86,37 +86,37 @@ onMounted(() => {
                 <!-- Dados do cliente -->
                 <div class="grid grid-cols-3 gap-3">
                     <RmTextField label="Identificador">
-                        {{ state.pedidoSelecionado.cliente.id }}
+                        {{ state.pedidoSelecionado.cliente?.id }}
                     </RmTextField>
                     <RmTextField label="Razão social" class="col-span-2">
-                        {{ state.pedidoSelecionado.cliente.razaoSocial }}
+                        {{ state.pedidoSelecionado.cliente?.razaoSocial }}
                     </RmTextField>
                     <RmTextField label="CNPJ">
-                        {{ mascaraCnpj(state.pedidoSelecionado.cliente.cnpj) }}
+                        {{ mascaraCnpj(state.pedidoSelecionado.cliente?.cnpj ?? '') }}
                     </RmTextField>
                     <RmTextField label="Nome fantasia" class="col-span-2">
-                        {{ state.pedidoSelecionado.cliente.nomeFantasia }}
+                        {{ state.pedidoSelecionado.cliente?.nomeFantasia }}
                     </RmTextField>
                     <RmTextField label="Cep">
-                        {{ state.pedidoSelecionado.cliente.endereco.cep }}
+                        {{ state.pedidoSelecionado.cliente?.endereco?.cep }}
                     </RmTextField>
                     <RmTextField label="Logradouro" class="col-span-2">
-                        {{ state.pedidoSelecionado.cliente.endereco.logradouro }}
+                        {{ state.pedidoSelecionado.cliente?.endereco?.logradouro }}
                     </RmTextField>
                     <RmTextField label="Número">
-                        {{ state.pedidoSelecionado.cliente.endereco.numero }}
+                        {{ state.pedidoSelecionado.cliente?.endereco?.numero }}
                     </RmTextField>
                     <RmTextField label="Complemento" class="col-span-2">
-                        {{ state.pedidoSelecionado.cliente.endereco.complemento || "-" }}
+                        {{ state.pedidoSelecionado.cliente?.endereco?.complemento || "-" }}
                     </RmTextField>
                     <RmTextField label="Bairro">
-                        {{ state.pedidoSelecionado.cliente.endereco.bairro }}
+                        {{ state.pedidoSelecionado.cliente?.endereco?.bairro }}
                     </RmTextField>
                     <RmTextField label="Município">
-                        {{ state.pedidoSelecionado.cliente.endereco.cidade }}
+                        {{ state.pedidoSelecionado.cliente?.endereco?.cidade }}
                     </RmTextField>
                     <RmTextField label="Estado">
-                        {{ state.pedidoSelecionado.cliente.endereco.estado }}
+                        {{ state.pedidoSelecionado.cliente?.endereco?.estado }}
                     </RmTextField>
                 </div>
 
@@ -130,7 +130,7 @@ onMounted(() => {
                 <!-- Tipo de frete -->
                 <div class="max-w-xs mb-5">
                     <RmTextField label="Tipo de frete">
-                        {{ interpretarModoFrete(state.pedidoSelecionado.modoFrete ) }}
+                        {{ interpretarModoFrete(state.pedidoSelecionado.modoFrete ?? 0) }}
                     </RmTextField>
                 </div>
 
@@ -177,7 +177,7 @@ onMounted(() => {
                                 {{ state.pedidoSelecionado.dadosAgendamento.email }}
                             </RmTextField>
                             <RmTextField label="Telefone para contato">
-                                {{ mascaraTelefone(state.pedidoSelecionado.dadosAgendamento.telefone) }}
+                                {{ mascaraTelefone(state.pedidoSelecionado.dadosAgendamento?.telefone ?? '') }}
                             </RmTextField>
                         </div>
                     </div>
@@ -220,18 +220,18 @@ onMounted(() => {
                             Total
                         </th>
                     </tr>
-                    <tr v-for="(product, index) in state.pedidoSelecionado.produtos" :key="index">
+                    <tr v-for="(product, index) in (state.pedidoSelecionado.produtos ?? [])" :key="index">
                         <td>{{ index + 1 }}</td>
                         <td>{{ product.id }}</td>
                         <td class="!text-left">
                             {{ product.descricao }}
                         </td>
                         <td>{{ product.quantidade }}</td>
-                        <td>R$ {{ formatarDecimal(product.valorUnitario) }}</td>
+                        <td>R$ {{ formatarDecimal(product.valorUnitario ?? 0) }}</td>
                         <td>{{ formatarDecimal(product.percentualIPI ?? 0) }}%</td>
                         <td>{{ formatarDecimal(product.percentualICMS ?? 0) }}%</td>
                         <td>{{ formatarDecimal(product.percentualICMSST ?? 0) }}%</td>
-                        <td>R$ {{ formatarDecimal(product.valorTotal) }}</td>
+                        <td>R$ {{ formatarDecimal(product.valorTotal ?? 0) }}</td>
                     </tr>
                 </table>
 
@@ -251,7 +251,7 @@ onMounted(() => {
                             {{ planoPagamento }}
                         </RmTextField>
                         <RmTextField label="Data do faturamento" class="mb-4">
-                            {{ formatarData(state.pedidoSelecionado.dataLancamento) }}
+                            {{ formatarData(state.pedidoSelecionado.dataLancamento ?? '') }}
                         </RmTextField>
                     </div>
                 </div>
@@ -274,10 +274,10 @@ onMounted(() => {
                 <div class="flex-1 overflow-auto light-scroll">
                     <div class="grid grid-cols-3 gap-3">
                         <RmTextField label="Data de emissão">
-                            {{ formatarData(state.pedidoSelecionado.dataEmissao) }}
+                            {{ formatarData(state.pedidoSelecionado.dataEmissao ?? '') }}
                         </RmTextField>
                         <RmTextField label="Total de items">
-                            {{ state.pedidoSelecionado.produtos.length }}
+                            {{ (state.pedidoSelecionado.produtos ?? []).length }}
                         </RmTextField>
                         <RmTextField label="Total de peças">
                             {{ totalVolumes }}
@@ -286,13 +286,13 @@ onMounted(() => {
                             R$ {{ totalProdutos }}
                         </RmTextField>
                         <RmTextField label="Total ICMS">
-                            R$ {{ formatarDecimal(state.pedidoSelecionado.valorICMS) }}
+                            R$ {{ formatarDecimal(state.pedidoSelecionado.valorICMS ?? 0) }}
                         </RmTextField>
                         <RmTextField label="Total IPI">
-                            R$ {{ formatarDecimal(state.pedidoSelecionado.valorIPI) }}
+                            R$ {{ formatarDecimal(state.pedidoSelecionado.valorIPI ?? 0) }}
                         </RmTextField>
                         <RmTextField label="Total ICMS ST">
-                            R$ {{ formatarDecimal(state.pedidoSelecionado.valorICMSST) }}
+                            R$ {{ formatarDecimal(state.pedidoSelecionado.valorICMSST ?? 0) }}
                         </RmTextField>
                         <RmTextField label="Peso líquido">
                             {{ totalPesoLiquido }} kg

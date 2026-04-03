@@ -5,64 +5,64 @@ namespace RedMobilePedidos.API.Models.Responses.Pedidos;
 
 public record PedidoDetalhado
 {
-    public required string Id { get; init; }
-    public required ClientePedido Cliente { get; init; }
-    public required ModoFrete ModoFrete { get; init; }
+    public string? Id { get; init; }
+    public ClientePedido? Cliente { get; init; }
+    public ModoFrete? ModoFrete { get; init; }
     public DadosAgendamento? DadosAgendamento { get; init; }
-    public required Endereco EnderecoEntrega { get; init; }
-    public required List<ProdutoPedido> Produtos { get; init; }
-    public required string NumeroPedidoCompra { get; init; }
-    public required DateTime DataEmissao { get; init; }
-    public required string InformacoesNota { get; init; }
-    public required string ObservacoesPedido { get; init; }
-    public required List<Nota> Notas { get; init; }
-    public required DateTime DataLancamento { get; init; }
-    public required decimal ValorProdutos { get; init; }
-    public required decimal ValorICMS { get; init; }
-    public required decimal ValorICMSST { get; init; }
-    public required decimal ValorIPI { get; init; }
-    public required decimal ValorNota { get; init; }
-    public required List<NotaFiscal> NotasFiscais { get; init; }
-    public required List<string> Boletos { get; init; }
-    public required string Status { get; init; }
-    public required string PlanoPagamento { get; init; }
-    public required TipoPedido TipoPedido { get; init; }
-    public required string IdRepresentante { get; init; }
-    public required string NomeRepresentante { get; init; }
-    public required decimal MargemPedido { get; init; }
-    public required string IdGerente { get; init; }
-    public required string NomeGerente { get; init; }
-    public required decimal PesoLiquido { get; init; }
-    public required decimal PesoBruto { get; init; }
+    public Endereco? EnderecoEntrega { get; init; }
+    public List<ProdutoPedido>? Produtos { get; init; }
+    public string? NumeroPedidoCompra { get; init; }
+    public DateTime? DataEmissao { get; init; }
+    public string? InformacoesNota { get; init; }
+    public string? ObservacoesPedido { get; init; }
+    public List<Nota>? Notas { get; init; }
+    public DateTime? DataLancamento { get; init; }
+    public decimal? ValorProdutos { get; init; }
+    public decimal? ValorICMS { get; init; }
+    public decimal? ValorICMSST { get; init; }
+    public decimal? ValorIPI { get; init; }
+    public decimal? ValorNota { get; init; }
+    public List<NotaFiscal>? NotasFiscais { get; init; }
+    public List<string>? Boletos { get; init; }
+    public string? Status { get; init; }
+    public string? PlanoPagamento { get; init; }
+    public TipoPedido? TipoPedido { get; init; }
+    public string? IdRepresentante { get; init; }
+    public string? NomeRepresentante { get; init; }
+    public decimal? MargemPedido { get; init; }
+    public string? IdGerente { get; init; }
+    public string? NomeGerente { get; init; }
+    public decimal? PesoLiquido { get; init; }
+    public decimal? PesoBruto { get; init; }
 }
 
 public sealed record ClientePedido
 {
-    public required string Id { get; init; }
-    public required string NomeFantasia { get; init; }
-    public required string RazaoSocial { get; init; }
-    public required string Cnpj { get; init; }
-    public required Endereco Endereco { get; init; }
+    public string? Id { get; init; }
+    public string? NomeFantasia { get; init; }
+    public string? RazaoSocial { get; init; }
+    public string? Cnpj { get; init; }
+    public Endereco? Endereco { get; init; }
 }
 
 public sealed record ProdutoPedido
 {
-    public required int Ordem { get; init; }
-    public required string Id { get; init; }
-    public required string Descricao { get; init; }
-    public required int Quantidade { get; init; }
-    public required decimal PercentualDesconto { get; init; }
-    public required decimal ValorUnitario { get; init; }
-    public required decimal PrecoBase { get; init; }
-    public required decimal Comissao { get; init; }
-    public required decimal ValorTotal { get; init; }
-    public required decimal Margem { get; init; }
-    public required decimal PercentualICMS { get; init; }
-    public required decimal PercentualIPI { get; init; }
-    public required decimal PercentualICMSST { get; init; }
-    public required int SaldoPendente { get; init; }
-    public required decimal ICMS { get; init; }
-    public required decimal ICMSST { get; init; }
-    public required decimal IPI { get; init; }
-    public required decimal ComissaoMaxima { get; init; }
+    public int? Ordem { get; init; }
+    public string? Id { get; init; }
+    public string? Descricao { get; init; }
+    public int? Quantidade { get; init; }
+    public decimal? PercentualDesconto { get; init; }
+    public decimal? ValorUnitario { get; init; }
+    public decimal? PrecoBase { get; init; }
+    public decimal? Comissao { get; init; }
+    public decimal? ValorTotal { get; init; }
+    public decimal? Margem { get; init; }
+    public decimal? PercentualICMS { get; init; }
+    public decimal? PercentualIPI { get; init; }
+    public decimal? PercentualICMSST { get; init; }
+    public int? SaldoPendente { get; init; }
+    public decimal? ICMS { get; init; }
+    public decimal? ICMSST { get; init; }
+    public decimal? IPI { get; init; }
+    public decimal? ComissaoMaxima { get; init; }
 }

@@ -91,17 +91,17 @@ function loadChart() {
         data: {
             labels: labels,
 
-            datasets: props.items.length 
-                ? Array.from({ length: props.items[0].series.length }, (_, i) => {
+            datasets: props.items.length
+                ? Array.from({ length: props.items[0].series?.length ?? 0 }, (_, i) => {
                     return {
                         type: 'line',
-                        label: props.items[0].series[i].nome,
-                        data: props.items.flatMap(({ series }) => series[i].valor),
+                        label: props.items[0].series?.[i]?.nome ?? '',
+                        data: props.items.flatMap(({ series }) => series?.[i]?.valor ?? 0),
                         borderColor: props.lineColor,
-                        order: props.items[0].series.length - i,
+                        order: (props.items[0].series?.length ?? 0) - i,
                         fill: 'origin',
                     };
-                }) 
+                })
                 : []
         }
     });

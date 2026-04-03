@@ -1,5 +1,5 @@
 export default interface MelhorClienteDTO {
-    nomeCliente: string;
-    valorTotal: number;
-    cnpj: string;
+    nomeCliente?: string;
+    valorTotal?: number;
+    cnpj?: string;
 }

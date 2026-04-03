@@ -150,7 +150,7 @@ onMounted(() => carregarDados());
                                 {{ titulo }} durante o período
                             </RmText>
                             <div class="h-44 relative">
-                                <RmBarChart :items="state.dashboard.pedidosPorPeriodo" />
+                                <RmBarChart :items="state.dashboard.pedidosPorPeriodo ?? []" />
                             </div>
                         </div>
 
@@ -161,7 +161,7 @@ onMounted(() => carregarDados());
                                 {{ titulo }} por status
                             </RmText>
                             <div class="h-44 relative">
-                                <RmDonutChart :items="state.dashboard.pedidosPorTipo" />
+                                <RmDonutChart :items="state.dashboard.pedidosPorTipo ?? []" />
                             </div>
                         </div>
                     </div>
@@ -202,15 +202,15 @@ onMounted(() => carregarDados());
                         </tr>
                         <tr v-for="pedido in state.pedidos" :key="pedido.id">
                             <td>{{ pedido.id }}</td>
-                            <td>{{ pedido.idCliente.substr(0,6) }}</td>
-                            <td>{{ pedido.idCliente.substr(6,2) }}</td>
+                            <td>{{ (pedido.idCliente ?? '').substr(0,6) }}</td>
+                            <td>{{ (pedido.idCliente ?? '').substr(6,2) }}</td>
                             <td class="!text-left">
                                 {{ pedido.nome }}
                             </td>
-                            <td>{{ mascaraCnpj(pedido.cnpj) }}</td>
-                            <td>{{ formatarData(pedido.dataLancamento) }}</td>
-                            <td>R$ {{ formatarDecimal(pedido.valorTotal) }}</td>
-                            <td>{{ statusPedidoEnumParser.get(pedido.status)?.titulo }}</td>
+                            <td>{{ mascaraCnpj(pedido.cnpj ?? '') }}</td>
+                            <td>{{ formatarData(pedido.dataLancamento ?? '') }}</td>
+                            <td>R$ {{ formatarDecimal(pedido.valorTotal ?? 0) }}</td>
+                            <td>{{ statusPedidoEnumParser.get(pedido.status ?? '')?.titulo }}</td>
                         </tr>
                         <tr v-if="state.pedidos.length == 0">
                             <td colspan="8">

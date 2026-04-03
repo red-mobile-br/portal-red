@@ -2,11 +2,11 @@ namespace RedMobilePedidos.API.Models.Responses.TabelaPrecoss;
 
 public sealed record TabelaPrecos
 {
-    public required string Descricao { get; init; }
-    public required DateTime DataAtualizacao { get; init; }
-    public required string Comentarios { get; init; }
-    public required decimal ValorMinimoFreteCif { get; init; }
-    public required string Prazo { get; init; }
-    public required decimal ICMS { get; init; }
-    public required List<ProdutoTabelaPrecos> Produtos { get; init; }
+    public string? Descricao { get; init; }
+    public DateTime? DataAtualizacao { get; init; }
+    public string? Comentarios { get; init; }
+    public decimal? ValorMinimoFreteCif { get; init; }
+    public string? Prazo { get; init; }
+    public decimal? ICMS { get; init; }
+    public List<ProdutoTabelaPrecos>? Produtos { get; init; }
 }

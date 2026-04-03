@@ -4,12 +4,12 @@ namespace RedMobilePedidos.API.Models.Responses.Metas;
 
 public sealed record Meta
 {
-    public required string Titulo { get; init; }
-    public required DateTime DataInicio { get; init; }
-    public required DateTime DataFim { get; init; }
-    public required decimal ValorMeta { get; init; }
-    public required decimal ValorRealizado { get; init; }
-    public required StatusMeta Status { get; init; }
-    public required string Representante { get; init; }
-    public required string NomeRepresentante { get; init; }
+    public string? Titulo { get; init; }
+    public DateTime? DataInicio { get; init; }
+    public DateTime? DataFim { get; init; }
+    public decimal? ValorMeta { get; init; }
+    public decimal? ValorRealizado { get; init; }
+    public StatusMeta? Status { get; init; }
+    public string? Representante { get; init; }
+    public string? NomeRepresentante { get; init; }
 }

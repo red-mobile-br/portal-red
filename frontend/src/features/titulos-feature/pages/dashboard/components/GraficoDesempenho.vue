@@ -14,7 +14,7 @@ const chart = ref<HTMLCanvasElement>();
 
 function loadChart() {
     const ctx = chart.value as HTMLCanvasElement;
-    const labels = props.items.map(i => i.rotulo);
+    const labels = props.items.map(i => i.rotulo ?? '');
     
     const colors = ['#F66A70', '#98D8D5', '#E2CA4A'];
     const chartEl = new Chart(ctx, {
@@ -100,7 +100,7 @@ function loadChart() {
             datasets:[
                 {
                     type: 'bar',
-                    data: props.items.flatMap(({ series }) => series[0].valor),
+                    data: props.items.flatMap(({ series }) => (series ?? [])[0]?.valor ?? 0),
                     backgroundColor: colors[0],
                     order: 3,
                     yAxisID: 'y',
@@ -108,14 +108,14 @@ function loadChart() {
                 },
                 {
                     type: 'bar',
-                    data: props.items.flatMap(({ series }) => series[1].valor),
+                    data: props.items.flatMap(({ series }) => (series ?? [])[1]?.valor ?? 0),
                     backgroundColor: colors[1],
                     order: 2,
                     yAxisID: 'y',
                 },
                 {
                     type: 'line',
-                    data:props.items.flatMap(({ series }) => series[2].valor),
+                    data: props.items.flatMap(({ series }) => (series ?? [])[2]?.valor ?? 0),
                     backgroundColor: colors[2],
                     borderColor: colors[2],
                     order: 1,

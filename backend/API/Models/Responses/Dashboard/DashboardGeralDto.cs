@@ -5,9 +5,9 @@ namespace RedMobilePedidos.API.Models.Responses.Dashboard;
 
 public sealed record DashboardGeralDto
 {
-    public required int TotalPedidosPeriodo { get; init; }
-    public required decimal TotalComissaoPeriodo { get; init; }
-    public required int PedidosAbertosPeriodo { get; init; }
-    public required List<ItemGrafico> ComissoesPeriodo { get; init; }
-    public required List<ClientesPorEstado> ClientesPorEstado { get; init; }
+    public int? TotalPedidosPeriodo { get; init; }
+    public decimal? TotalComissaoPeriodo { get; init; }
+    public int? PedidosAbertosPeriodo { get; init; }
+    public List<ItemGrafico>? ComissoesPeriodo { get; init; }
+    public List<ClientesPorEstado>? ClientesPorEstado { get; init; }
 }

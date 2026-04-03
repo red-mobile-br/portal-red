@@ -21,10 +21,10 @@ const props = defineProps({
 
 const { eGerente } = useAutorizacao();
 const periodo = computed(() => {
-    return `${formatarData(props.meta.dataInicio)} à ${formatarData(props.meta.dataFim)}`;
+    return `${formatarData(props.meta.dataInicio ?? '')} à ${formatarData(props.meta.dataFim ?? '')}`;
 });
 
-const percentual = computed(() => ((props.meta.valorRealizado / props.meta.valorMeta) * 100));
+const percentual = computed(() => (((props.meta.valorRealizado ?? 0) / (props.meta.valorMeta ?? 0)) * 100));
 
 </script>
 
@@ -50,7 +50,7 @@ const percentual = computed(() => ((props.meta.valorRealizado / props.meta.valor
                         Valor da meta
                     </p>
                     <p class="text-xs opacity-60">
-                        R$ {{ formatarDecimal(meta.valorMeta) }}
+                        R$ {{ formatarDecimal(meta.valorMeta ?? 0) }}
                     </p>
                 </div>
 
@@ -61,7 +61,7 @@ const percentual = computed(() => ((props.meta.valorRealizado / props.meta.valor
                         Valor faturado
                     </p>
                     <p class="text-xs opacity-60">
-                        R$ {{ formatarDecimal(meta.valorRealizado) }}
+                        R$ {{ formatarDecimal(meta.valorRealizado ?? 0) }}
                     </p>
                 </div>
 
@@ -105,7 +105,7 @@ const percentual = computed(() => ((props.meta.valorRealizado / props.meta.valor
                         Valor da meta
                     </p>
                     <p class="text-xs opacity-60">
-                        R$ {{ formatarDecimal(meta.valorMeta) }}
+                        R$ {{ formatarDecimal(meta.valorMeta ?? 0) }}
                     </p>
                 </div>
 
@@ -114,7 +114,7 @@ const percentual = computed(() => ((props.meta.valorRealizado / props.meta.valor
                         Valor faturado
                     </p>
                     <p class="text-xs opacity-60">
-                        R$ {{ formatarDecimal(meta.valorRealizado) }}
+                        R$ {{ formatarDecimal(meta.valorRealizado ?? 0) }}
                     </p>
                 </div>
             </div>

@@ -42,20 +42,20 @@ async function obterConquistaAtual() {
 
 // Computeds
 const periodo = computed(() => {
-    return meta.value ?  `${formatarData(meta.value.dataInicio)} à ${formatarData(meta.value.dataFim)}` : '';
+    return meta.value ?  `${formatarData(meta.value.dataInicio ?? '')} à ${formatarData(meta.value.dataFim ?? '')}` : '';
 });
 
 const diasRestantes = computed(() => {
-    return meta.value ? differenceInCalendarDays(new Date(meta.value.dataFim), new Date()) : 0;
+    return meta.value?.dataFim ? differenceInCalendarDays(new Date(meta.value.dataFim), new Date()) : 0;
 });
 
 const totalDias = computed(() => {
-    return meta.value ? differenceInCalendarDays(new Date(meta.value.dataFim), new Date(meta.value.dataInicio)) : 0;
+    return meta.value?.dataFim && meta.value?.dataInicio ? differenceInCalendarDays(new Date(meta.value.dataFim), new Date(meta.value.dataInicio)) : 0;
 });
 
 const percentualMeta = computed(() => {
     if(!meta.value?.valorRealizado && !meta.value?.valorMeta) return 0;
-    return meta.value ? (meta.value.valorRealizado / meta.value.valorMeta) * 100 : 0;
+    return meta.value ? ((meta.value.valorRealizado ?? 0) / (meta.value.valorMeta ?? 1)) * 100 : 0;
 });
 
 const percentualPrazo = computed(() => meta.value ? ((totalDias.value - diasRestantes.value) / totalDias.value) * 100 : 0);
@@ -83,7 +83,7 @@ onMounted(() => obterConquistaAtual());
             
                 <div class="px-3 flex-1">
                     <p class="text-sm font-semibold mb-1">
-                        {{ meta.titulo }}
+                        {{ meta?.titulo ?? '' }}
                     </p>
                     <p class="text-xs opacity-60">
                         {{ periodo }}
@@ -99,7 +99,7 @@ onMounted(() => obterConquistaAtual());
                             Valor da meta
                         </p>
                         <p class="text-xs opacity-60">
-                            R$ {{ formatarDecimal(meta.valorMeta) }}
+                            R$ {{ formatarDecimal(meta?.valorMeta ?? 0) }}
                         </p>
                     </div>
             
@@ -110,7 +110,7 @@ onMounted(() => obterConquistaAtual());
                             Valor faturado
                         </p>
                         <p class="text-xs opacity-60">
-                            R$ {{ formatarDecimal(meta.valorRealizado) }}
+                            R$ {{ formatarDecimal(meta?.valorRealizado ?? 0) }}
                         </p>
                     </div>
             

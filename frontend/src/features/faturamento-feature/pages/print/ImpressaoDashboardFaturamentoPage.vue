@@ -112,7 +112,7 @@ onMounted(() => carregarDados());
                                 Valor total base:
                             </RmText>
                             <RmText type="display-medium">
-                                R$ {{ formatarDecimal(state.dashboard.totalBase) }}
+                                R$ {{ formatarDecimal(state.dashboard.totalBase ?? 0) }}
                             </RmText>
                         </div>
                         <div class="mx-5 w-px bg-gray-300" />
@@ -121,7 +121,7 @@ onMounted(() => carregarDados());
                                 Valor total NF
                             </RmText>
                             <RmText type="display-medium">
-                                R$ {{ formatarDecimal(state.dashboard.totalFaturado) }}
+                                R$ {{ formatarDecimal(state.dashboard.totalFaturado ?? 0) }}
                             </RmText>
                         </div>
                         <div class="mx-5 w-px bg-gray-300" />
@@ -150,7 +150,7 @@ onMounted(() => carregarDados());
                         Vendas
                     </RmText>
                     <div class="h-52 relative">
-                        <RmMultiChart :types="['line', 'line']" :items="state.dashboard.vendasPorDia" />
+                        <RmMultiChart :types="['line', 'line']" :items="state.dashboard.vendasPorDia ?? []" />
                     </div>
 
                     <!-- Vendas por categoria -->
@@ -159,7 +159,7 @@ onMounted(() => carregarDados());
                         Vendas por categoria
                     </RmText>
                     <div class="h-52 relative">
-                        <RmDonutChart :items="state.dashboard.vendasPorCategoria" :display-legend="true" />
+                        <RmDonutChart :items="state.dashboard.vendasPorCategoria ?? []" :display-legend="true" />
 
                     </div>
                     <RmDivider class="my-5" />
@@ -169,7 +169,7 @@ onMounted(() => carregarDados());
                         Produtos mais vendidos
                     </RmText>
                     <div>
-                        <ItemListaMaisVendidos v-for="(item, index) in state.dashboard.produtosMaisVendidos"
+                        <ItemListaMaisVendidos v-for="(item, index) in state.dashboard.produtosMaisVendidos ?? []"
                                           :key="index"
                                           :item="item" />
                     </div>
@@ -203,9 +203,9 @@ onMounted(() => carregarDados());
                             <td class="!text-left">
                                 {{ faturamento.cliente }}
                             </td>
-                            <td>{{ formatarData(faturamento.dataHora) }}</td>
-                            <td>R$ {{ formatarDecimal(faturamento.valorPedido) }}</td>
-                            <td>R$ {{ formatarDecimal(faturamento.valorBase) }}</td>
+                            <td>{{ formatarData(faturamento.dataHora ?? '') }}</td>
+                            <td>R$ {{ formatarDecimal(faturamento.valorPedido ?? 0) }}</td>
+                            <td>R$ {{ formatarDecimal(faturamento.valorBase ?? 0) }}</td>
                         </tr>
                     </table>
                 </div>

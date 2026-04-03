@@ -38,7 +38,7 @@ export default function templateRelatorioPedido(data: ReportTemplateOptions) {
                                 'element': 'text',
                                 'type': 'headline-primary',
                                 'marginBottom': 0,
-                                'content': order.id
+                                'content': order.id ?? ''
                             }
                         ]
                     },
@@ -82,7 +82,7 @@ export default function templateRelatorioPedido(data: ReportTemplateOptions) {
                                 'element': 'text',
                                 'type': 'headline-primary',
                                 'marginBottom': 0,
-                                'content': statusPedidoEnumParser.get(order.status)?.titulo
+                                'content': statusPedidoEnumParser.get(order.status ?? '0')?.titulo
                             }
                         ]
                     }
@@ -116,7 +116,7 @@ export default function templateRelatorioPedido(data: ReportTemplateOptions) {
                     {
                         'element': 'textField',
                         'label': 'Identificador',
-                        'content': order.cliente.id
+                        'content': order.cliente?.id ?? ''
                     },
                     {
                         'element': 'colSpan',
@@ -124,13 +124,13 @@ export default function templateRelatorioPedido(data: ReportTemplateOptions) {
                         'child': {
                             'element': 'textField',
                             'label': 'Razão social',
-                            content: order.cliente.razaoSocial
+                            content: order.cliente?.razaoSocial ?? ''
                         }
                     },
                     {
                         'element': 'textField',
                         'label': 'CNPJ',
-                        'content': mascaraCnpj(order.cliente.cnpj)
+                        'content': mascaraCnpj(order.cliente?.cnpj ?? '')
                     },
                     {
                         'element': 'colSpan',
@@ -138,13 +138,13 @@ export default function templateRelatorioPedido(data: ReportTemplateOptions) {
                         'child': {
                             'element': 'textField',
                             'label': 'Nome fantasia',
-                            'content': order.cliente.nomeFantasia
+                            'content': order.cliente?.nomeFantasia ?? ''
                         }
                     },
                     {
                         'element': 'textField',
                         'label': 'CEP',
-                        'content': order.cliente.endereco.cep
+                        'content': order.cliente?.endereco?.cep ?? ''
                     },
                     {
                         'element': 'colSpan',
@@ -152,13 +152,13 @@ export default function templateRelatorioPedido(data: ReportTemplateOptions) {
                         'child': {
                             'element': 'textField',
                             'label': 'Logradouro',
-                            'content': order.cliente.endereco.logradouro
+                            'content': order.cliente?.endereco?.logradouro ?? ''
                         }
                     },
                     {
                         'element': 'textField',
                         'label': 'Número',
-                        'content': order.cliente.endereco.numero
+                        'content': order.cliente?.endereco?.numero ?? ''
                     },
                     {
                         'element': 'colSpan',
@@ -166,23 +166,23 @@ export default function templateRelatorioPedido(data: ReportTemplateOptions) {
                         'child': {
                             'element': 'textField',
                             'label': 'Complemento',
-                            'content': order.cliente.endereco.complemento || '-'
+                            'content': order.cliente?.endereco?.complemento || '-'
                         }
                     },
                     {
                         'element': 'textField',
                         'label': 'Bairro',
-                        'content': order.cliente.endereco.bairro
+                        'content': order.cliente?.endereco?.bairro ?? ''
                     },
                     {
                         'element': 'textField',
                         'label': 'Município',
-                        'content': order.cliente.endereco.cidade
+                        'content': order.cliente?.endereco?.cidade ?? ''
                     },
                     {
                         'element': 'textField',
                         'label': 'Estado',
-                        'content': order.cliente.endereco.estado
+                        'content': order.cliente?.endereco?.estado ?? ''
                     }
                 ]
             },
@@ -205,38 +205,38 @@ export default function templateRelatorioPedido(data: ReportTemplateOptions) {
                         'child': {
                             'element': 'textField',
                             'label': 'Logradouro',
-                            'content': order.enderecoEntrega.logradouro
+                            'content': order.enderecoEntrega?.logradouro ?? ''
                         }
                     },
                     {
                         'element': 'textField',
                         'label': 'CEP',
-                        'content': order.enderecoEntrega.cep
+                        'content': order.enderecoEntrega?.cep ?? ''
                     },
                     {
                         'element': 'textField',
                         'label': 'Número',
-                        'content': order.enderecoEntrega.numero
+                        'content': order.enderecoEntrega?.numero ?? ''
                     },
                     {
                         'element': 'textField',
                         'label': 'Complemento',
-                        'content': order.enderecoEntrega.complemento || '-'
+                        'content': order.enderecoEntrega?.complemento || '-'
                     },
                     {
                         'element': 'textField',
                         'label': 'Bairro',
-                        'content': order.enderecoEntrega.bairro
+                        'content': order.enderecoEntrega?.bairro ?? ''
                     },
                     {
                         'element': 'textField',
                         'label': 'Município',
-                        'content': order.enderecoEntrega.cidade
+                        'content': order.enderecoEntrega?.cidade ?? ''
                     },
                     {
                         'element': 'textField',
                         'label': 'Estado',
-                        'content': order.enderecoEntrega.estado
+                        'content': order.enderecoEntrega?.estado ?? ''
                     },
                     {
                         'element': 'textField',
@@ -293,18 +293,18 @@ export default function templateRelatorioPedido(data: ReportTemplateOptions) {
                     { title: 'ICMS ST' },
                     { title: 'Total' }
                 ],
-                rows:  order.produtos.map((product, index) => {
+                rows: (order.produtos ?? []).map((product, index) => {
                     return [
                         index + 1,
-                        product.id,
-                        product.descricao,
-                        product.quantidade,
-                        formatarDecimal(product.valorUnitario),
-                        formatarDecimal(product.precoBase),
-                        formatarDecimal(product.ipi),
-                        formatarDecimal(product.icms),
-                        formatarDecimal(product.icmsst),
-                        formatarDecimal(product.valorTotal),
+                        product.id ?? '',
+                        product.descricao ?? '',
+                        product.quantidade ?? 0,
+                        formatarDecimal(product.valorUnitario ?? 0),
+                        formatarDecimal(product.precoBase ?? 0),
+                        formatarDecimal(product.ipi ?? 0),
+                        formatarDecimal(product.icms ?? 0),
+                        formatarDecimal(product.icmsst ?? 0),
+                        formatarDecimal(product.valorTotal ?? 0),
                     ];
                 })
             },
@@ -324,13 +324,13 @@ export default function templateRelatorioPedido(data: ReportTemplateOptions) {
                     {
                         'element': 'textField',
                         'label': 'NFs',
-                        'content': order.notasFiscais.length > 0 ? order.notasFiscais.join(', ') : '-',
+                        'content': (order.notasFiscais?.length ?? 0) > 0 ? order.notasFiscais!.join(', ') : '-',
                         'marginBottom': 1
                     },
                     {
                         'element': 'textField',
                         'label': 'Boletos',
-                        'content': order.boletos.length > 0 ? order.boletos.join(', ') : '-',
+                        'content': (order.boletos?.length ?? 0) > 0 ? order.boletos!.join(', ') : '-',
                         'marginBottom': 1
                     },
                     {
@@ -351,7 +351,7 @@ export default function templateRelatorioPedido(data: ReportTemplateOptions) {
                         child: {
                             'element': 'textField',
                             'label': 'Data do faturamento',
-                            'content':  formatarData(order.dataLancamento),
+                            'content': formatarData(order.dataLancamento ?? ''),
                             'marginBottom': 1
                         }
                     }
@@ -384,12 +384,12 @@ export default function templateRelatorioPedido(data: ReportTemplateOptions) {
                     {
                         'element': 'textField',
                         'label': 'Data de emissão',
-                        'content': formatarData(order.dataEmissao)
+                        'content': formatarData(order.dataEmissao ?? '')
                     },
                     {
                         'element': 'textField',
                         'label': 'Total de items',
-                        'content': order.produtos.length.toString()
+                        'content': (order.produtos?.length ?? 0).toString()
                     },
                     {
                         'element': 'textField',
@@ -404,17 +404,17 @@ export default function templateRelatorioPedido(data: ReportTemplateOptions) {
                     {
                         'element': 'textField',
                         'label': 'Total ICMS',
-                        'content': `R$ ${order.valorICMS}`
+                        'content': `R$ ${order.valorICMS ?? 0}`
                     },
                     {
                         'element': 'textField',
                         'label': 'Total IPI',
-                        'content': `R$ ${order.valorIPI}`
+                        'content': `R$ ${order.valorIPI ?? 0}`
                     },
                     {
                         'element': 'textField',
                         'label': 'Total ICMS ST',
-                        'content': `R$ ${order.valorICMSST }`
+                        'content': `R$ ${order.valorICMSST ?? 0}`
                     },
                     {
                         'element': 'textField',
@@ -429,7 +429,7 @@ export default function templateRelatorioPedido(data: ReportTemplateOptions) {
                     {
                         'element': 'textField',
                         'label': 'Total da nota fiscal',
-                        'content': 'R$ ' + formatarDecimal(order.valorNota)
+                        'content': 'R$ ' + formatarDecimal(order.valorNota ?? 0)
                     }
                 ]
             }

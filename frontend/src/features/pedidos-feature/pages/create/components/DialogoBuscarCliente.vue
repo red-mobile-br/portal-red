@@ -147,13 +147,13 @@ defineExpose({ search });
                                         <tr v-for="(client, index) in state.clients" :key="index" class="cursor-pointer"
                                             @click="selectClient(client)">
                                             <td class="px-4">
-                                                {{ client.id.substr(0,6) }}
+                                                {{ (client.id ?? '').substr(0,6) }}
                                             </td>
-                                            <td>{{ client.id.substr(6,2) }}</td>
+                                            <td>{{ (client.id ?? '').substr(6,2) }}</td>
                                             <td class="!text-left !px-3">
                                                 {{ client.nome }}
                                             </td>
-                                            <td>{{ mascaraCnpj(client.cnpj) }}</td>
+                                            <td>{{ mascaraCnpj(client.cnpj ?? '') }}</td>
                                         </tr>
 
                                         <!-- Nenhum produto -->

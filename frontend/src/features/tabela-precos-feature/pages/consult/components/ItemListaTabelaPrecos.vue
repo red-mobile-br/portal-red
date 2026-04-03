@@ -19,7 +19,7 @@ defineProps({
                 {{ product.descricao }}
             </p>
         </td>
-        <td>R$ {{ formatarDecimal(product.precoMercado) }}</td>
-        <td>{{ formatarDecimal(product.percentualIPI) }}%</td>
+        <td>R$ {{ formatarDecimal(product.precoMercado ?? 0) }}</td>
+        <td>{{ formatarDecimal(product.percentualIPI ?? 0) }}%</td>
     </tr>
 </template>

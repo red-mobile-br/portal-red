@@ -169,8 +169,8 @@ const imprimir = () => {
 const buscarRepresentante = async () => {
     const representante = await refModalBuscarRepresentante.value?.search();
     if(representante) {
-        filtros.idRepresentante = representante.id;
-        filtros.nomeRepresentante = representante.nome;
+        filtros.idRepresentante = representante.id ?? '';
+        filtros.nomeRepresentante = representante.nome ?? '';
         aplicarFiltrosEReiniciar(carregarDados);
     }
 };
@@ -179,8 +179,8 @@ const buscarRepresentante = async () => {
 const buscarCliente = async () => {
     const cliente = await refModalBuscarCliente.value?.search();
     if(cliente) {
-        filtros.idCliente = cliente.id;
-        filtros.nomeCliente = cliente.nome;
+        filtros.idCliente = cliente.id ?? '';
+        filtros.nomeCliente = cliente.nome ?? '';
         aplicarFiltrosEReiniciar(carregarDados);
     }
 };
@@ -236,7 +236,7 @@ onMounted(() => carregarDados());
                     Valor Recebido
                 </RmText>
                 <p class="font-semibold text-2xl text-primary-light">
-                    R$ {{ formatarDecimal(state.dashboard.valorRecebido) }}
+                    R$ {{ formatarDecimal(state.dashboard.valorRecebido ?? 0) }}
                 </p>
                 <RmDivider class="mb-2 my-3" />
                 <RmText type="label-small">
@@ -250,7 +250,7 @@ onMounted(() => carregarDados());
                     Valor a Receber
                 </RmText>
                 <p class="font-semibold text-2xl text-accent">
-                    R$ {{ formatarDecimal(state.dashboard.valorAReceber) }}
+                    R$ {{ formatarDecimal(state.dashboard.valorAReceber ?? 0) }}
                 </p>
                 <RmDivider class="mb-2 my-3" />
                 <RmText type="label-small">
@@ -264,7 +264,7 @@ onMounted(() => carregarDados());
                     Desempenho no período
                 </RmText>
                 <div class="flex-1 relative">
-                    <GraficoDesempenho :items="state.dashboard.desempenhoPeriodo" />
+                    <GraficoDesempenho :items="state.dashboard.desempenhoPeriodo ?? []" />
                 </div>
             </RmCard>
 

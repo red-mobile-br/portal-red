@@ -139,7 +139,7 @@ defineExpose({ search });
                                             <td class="!text-left">
                                                 {{ product.descricao }}
                                             </td>
-                                            <td>R$ {{ formatarDecimal(product.valorUnitario) }}</td>
+                                            <td>R$ {{ formatarDecimal(product.valorUnitario ?? 0) }}</td>
                                         </tr>
 
                                         <!-- Nenhum produto -->
