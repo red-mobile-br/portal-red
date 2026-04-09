@@ -90,7 +90,7 @@ public class PedidoController(
             assunto,
             corpoEmail,
             pdfBytes,
-            $"Pedido_{pedido.Id}_{pedido.DataLancamento:yyyyMMdd}.pdf"
+            $"Pedido_{pedido.Id}_{pedido.DataEmissao:yyyyMMdd}.pdf"
         );
 
         return Ok(new { mensagem = "Email enviado com sucesso" });
@@ -119,7 +119,7 @@ public class PedidoController(
         var html = servicoRelatorioPedido.GerarRelatorioHtml(pedido);
         var pdfBytes = await pdfService.GerarPdfDeHtmlAsync(html);
 
-        return File(pdfBytes, "application/pdf", $"Pedido_{pedido.Id}_{pedido.DataLancamento:yyyyMMdd}.pdf");
+        return File(pdfBytes, "application/pdf", $"Pedido_{pedido.Id}_{pedido.DataEmissao:yyyyMMdd}.pdf");
     }
 
     [HttpGet("{numero}/notaFiscal/{id}")]

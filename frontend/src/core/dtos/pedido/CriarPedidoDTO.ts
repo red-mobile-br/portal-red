@@ -7,11 +7,11 @@ export default interface CriarPedidoDTO {
     };
     enderecoEntrega: {
         logradouro: string;
-        numero: string;
+        numero: number | '';
         complemento: string;
         bairro: string;
         cidade: string;
-        estado: string;
+        uf: string;
         cep: string
     };
     produtos: {

@@ -18,11 +18,11 @@ const { eGerente } = useAutorizacao();
 
 <template>
     <tr>
-        <td>{{ commission?.pedido ?? '' }}</td>
+        <td>{{ commission?.numeroPedido ?? '' }}</td>
         <td class="!text-left">
             {{ commission?.nomeCliente ?? '' }}
         </td>
-        <td>{{ commission?.titulo ?? '' }}</td>
+        <td>{{ commission?.numeroTitulo ?? '' }}</td>
         <td>{{ commission?.parcela ?? '' }}</td>
         <td>{{ commission?.dataVencimento ? formatarData(commission.dataVencimento) : '-' }}</td>
         <td>{{ commission?.dataBaixa ? formatarData(commission.dataBaixa) : '-' }}</td>
@@ -31,7 +31,7 @@ const { eGerente } = useAutorizacao();
         <td>{{ formatarDecimal(commission?.percentualComissao ?? 0) }}%</td>
         <td v-if="eGerente">
             <RmTooltip :text="commission?.nomeRepresentante ?? ''">
-                {{ commission?.representante ?? '' }}
+                {{ commission?.idRepresentante ?? '' }}
             </RmTooltip>
         </td>
         <td>R$ {{ formatarDecimal(commission?.valorComissao ?? 0) }}</td>

@@ -44,33 +44,33 @@ public class TituloControllerTests : BaseControllerTests
             {
                 new()
                 {
-                    Titulo = "TITLE001",
+                    NumeroTitulo = "TITLE001",
                     NomeCliente = "Client ABC",
                     Parcela = 1,
                     Cnpj = "12345678000190",
-                    Pedido = "ORD001",
+                    NumeroPedido = "ORD001",
                     ValorTitulo = 1000.00m,
-                    Status = "Open",
+                    Status = 0,
                     DataVencimento = DateTime.Today.AddDays(30),
                     DataPagamento = null,
-                    DataVencimentoOriginal = DateTime.Today.AddDays(30),
+                    VencimentoOriginal = DateTime.Today.AddDays(30),
                     NomeRepresentante = "Vendor 1",
-                    Representante = "V001"
+                    IdRepresentante = "V001"
                 },
                 new()
                 {
-                    Titulo = "TITLE002",
+                    NumeroTitulo = "TITLE002",
                     NomeCliente = "Client XYZ",
                     Parcela = 2,
                     Cnpj = "98765432000111",
-                    Pedido = "ORD002",
+                    NumeroPedido = "ORD002",
                     ValorTitulo = 2000.00m,
-                    Status = "Paid",
+                    Status = 2,
                     DataVencimento = DateTime.Today.AddDays(-10),
                     DataPagamento = DateTime.Today.AddDays(-5),
-                    DataVencimentoOriginal = DateTime.Today.AddDays(-10),
+                    VencimentoOriginal = DateTime.Today.AddDays(-10),
                     NomeRepresentante = "Vendor 2",
-                    Representante = "V002"
+                    IdRepresentante = "V002"
                 }
             },
             NumeroPagina = 1,
@@ -91,7 +91,7 @@ public class TituloControllerTests : BaseControllerTests
         // Assert
         result.Should().NotBeNull();
         result.Dados.Should().HaveCount(2);
-        result.Dados.First().Titulo.Should().Be("TITLE001");
+        result.Dados.First().NumeroTitulo.Should().Be("TITLE001");
     }
 
     [Fact]
@@ -141,18 +141,18 @@ public class TituloControllerTests : BaseControllerTests
             {
                 new()
                 {
-                    Titulo = "TITLE050",
+                    NumeroTitulo = "TITLE050",
                     NomeCliente = "Client Test",
                     Parcela = 1,
                     Cnpj = "11111111000111",
-                    Pedido = "ORD050",
+                    NumeroPedido = "ORD050",
                     ValorTitulo = 500.00m,
-                    Status = "Open",
+                    Status = 0,
                     DataVencimento = DateTime.Today.AddDays(15),
                     DataPagamento = null,
-                    DataVencimentoOriginal = DateTime.Today.AddDays(15),
+                    VencimentoOriginal = DateTime.Today.AddDays(15),
                     NomeRepresentante = "Vendor Test",
-                    Representante = "V999"
+                    IdRepresentante = "V999"
                 }
             },
             NumeroPagina = 3,
@@ -295,18 +295,18 @@ public class TituloControllerTests : BaseControllerTests
             {
                 new()
                 {
-                    Titulo = "TITLE003",
+                    NumeroTitulo = "TITLE003",
                     NomeCliente = "Client Test",
                     Parcela = 1,
                     Cnpj = "12345678000190",
-                    Pedido = "ORD003",
+                    NumeroPedido = "ORD003",
                     ValorTitulo = 3000.00m,
-                    Status = "Open",
+                    Status = 0,
                     DataVencimento = null,
                     DataPagamento = null,
-                    DataVencimentoOriginal = null,
+                    VencimentoOriginal = null,
                     NomeRepresentante = "Vendor 3",
-                    Representante = "V003"
+                    IdRepresentante = "V003"
                 }
             },
             NumeroPagina = 1,
@@ -329,6 +329,6 @@ public class TituloControllerTests : BaseControllerTests
         result.Dados.Should().HaveCount(1);
         result.Dados.First().DataVencimento.Should().BeNull();
         result.Dados.First().DataPagamento.Should().BeNull();
-        result.Dados.First().DataVencimentoOriginal.Should().BeNull();
+        result.Dados.First().VencimentoOriginal.Should().BeNull();
     }
 }

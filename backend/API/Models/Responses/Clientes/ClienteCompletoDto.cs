@@ -6,6 +6,7 @@ namespace RedMobilePedidos.API.Models.Responses.Clientes;
 public sealed record ClienteCompletoDto
 {
     public string? Id { get; init; }
+    public string? TipoCliente { get; init; }
     public string? IdRepresentante { get; init; }
     public string? NomeRepresentante { get; init; }
     public string? IdGerente { get; init; }
@@ -44,5 +45,5 @@ public sealed record ClienteCompletoDto
     public ArquivoInfo? DocumentoSintegra { get; init; }
     public List<ArquivoInfo>? Comprovantes { get; init; }
     public List<ArquivoInfo>? NotasComerciais { get; init; }
-    public List<DadosBancarios>? DadosBancarios { get; init; }
+    public DadosBancarios? DadosBancarios { get; init; }
 }

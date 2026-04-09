@@ -2,9 +2,9 @@ import ProdutoTabelaPrecosDTO from "./ProdutoTabelaPrecosDTO";
 
 export default interface TabelaPrecosDTO {
     valorMinimoFreteCif?: number;
-    comentarios?: string;
+    observacoes?: string;
     dataAtualizacao?: string;
-    prazo?: string;
+    dataValidade?: string;
     descricao?: string;
     icms?: number;
     produtos?: ProdutoTabelaPrecosDTO[];

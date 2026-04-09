@@ -243,31 +243,31 @@ public class ClienteControllerTests : BaseControllerTests
                 new()
                 {
                     Id = "PED001",
-                    DataLancamento = DateTime.Today,
-                    Nome = "Cliente ABC",
+                    DataEmissao = DateTime.Today,
+                    NomeCliente = "Cliente ABC",
                     ValorTotal = 1000.00m,
                     Status = "Aberto",
                     Cnpj = cnpj,
                     IdCliente = "CLI001",
-                    Notas = [],
+                    Anotacoes = [],
                     NotasFiscais = [],
                     Boletos = [],
-                    Representante = "V001",
+                    IdRepresentante = "V001",
                     NomeRepresentante = "Representante 1"
                 },
                 new()
                 {
                     Id = "PED002",
-                    DataLancamento = DateTime.Today,
-                    Nome = "Cliente XYZ",
+                    DataEmissao = DateTime.Today,
+                    NomeCliente = "Cliente XYZ",
                     ValorTotal = 2000.00m,
                     Status = "Aberto",
                     Cnpj = cnpj,
                     IdCliente = "CLI001",
-                    Notas = [],
+                    Anotacoes = [],
                     NotasFiscais = [],
                     Boletos = [],
-                    Representante = "V002",
+                    IdRepresentante = "V002",
                     NomeRepresentante = "Representante 2"
                 }
             },
@@ -346,8 +346,7 @@ public class ClienteControllerTests : BaseControllerTests
             Margem = 5,
             PercentualICMS = 18,
             PercentualIPI = 10,
-            PercentualICMSST = 0,
-            ValorTotal = 0
+            PercentualICMSST = 0
         };
 
         var mockClient = MockHttpMessageHandler.CreateMockClient(

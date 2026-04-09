@@ -238,7 +238,7 @@ onMounted(() => {
                         </RmTextField>
 
                         <RmTextField label="Estado">
-                            {{ state.clienteSelecionado.endereco?.estado ?? '' }}
+                            {{ state.clienteSelecionado.endereco?.uf ?? '' }}
                         </RmTextField>
                     
                     </div>
@@ -301,7 +301,7 @@ onMounted(() => {
                             {{ state.clienteSelecionado.enderecoEntrega?.cidade }}
                         </RmTextField>
                         <RmTextField label="Estado">
-                            {{ state.clienteSelecionado.enderecoEntrega?.estado }}
+                            {{ state.clienteSelecionado.enderecoEntrega?.uf }}
                         </RmTextField>
                     </div>
                 </RmCard>
@@ -330,7 +330,7 @@ onMounted(() => {
                             {{ reference.nomeContato ?? '' }}
                         </RmTextField>
                         <RmTextField label="Empresa">
-                            {{ reference.razaoSocial ?? '' }}
+                            {{ reference.nomeEmpresa ?? '' }}
                         </RmTextField>
                         <RmTextField label="Celular">
                             {{ reference.telefone ?? '' }}
@@ -370,26 +370,25 @@ onMounted(() => {
                         Dados bancários
                     </RmText>
 
-                    <div v-for="(bankData, index) in state.clienteSelecionado.dadosBancarios ?? []"
-                         :key="index"
-                         class="grid grid-cols-4 gap-4 flex-1 border-b last:border-b-0 border-gray-300">
+                    <div v-if="state.clienteSelecionado.dadosBancarios"
+                         class="grid grid-cols-4 gap-4 flex-1">
                         <RmTextField label="Nome do banco" class="col-span-4">
-                            {{ bankData.nomeBanco ?? '' }}
+                            {{ state.clienteSelecionado.dadosBancarios.nomeBanco ?? '' }}
                         </RmTextField>
                         <RmTextField label="Nº do banco">
-                            {{ bankData.numeroBanco ?? '' }}
+                            {{ state.clienteSelecionado.dadosBancarios.numeroBanco ?? '' }}
                         </RmTextField>
                         <RmTextField label="Nome da agência">
-                            {{ bankData.nomeAgencia ?? '' }}
+                            {{ state.clienteSelecionado.dadosBancarios.nomeAgencia ?? '' }}
                         </RmTextField>
                         <RmTextField label="Nº da agência">
-                            {{ bankData.numeroAgencia ?? '' }}
+                            {{ state.clienteSelecionado.dadosBancarios.numeroAgencia ?? '' }}
                         </RmTextField>
                         <RmTextField label="Nº da conta">
-                            {{ bankData.numeroConta ?? '' }}
+                            {{ state.clienteSelecionado.dadosBancarios.numeroConta ?? '' }}
                         </RmTextField>
                     </div>
-                    <p v-if="!state.clienteSelecionado.dadosBancarios?.length" class="text-center text-sm">
+                    <p v-else class="text-center text-sm">
                         Não há dados bancários informados
                     </p>
                 </RmCard>

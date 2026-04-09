@@ -7,12 +7,12 @@ export interface ArquivoInfoDTO {
 
 export interface SocioInfoDTO {
     nome?: string;
-    percentual?: string;
+    percentual?: number;
     cpf?: string;
 }
 
 export interface ReferenciaComercialDTO {
-    razaoSocial?: string;
+    nomeEmpresa?: string;
     telefone?: string;
     celular?: string;
     nomeContato?: string;
@@ -35,9 +35,10 @@ export interface ClientePedidoDTO {
 }
 
 export interface ClienteDetalhadoDTO {
+    tipoCliente?: string;
     ramoAtividade?: string;
     endereco?: EnderecoDTO;
-    dadosBancarios?: DadosBancariosDTO[];
+    dadosBancarios?: DadosBancariosDTO;
     telefoneCobranca?: string;
     cnae?: string;
     cnpj?: string;

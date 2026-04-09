@@ -95,7 +95,7 @@ const percentual = computed(() => (((props.meta.valorRealizado ?? 0) / (props.me
                     Representante
                 </p>
                 <p class="text-xs opacity-60">
-                    {{ meta.representante }} - {{ meta.nomeRepresentante }}
+                    {{ meta.idRepresentante }} - {{ meta.nomeRepresentante }}
                 </p>
             </div>
 
@@ -128,7 +128,7 @@ const percentual = computed(() => (((props.meta.valorRealizado ?? 0) / (props.me
                     Representante
                 </p>
                 <p class="text-xs opacity-60">
-                    {{ meta.representante }} - {{ meta.nomeRepresentante }}
+                    {{ meta.idRepresentante }} - {{ meta.nomeRepresentante }}
                 </p>
             </div>
         </div>

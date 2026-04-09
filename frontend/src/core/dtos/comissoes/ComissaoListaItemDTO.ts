@@ -1,15 +1,14 @@
 export default interface ComissaoListaItemDTO {
-    pedido?: string;
+    numeroPedido?: string;
     nomeCliente?: string;
-    cnpj?: string;
-    titulo?: string;
+    numeroTitulo?: string;
     parcela?: number;
     dataVencimento?: string;
     dataBaixa?: string;
     valorTitulo?: number;
     valorBase?: number;
     percentualComissao?: number;
-    representante?: string;
+    idRepresentante?: string;
     nomeRepresentante?: string;
     valorComissao?: number;
 }

@@ -8,5 +8,6 @@ export default interface ImpostoProdutoDTO {
     percentualIPI?: number;
     percentualICMSST?: number;
     comissaoMaxima?: number;
-    valorTotal?: number;
+    valorMargem?: number;
+    valorCusto?: number;
 }

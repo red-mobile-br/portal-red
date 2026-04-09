@@ -199,12 +199,12 @@ onMounted(() => carregarDados());
                             </th>
                         </tr>
                         <tr v-for="(faturamento, index) in state.faturamentos" :key="index">
-                            <td>{{ faturamento.pedido }}</td>
+                            <td>{{ faturamento.numeroPedido }}</td>
                             <td class="!text-left">
-                                {{ faturamento.cliente }}
+                                {{ faturamento.nomeCliente }}
                             </td>
-                            <td>{{ formatarData(faturamento.dataHora ?? '') }}</td>
-                            <td>R$ {{ formatarDecimal(faturamento.valorPedido ?? 0) }}</td>
+                            <td>{{ formatarData(faturamento.dataEmissao ?? '') }}</td>
+                            <td>R$ {{ formatarDecimal(faturamento.valorBruto ?? 0) }}</td>
                             <td>R$ {{ formatarDecimal(faturamento.valorBase ?? 0) }}</td>
                         </tr>
                     </table>

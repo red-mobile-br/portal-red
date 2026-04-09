@@ -2,12 +2,12 @@ namespace RedMobilePedidos.API.Models.Responses.DashboardFaturamentos;
 
 public sealed record FaturamentoItem
 {
-    public string? Pedido { get; init; }
-    public string? Cliente { get; init; }
-    public DateTime? DataHora { get; init; }
-    public decimal? ValorPedido { get; init; }
+    public string? NumeroPedido { get; init; }
+    public string? NomeCliente { get; init; }
+    public DateTime? DataEmissao { get; init; }
+    public decimal? ValorBruto { get; init; }
     public decimal? ValorBase { get; init; }
-    public string? Representante { get; init; }
+    public string? IdRepresentante { get; init; }
     public string? NomeRepresentante { get; init; }
-    public string? NotaFiscal { get; init; }
+    public string? NumeroNota { get; init; }
 }

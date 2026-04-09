@@ -39,10 +39,10 @@ const canEdit = computed(() => ['0', 'M', 'R'].includes(props.order?.status ?? '
     <tr class="cursor-pointer">
         <td>{{ order?.id ?? '' }}</td>
         <td class="!text-left">
-            {{ order?.nome ?? '' }}
+            {{ order?.nomeCliente ?? '' }}
         </td>
         <td>{{ mascaraCnpj(order?.cnpj ?? '') }}</td>
-        <td>{{ formatarData(order?.dataLancamento ?? '') }}</td>
+        <td>{{ formatarData(order?.dataEmissao ?? '') }}</td>
         <td>R$ {{ formatarDecimal(order?.valorTotal ?? 0) }}</td>
         <td>
             <RmTooltip :text="tipoPedido.titulo">

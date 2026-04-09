@@ -180,19 +180,19 @@ onMounted(() => carregarDados());
                             </th>
                         </tr>
                         <tr v-for="(titulo, index) in state.titulos" :key="index">
-                            <td>{{ titulo.titulo }}</td>
+                            <td>{{ titulo.numeroTitulo }}</td>
                             <td>{{ titulo.parcela }}</td>
-                            <td>{{ titulo.pedido }}</td>
+                            <td>{{ titulo.numeroPedido }}</td>
                             <td class="!text-left">
                                 {{ titulo.nomeCliente }}
                             </td>
                             <td>{{ mascaraCnpj(titulo.cnpj ?? '') }}</td>
-                            <td>{{ titulo.dataVencimentoOriginal ? formatarData(titulo.dataVencimentoOriginal) : '-' }}</td>
+                            <td>{{ titulo.vencimentoOriginal ? formatarData(titulo.vencimentoOriginal) : '-' }}</td>
                             <td>{{ titulo.dataVencimento ? formatarData(titulo.dataVencimento) : '-' }}</td>
                             <td>{{ titulo.dataPagamento ? formatarData(titulo.dataPagamento) : '-' }}</td>
                             <td>R$ {{ formatarDecimal(titulo.valorTitulo ?? 0) }}</td>
                             <td>
-                                {{ statusTituloEnumParser.get((titulo.status ?? '').toString())?.titulo }}
+                                {{ statusTituloEnumParser.get(String(titulo.status ?? 0))?.titulo }}
                             </td>
                         </tr>
                     </table>

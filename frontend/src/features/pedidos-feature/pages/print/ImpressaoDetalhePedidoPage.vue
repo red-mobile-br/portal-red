@@ -116,7 +116,7 @@ onMounted(() => {
                         {{ state.pedidoSelecionado.cliente?.endereco?.cidade }}
                     </RmTextField>
                     <RmTextField label="Estado">
-                        {{ state.pedidoSelecionado.cliente?.endereco?.estado }}
+                        {{ state.pedidoSelecionado.cliente?.endereco?.uf }}
                     </RmTextField>
                 </div>
 
@@ -160,7 +160,7 @@ onMounted(() => {
                             {{ state.pedidoSelecionado.enderecoEntrega.cidade }}
                         </RmTextField>
                         <RmTextField label="Estado">
-                            {{ state.pedidoSelecionado.enderecoEntrega.estado }}
+                            {{ state.pedidoSelecionado.enderecoEntrega.uf }}
                         </RmTextField>
                     </div>
                     <RmDivider class="my-5" />
@@ -251,7 +251,7 @@ onMounted(() => {
                             {{ planoPagamento }}
                         </RmTextField>
                         <RmTextField label="Data do faturamento" class="mb-4">
-                            {{ formatarData(state.pedidoSelecionado.dataLancamento ?? '') }}
+                            {{ formatarData(state.pedidoSelecionado.dataEmissao ?? '') }}
                         </RmTextField>
                     </div>
                 </div>

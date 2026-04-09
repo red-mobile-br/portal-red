@@ -87,11 +87,11 @@ interface NovoPedidoState {
         tipoPedido: 0 | 1,
         enderecoEntrega: {
             logradouro: string,
-            numero: string,
+            numero: number | '',
             complemento: string,
             bairro: string,
             cidade: string,
-            estado: string,
+            uf: string,
             cep: string
         },
         numeroPedidoCompra: string,
@@ -173,7 +173,7 @@ const state = reactive<NovoPedidoState>({
             complemento: '',
             bairro: '',
             cidade: '',
-            estado: '',
+            uf: '',
             cep: ''
         },
         numeroPedidoCompra: '',
@@ -224,7 +224,7 @@ watch(() => state.form.enderecoEntrega.cep, (novoValor, valorAntigo) => {
                 state.form.enderecoEntrega.logradouro = resp.logradouro;
                 state.form.enderecoEntrega.bairro = resp.bairro;
                 state.form.enderecoEntrega.cidade = resp.localidade;
-                state.form.enderecoEntrega.estado = resp.uf;
+                state.form.enderecoEntrega.uf = resp.uf;
             });
     }
 });
@@ -246,7 +246,7 @@ const aplicarImpostosProduto = (produto: ProdutoDTO, taxes: import('@/core/dtos/
     produto.percentualDesconto = produto.percentualDesconto ?? 0;
     produto.valorUnitario = produto.valorUnitario ?? produto.precoBase;
     produto.margem = taxes.margem ?? 0;
-    produto.valorTotal = taxes.valorTotal ?? 0;
+    produto.valorTotal = (produto.valorUnitario ?? 0) * (produto.quantidade ?? 0);
 };
 
 /** Cancelador de request anterior */
@@ -498,7 +498,7 @@ const limparFormulario = () => {
     state.form.enderecoEntrega.complemento= '';
     state.form.enderecoEntrega.bairro= '';
     state.form.enderecoEntrega.cidade= '';
-    state.form.enderecoEntrega.estado= '';
+    state.form.enderecoEntrega.uf= '';
     state.form.enderecoEntrega.cep= '';
     state.form.agendado= false;
     state.form.numeroPedidoCompra = '';
@@ -644,7 +644,7 @@ const submeter = async () => {
                     complemento: clienteEndereco?.complemento ?? '',
                     bairro: clienteEndereco?.bairro ?? '',
                     cidade: clienteEndereco?.cidade ?? '',
-                    estado: clienteEndereco?.estado ?? '',
+                    uf: clienteEndereco?.uf ?? '',
                     cep: clienteEndereco?.cep ?? '',
                 }
                 : {
@@ -653,7 +653,7 @@ const submeter = async () => {
                     complemento: state.form.enderecoEntrega.complemento,
                     bairro: state.form.enderecoEntrega.bairro,
                     cidade: state.form.enderecoEntrega.cidade,
-                    estado: state.form.enderecoEntrega.estado,
+                    uf: state.form.enderecoEntrega.uf,
                     cep: state.form.enderecoEntrega.cep,
                 },
             planoPagamento: state.form.planoPagamento,
@@ -754,7 +754,7 @@ const carregarParaEdicao = async () => {
         state.form.enderecoEntrega.complemento = pedido.enderecoEntrega?.complemento ?? '';
         state.form.enderecoEntrega.bairro = pedido.enderecoEntrega?.bairro ?? '';
         state.form.enderecoEntrega.cidade = pedido.enderecoEntrega?.cidade ?? '';
-        state.form.enderecoEntrega.estado = pedido.enderecoEntrega?.estado ?? '';
+        state.form.enderecoEntrega.uf = pedido.enderecoEntrega?.uf ?? '';
         state.form.enderecoEntrega.cep = pedido.enderecoEntrega?.cep ?? '';
 
         state.form.numeroPedidoCompra = pedido.numeroPedidoCompra ?? '';
@@ -991,7 +991,7 @@ onBeforeRouteLeave((_, __, next) => {
                         {{ state.clienteSelecionado.endereco?.cidade }}
                     </RmTextField>
                     <RmTextField label="Estado">
-                        {{ state.clienteSelecionado.endereco?.estado }}
+                        {{ state.clienteSelecionado.endereco?.uf }}
                     </RmTextField>
                 </div>
 
@@ -1261,7 +1261,7 @@ onBeforeRouteLeave((_, __, next) => {
                                  label="Cidade"
                                  :rules="[obrigatorio]" />
 
-                        <RmSelect v-model="state.form.enderecoEntrega.estado"
+                        <RmSelect v-model="state.form.enderecoEntrega.uf"
                                   name="estado"
                                   placeholder="Selecione um estado"
                                   label="Estado"

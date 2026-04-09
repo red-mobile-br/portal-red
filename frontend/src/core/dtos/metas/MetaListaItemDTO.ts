@@ -4,7 +4,7 @@ export default interface MetaListaItemDTO {
     valorMeta?: number;
     dataInicio?: string;
     status?: number;
-    representante?: string;
+    idRepresentante?: string;
     nomeRepresentante?: string;
     titulo?: string;
 }

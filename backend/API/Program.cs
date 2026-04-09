@@ -70,12 +70,16 @@ builder.Services.AddScoped<IRelatorioPedidoService, RelatorioPedidoService>();
 builder.Services.AddSingleton<IEmailTemplateService, EmailTemplateService>();
 
 // Controllers
-// Configuração de serialização JSON do MVC (deve estar alinhada com JsonOpcoes.Padrao em Settings/)
+// Configuração de serialização JSON do MVC — reaproveita JsonOpcoes.Padrao (ponto único de verdade)
 builder.Services.AddControllers()
     .AddJsonOptions(o =>
     {
-        o.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
-        o.JsonSerializerOptions.PropertyNameCaseInsensitive = true;
+        o.JsonSerializerOptions.PropertyNamingPolicy = JsonOpcoes.Padrao.PropertyNamingPolicy;
+        o.JsonSerializerOptions.PropertyNameCaseInsensitive = JsonOpcoes.Padrao.PropertyNameCaseInsensitive;
+        o.JsonSerializerOptions.NumberHandling = JsonOpcoes.Padrao.NumberHandling;
+        o.JsonSerializerOptions.DefaultIgnoreCondition = JsonOpcoes.Padrao.DefaultIgnoreCondition;
+        foreach (var conv in JsonOpcoes.Padrao.Converters)
+            o.JsonSerializerOptions.Converters.Add(conv);
     });
 
 // Swagger

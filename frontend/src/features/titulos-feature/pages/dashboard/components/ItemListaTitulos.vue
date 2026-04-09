@@ -16,31 +16,31 @@ const props = defineProps({
     }
 });
 const { eGerente } = useAutorizacao();
-const tipoPedido = computed(() => statusTituloEnumParser.get((props.title.status ?? '').toString().toUpperCase())!);
+const tipoPedido = computed(() => statusTituloEnumParser.get(String(props.title.status ?? 0))!);
 const icon = computed(() => icons[tipoPedido.value.icon]);
 
 </script>
 
 <template>
     <tr>
-        <td>{{ title.titulo }}</td>
+        <td>{{ title.numeroTitulo }}</td>
         <td>{{ title.parcela?.toString().padStart(3, '0') }}</td>
-        <td>{{ title.pedido }}</td>
+        <td>{{ title.numeroPedido }}</td>
         <td class="!text-left">
             {{ title.nomeCliente }}
         </td>
         <td>{{ mascaraCnpj(title.cnpj ?? '') }}</td>
-        <td>{{ title.dataVencimentoOriginal ? formatarData(title.dataVencimentoOriginal) : '-' }}</td>
+        <td>{{ title.vencimentoOriginal ? formatarData(title.vencimentoOriginal) : '-' }}</td>
         <td>{{ title.dataVencimento ? formatarData(title.dataVencimento) : '-' }}</td>
         <td>{{ title.dataPagamento ? formatarData(title.dataPagamento) : '-' }}</td>
         <td>R$ {{ formatarDecimal(title.valorTitulo ?? 0) }}</td>
         <td v-if="eGerente">
             <RmTooltip :text="title.nomeRepresentante ?? ''">
-                {{ title.representante }}
+                {{ title.idRepresentante }}
             </RmTooltip>
         </td>
         <td>
-            <RmTooltip :text="statusTituloEnumParser.get((title.status ?? '').toString())!.titulo">
+            <RmTooltip :text="statusTituloEnumParser.get(String(title.status ?? 0))!.titulo">
                 <component :is="icon"
                            :style="{'fill': tipoPedido.color}"
                            class="w-6 mx-auto" />

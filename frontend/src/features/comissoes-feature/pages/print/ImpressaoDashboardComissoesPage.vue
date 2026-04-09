@@ -190,11 +190,11 @@ onMounted(() => carregarDados());
                             </th>
                         </tr>
                         <tr v-for="(comissao, index) in state.comissoes" :key="index">
-                            <td>{{ comissao?.pedido ?? '' }}</td>
+                            <td>{{ comissao?.numeroPedido ?? '' }}</td>
                             <td class="!text-left">
                                 {{ comissao?.nomeCliente ?? '' }}
                             </td>
-                            <td>{{ comissao?.titulo ?? '' }}</td>
+                            <td>{{ comissao?.numeroTitulo ?? '' }}</td>
                             <td>{{ comissao?.parcela ?? '' }}</td>
                             <td>{{ comissao?.dataVencimento ? formatarData(comissao.dataVencimento) : '-' }}</td>
                             <td>{{ comissao?.dataBaixa ? formatarData(comissao.dataBaixa) : '-' }}</td>

@@ -14,24 +14,24 @@ const props = defineProps({
 });
 const { eGerente } = useAutorizacao();
 
-const date = computed(() => formatarData(props.revenue.dataHora ?? ''));
-const orderValue = computed(() => formatarDecimal(props.revenue.valorPedido ?? 0));
+const date = computed(() => formatarData(props.revenue.dataEmissao ?? ''));
+const orderValue = computed(() => formatarDecimal(props.revenue.valorBruto ?? 0));
 const baseValue = computed(() => formatarDecimal(props.revenue.valorBase ?? 0));
 </script>
 
 <template>
     <tr>
-        <td>{{ revenue.pedido }}</td>
+        <td>{{ revenue.numeroPedido }}</td>
         <td class="!text-left">
-            {{ revenue.cliente }}
+            {{ revenue.nomeCliente }}
         </td>
         <td>{{ date }}</td>
-        <td>{{ revenue.notaFiscal }}</td>
+        <td>{{ revenue.numeroNota }}</td>
         <td>R$ {{ baseValue }}</td>
         <td>R$ {{ orderValue }}</td>
         <td v-if="eGerente">
             <RmTooltip :text="revenue.nomeRepresentante ?? ''">
-                {{ revenue.representante }}
+                {{ revenue.idRepresentante }}
             </RmTooltip>
         </td>
     </tr>

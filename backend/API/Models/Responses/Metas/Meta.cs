@@ -10,6 +10,6 @@ public sealed record Meta
     public decimal? ValorMeta { get; init; }
     public decimal? ValorRealizado { get; init; }
     public StatusMeta? Status { get; init; }
-    public string? Representante { get; init; }
+    public string? IdRepresentante { get; init; }
     public string? NomeRepresentante { get; init; }
 }

@@ -36,32 +36,18 @@ public class TabelaPrecosControllerTests : BaseControllerTests
         {
             Descricao = "Tabela de Preços São Paulo",
             DataAtualizacao = DateTime.Today,
-            Comentarios = "Preços válidos para 2024",
+            DataValidade = DateTime.Today.AddDays(30),
+            Observacoes = "Preços válidos para 2024",
             ValorMinimoFreteCif = 1000.00m,
-            Prazo = "30 dias",
             ICMS = 18.00m,
             Produtos = new List<ProdutoTabelaPrecos>
             {
                 new()
                 {
-                    ReferenciaComercial = "PROD001",
+                    Referencia = "PROD001",
                     Descricao = "Product 1",
                     Imagem = "image1.jpg",
-                    ComissaoPorcento3 = new ComissaoTabelaPrecos
-                    {
-                        PrecoSemIpi = 100.00m,
-                        PercentualIPI = 10.00m,
-                        PrecoComIpi = 110.00m,
-                        UnidadesPorEmbalagem = 12
-                    },
-                    ComissaoPorcento5 = new ComissaoTabelaPrecos
-                    {
-                        PrecoSemIpi = 95.00m,
-                        PercentualIPI = 10.00m,
-                        PrecoComIpi = 104.50m,
-                        UnidadesPorEmbalagem = 12
-                    },
-                    PrecoMercado = 150.00m,
+                    PrecoTabela = 150.00m,
                     PercentualIPI = 10.00m
                 }
             }
@@ -94,9 +80,8 @@ public class TabelaPrecosControllerTests : BaseControllerTests
         {
             Descricao = "Tabela de Preços Rio de Janeiro",
             DataAtualizacao = DateTime.Today,
-            Comentarios = "Preços atualizados",
+            Observacoes = "Preços atualizados",
             ValorMinimoFreteCif = 800.00m,
-            Prazo = "45 dias",
             ICMS = 0.00m,
             Produtos = new List<ProdutoTabelaPrecos>()
         };
@@ -126,9 +111,8 @@ public class TabelaPrecosControllerTests : BaseControllerTests
         {
             Descricao = "Tabela de Preços Minas Gerais",
             DataAtualizacao = DateTime.Today.AddDays(-5),
-            Comentarios = "Sem produtos disponíveis",
+            Observacoes = "Sem produtos disponíveis",
             ValorMinimoFreteCif = 500.00m,
-            Prazo = "60 dias",
             ICMS = 8.00m,
             Produtos = new List<ProdutoTabelaPrecos>()
         };
@@ -158,32 +142,18 @@ public class TabelaPrecosControllerTests : BaseControllerTests
         {
             Descricao = "Tabela de Preços Rio Grande do Sul",
             DataAtualizacao = new DateTime(2024, 6, 15),
-            Comentarios = "Tabela atualizada mensalmente",
+            DataValidade = new DateTime(2024, 12, 31),
+            Observacoes = "Tabela atualizada mensalmente",
             ValorMinimoFreteCif = 1500.00m,
-            Prazo = "30/60/90 dias",
             ICMS = 7.00m,
             Produtos = new List<ProdutoTabelaPrecos>
             {
                 new()
                 {
-                    ReferenciaComercial = "REF123",
+                    Referencia = "REF123",
                     Descricao = "Produto Teste",
                     Imagem = "test.png",
-                    ComissaoPorcento3 = new ComissaoTabelaPrecos
-                    {
-                        PrecoSemIpi = 200.00m,
-                        PercentualIPI = 5.00m,
-                        PrecoComIpi = 210.00m,
-                        UnidadesPorEmbalagem = 6
-                    },
-                    ComissaoPorcento5 = new ComissaoTabelaPrecos
-                    {
-                        PrecoSemIpi = 190.00m,
-                        PercentualIPI = 5.00m,
-                        PrecoComIpi = 199.50m,
-                        UnidadesPorEmbalagem = 6
-                    },
-                    PrecoMercado = 250.00m,
+                    PrecoTabela = 250.00m,
                     PercentualIPI = 5.00m
                 }
             }
@@ -203,9 +173,9 @@ public class TabelaPrecosControllerTests : BaseControllerTests
         // Assert
         result.Should().NotBeNull();
         result.ValorMinimoFreteCif.Should().Be(1500.00m);
-        result.Prazo.Should().Be("30/60/90 dias");
+        result.DataValidade.Should().Be(new DateTime(2024, 12, 31));
         result.DataAtualizacao.Should().Be(new DateTime(2024, 6, 15));
-        result.Produtos.First().ComissaoPorcento3.UnidadesPorEmbalagem.Should().Be(6);
-        result.Produtos.First().ComissaoPorcento5.PrecoComIpi.Should().Be(199.50m);
+        result.Produtos.Should().NotBeNull();
+        result.Produtos!.First().PrecoTabela.Should().Be(250.00m);
     }
 }

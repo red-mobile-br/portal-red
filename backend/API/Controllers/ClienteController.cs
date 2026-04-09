@@ -165,7 +165,7 @@ public class ClienteController(IHttpClientFactory httpClientFactory, IOptions<Pr
             NotasComerciais = notasComerciais,
             IdRepresentante = dto.IdRepresentante,
             IdGerente = dto.IdGerente,
-            DadosBancarios = ConverterObjeto<List<DadosBancarios>>(dto.DadosBancarios)
+            DadosBancarios = ConverterObjeto<DadosBancarios>(dto.DadosBancarios)
         };
 
         var url = ConstruirUrlCriarCliente(UsuarioLogado);

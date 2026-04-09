@@ -15,8 +15,7 @@ public record PedidoDetalhado
     public DateTime? DataEmissao { get; init; }
     public string? InformacoesNota { get; init; }
     public string? ObservacoesPedido { get; init; }
-    public List<Nota>? Notas { get; init; }
-    public DateTime? DataLancamento { get; init; }
+    public List<Nota>? Anotacoes { get; init; }
     public decimal? ValorProdutos { get; init; }
     public decimal? ValorICMS { get; init; }
     public decimal? ValorICMSST { get; init; }

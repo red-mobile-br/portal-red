@@ -6,10 +6,10 @@ export default interface PedidoListaItemDTO {
     id?: string;
     notasFiscais?: {codigo?: string; urlRastreio?: string}[]
     boletos?: string[]
-    dataLancamento?: string;
-    nome?: string;
-    notas?: NotaDTO[]
-    representante?: string;
+    dataEmissao?: string;
+    nomeCliente?: string;
+    anotacoes?: NotaDTO[]
+    idRepresentante?: string;
     nomeRepresentante?: string;
     status?: '0' | '1' | '2' | '3' | '4' | 'F' | 'P' | 'X' | 'N' | 'M' | 'R' | 'V';
     valorTotal?: number;

@@ -94,7 +94,7 @@ onMounted(() => {
                         <div class="row">
                             <div class="field"><span class="field-label"><b>Bairro:</b></span><span class="field-value">{{ state.pedidoSelecionado.cliente?.endereco?.bairro }}</span></div>
                             <div class="field ml-4"><span class="field-label"><b>Cidade:</b></span><span class="field-value">{{ state.pedidoSelecionado.cliente?.endereco?.cidade }}</span></div>
-                            <div class="field ml-4"><span class="field-label"><b>UF:</b></span><span class="field-value">{{ state.pedidoSelecionado.cliente?.endereco?.estado }}</span></div>
+                            <div class="field ml-4"><span class="field-label"><b>UF:</b></span><span class="field-value">{{ state.pedidoSelecionado.cliente?.endereco?.uf }}</span></div>
                         </div>
                     </div>
                 </div>
@@ -113,7 +113,7 @@ onMounted(() => {
                         <div class="section-content">
                             <div class="field"><span class="field-label"><b>Frete:</b></span><span class="field-value">{{ interpretarModoFrete(state.pedidoSelecionado.modoFrete ?? 0) }}</span></div>
                             <div class="field"><span class="field-label"><b>Prazo:</b></span><span class="field-value">{{ planoPagamento }}</span></div>
-                            <div class="field"><span class="field-label"><b>Data:</b></span><span class="field-value">{{ formatarData(state.pedidoSelecionado.dataLancamento ?? '') }}</span></div>
+                            <div class="field"><span class="field-label"><b>Data:</b></span><span class="field-value">{{ formatarData(state.pedidoSelecionado.dataEmissao ?? '') }}</span></div>
                             <div class="field"><span class="field-label"><b>OC:</b></span><span class="field-value">{{ state.pedidoSelecionado.numeroPedidoCompra || '-' }}</span></div>
                         </div>
                     </div>
@@ -136,7 +136,7 @@ onMounted(() => {
                         <div class="row">
                             <div class="field"><span class="field-label"><b>Bairro:</b></span><span class="field-value">{{ state.pedidoSelecionado.enderecoEntrega.bairro }}</span></div>
                             <div class="field ml-4"><span class="field-label"><b>Cidade:</b></span><span class="field-value">{{ state.pedidoSelecionado.enderecoEntrega.cidade }}</span></div>
-                            <div class="field ml-4"><span class="field-label"><b>UF:</b></span><span class="field-value">{{ state.pedidoSelecionado.enderecoEntrega.estado }}</span></div>
+                            <div class="field ml-4"><span class="field-label"><b>UF:</b></span><span class="field-value">{{ state.pedidoSelecionado.enderecoEntrega.uf }}</span></div>
                         </div>
                     </div>
                 </div>

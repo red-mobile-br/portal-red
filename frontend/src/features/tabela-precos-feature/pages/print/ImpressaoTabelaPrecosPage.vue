@@ -98,8 +98,8 @@ onMounted(() => loadData());
                     <RmTextField class="mb-2" label="Últimas atualizações">
                         {{ formatarData(state.priceTable.dataAtualizacao ?? '') }}
                     </RmTextField>
-                    <RmTextField class="mb-2" label="Prazo">
-                        {{ formatarData(state.priceTable.prazo ?? '') }}
+                    <RmTextField class="mb-2" label="Validade">
+                        {{ formatarData(state.priceTable.dataValidade ?? '') }}
                     </RmTextField>
                     <RmTextField class="mb-2" label="Frete CIF">
                         A partir de  R$ {{ (state.priceTable.valorMinimoFreteCif ?? 0).toFixed(2) }}
@@ -109,7 +109,7 @@ onMounted(() => loadData());
                     </RmTextField>
 
                     <p class="text-xs font-semibold">
-                        {{ state.priceTable.comentarios }}
+                        {{ state.priceTable.observacoes }}
                     </p>
                     <p class="text-xs font-semibold">
                         Obs.: Preços referentes a comissão de 5%

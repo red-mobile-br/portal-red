@@ -102,7 +102,7 @@ const percentual = computed(() => ((totalDias.value - diasRestantes.value) / tot
                     Representante
                 </p>
                 <p class="text-xs opacity-60">
-                    {{ metaAtual.representante }} - {{ metaAtual.nomeRepresentante }}
+                    {{ metaAtual.idRepresentante }} - {{ metaAtual.nomeRepresentante }}
                 </p>
             </div>
         </div>

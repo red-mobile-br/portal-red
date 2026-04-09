@@ -2,8 +2,8 @@ export default interface EnderecoDTO {
     logradouro?: string;
     bairro?: string;
     cidade?: string;
-    estado?: string;
+    uf?: string;
     cep?: string;
-    numero?: string;
+    numero?: number;
     complemento?: string;
 }

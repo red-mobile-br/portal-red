@@ -62,32 +62,32 @@ public class PedidoControllerTests : BaseControllerTests
                 new()
                 {
                     Id = "ORD001",
-                    Nome = "Client ABC",
+                    NomeCliente = "Client ABC",
                     ValorTotal = 1500.00m,
                     Status = "Open",
                     Cnpj = "123456",
                     IdCliente = "CLI001",
-                    Notas = [],
+                    Anotacoes = [],
                     NotasFiscais = [],
                     Boletos = [],
-                    Representante = "V001",
+                    IdRepresentante = "V001",
                     NomeRepresentante = "Vendor 1",
-                    DataLancamento = DateTime.Today
+                    DataEmissao = DateTime.Today
                 },
                 new()
                 {
                     Id = "ORD002",
-                    Nome = "Client XYZ",
+                    NomeCliente = "Client XYZ",
                     ValorTotal = 2500.00m,
                     Status = "Open",
                     Cnpj = "654321",
                     IdCliente = "CLI002",
-                    Notas = [],
+                    Anotacoes = [],
                     NotasFiscais = [],
                     Boletos = [],
-                    Representante = "V002",
+                    IdRepresentante = "V002",
                     NomeRepresentante = "Vendor 2",
-                    DataLancamento = DateTime.Today
+                    DataEmissao = DateTime.Today
                 }
             },
             NumeroPagina = 1,

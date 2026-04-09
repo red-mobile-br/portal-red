@@ -34,11 +34,11 @@ public static class TestDataBuilder
                 Endereco = new Endereco
                 {
                     Logradouro = f.Address.StreetName(),
-                    Numero = f.Address.BuildingNumber(),
+                    Numero = f.Random.Int(1, 9999),
                     Complemento = f.Address.SecondaryAddress(),
                     Bairro = f.Address.County(),
                     Cidade = f.Address.City(),
-                    Estado = f.Address.StateAbbr(),
+                    Uf = f.Address.StateAbbr(),
                     Cep = f.Address.ZipCode()
                 }
             });
@@ -57,22 +57,22 @@ public static class TestDataBuilder
                 Endereco = new Endereco
                 {
                     Logradouro = f.Address.StreetName(),
-                    Numero = f.Address.BuildingNumber(),
+                    Numero = f.Random.Int(1, 9999),
                     Complemento = f.Address.SecondaryAddress(),
                     Bairro = f.Address.County(),
                     Cidade = f.Address.City(),
-                    Estado = f.Address.StateAbbr(),
+                    Uf = f.Address.StateAbbr(),
                     Cep = f.Address.ZipCode()
                 }
             })
             .RuleFor(o => o.ValorNota, f => f.Finance.Amount(100, 50000))
-            .RuleFor(o => o.DataLancamento, f => f.Date.Past(1))
+            .RuleFor(o => o.DataEmissao, f => f.Date.Past(1))
             .RuleFor(o => o.Status, f => f.Random.Int(0, 2).ToString())
             .RuleFor(o => o.TipoPedido, f => f.PickRandom<TipoPedido>())
             .RuleFor(o => o.PlanoPagamento, f => f.Random.AlphaNumeric(3))
             .RuleFor(o => o.IdRepresentante, f => f.Random.AlphaNumeric(6))
             .RuleFor(o => o.NomeRepresentante, f => f.Name.FullName())
-            .RuleFor(o => o.Notas, f => [])
+            .RuleFor(o => o.Anotacoes, f => [])
             .RuleFor(o => o.NotasFiscais, f => [])
             .RuleFor(o => o.Produtos, f => new List<ProdutoPedido>
             {
@@ -101,11 +101,11 @@ public static class TestDataBuilder
             .RuleFor(o => o.EnderecoEntrega, f => new Endereco
             {
                 Logradouro = f.Address.StreetName(),
-                Numero = f.Address.BuildingNumber(),
+                Numero = f.Random.Int(1, 9999),
                 Complemento = f.Address.SecondaryAddress(),
                 Bairro = f.Address.County(),
                 Cidade = f.Address.City(),
-                Estado = f.Address.StateAbbr(),
+                Uf = f.Address.StateAbbr(),
                 Cep = f.Address.ZipCode()
             })
             .RuleFor(o => o.PesoLiquido, f => f.Finance.Amount(0, 500))
@@ -134,7 +134,7 @@ public static class TestDataBuilder
             .RuleFor(g => g.ValorMeta, f => f.Finance.Amount(10000, 100000))
             .RuleFor(g => g.ValorRealizado, f => f.Finance.Amount(0, 80000))
             .RuleFor(g => g.Status, f => f.PickRandom<StatusMeta>())
-            .RuleFor(g => g.Representante, f => f.Random.AlphaNumeric(6))
+            .RuleFor(g => g.IdRepresentante, f => f.Random.AlphaNumeric(6))
             .RuleFor(g => g.NomeRepresentante, f => f.Name.FullName());
     }
 
@@ -156,10 +156,9 @@ public static class TestDataBuilder
     public static Faker<ComissaoListaItem> CommissionBuilder()
     {
         return new Faker<ComissaoListaItem>()
-            .RuleFor(c => c.Pedido, f => f.Random.AlphaNumeric(6))
+            .RuleFor(c => c.NumeroPedido, f => f.Random.AlphaNumeric(6))
             .RuleFor(c => c.NomeCliente, f => f.Company.CompanyName())
-            .RuleFor(c => c.Cnpj, f => f.Random.ReplaceNumbers("##.###.###/####-##"))
-            .RuleFor(c => c.Titulo, f => f.Commerce.ProductName())
+            .RuleFor(c => c.NumeroTitulo, f => f.Commerce.ProductName())
             .RuleFor(c => c.Parcela, f => f.Random.Int(1, 12))
             .RuleFor(c => c.DataVencimento, f => f.Date.Future(3))
             .RuleFor(c => c.DataBaixa, f => f.Date.Future(6))
@@ -167,20 +166,20 @@ public static class TestDataBuilder
             .RuleFor(c => c.ValorBase, f => f.Finance.Amount(100, 5000))
             .RuleFor(c => c.PercentualComissao, f => f.Finance.Amount(1, 10))
             .RuleFor(c => c.ValorComissao, (f, c) => c.ValorBase * (c.PercentualComissao / 100))
-            .RuleFor(c => c.Representante, f => f.Random.AlphaNumeric(6))
+            .RuleFor(c => c.IdRepresentante, f => f.Random.AlphaNumeric(6))
             .RuleFor(c => c.NomeRepresentante, f => f.Name.FullName());
     }
 
     public static Faker<FaturamentoItem> DashboardFaturamentoBuilder()
     {
         return new Faker<FaturamentoItem>()
-            .RuleFor(r => r.Pedido, f => f.Random.AlphaNumeric(6))
-            .RuleFor(r => r.Cliente, f => f.Company.CompanyName())
-            .RuleFor(r => r.ValorPedido, f => f.Finance.Amount(100, 10000))
+            .RuleFor(r => r.NumeroPedido, f => f.Random.AlphaNumeric(6))
+            .RuleFor(r => r.NomeCliente, f => f.Company.CompanyName())
+            .RuleFor(r => r.ValorBruto, f => f.Finance.Amount(100, 10000))
             .RuleFor(r => r.ValorBase, f => f.Finance.Amount(100, 10000))
-            .RuleFor(r => r.DataHora, f => f.Date.Past(3))
-            .RuleFor(r => r.Representante, f => f.Random.AlphaNumeric(6))
+            .RuleFor(r => r.DataEmissao, f => f.Date.Past(3))
+            .RuleFor(r => r.IdRepresentante, f => f.Random.AlphaNumeric(6))
             .RuleFor(r => r.NomeRepresentante, f => f.Name.FullName())
-            .RuleFor(r => r.NotaFiscal, f => f.Random.AlphaNumeric(8));
+            .RuleFor(r => r.NumeroNota, f => f.Random.AlphaNumeric(8));
     }
 }

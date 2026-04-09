@@ -205,10 +205,10 @@ onMounted(() => carregarDados());
                             <td>{{ (pedido.idCliente ?? '').substr(0,6) }}</td>
                             <td>{{ (pedido.idCliente ?? '').substr(6,2) }}</td>
                             <td class="!text-left">
-                                {{ pedido.nome }}
+                                {{ pedido.nomeCliente }}
                             </td>
                             <td>{{ mascaraCnpj(pedido.cnpj ?? '') }}</td>
-                            <td>{{ formatarData(pedido.dataLancamento ?? '') }}</td>
+                            <td>{{ formatarData(pedido.dataEmissao ?? '') }}</td>
                             <td>R$ {{ formatarDecimal(pedido.valorTotal ?? 0) }}</td>
                             <td>{{ statusPedidoEnumParser.get(pedido.status ?? '')?.titulo }}</td>
                         </tr>

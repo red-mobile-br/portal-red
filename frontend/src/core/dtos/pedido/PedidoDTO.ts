@@ -9,13 +9,12 @@ export default interface PedidoDTO {
     id?: string;
     notasFiscais?: {codigo?: string; urlRastreio?: string}[];
     boletos?: string[];
-    dataLancamento?: string;
     informacoesNota?: string;
     valorNota?: number;
     valorIPI?: number;
     margemPedido?: number;
     dataEmissao?: string;
-    notas?: NotaDTO[]
+    anotacoes?: NotaDTO[]
     observacoesPedido?: string;
     valorProdutos?: number;
     numeroPedidoCompra?: string;

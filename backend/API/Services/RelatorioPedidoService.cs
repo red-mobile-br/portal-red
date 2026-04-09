@@ -26,7 +26,7 @@ internal sealed class RelatorioPedidoService(IEmailTemplateService templateServi
             TipoPedido = ObterTipoPedido(pedido.TipoPedido ?? Enums.TipoPedido.Venda),
             TextoStatus = statusInfo.Titulo,
             CorStatus = statusInfo.Cor,
-            DataLancamento = pedido.DataLancamento ?? DateTime.MinValue,
+            DataLancamento = pedido.DataEmissao ?? DateTime.MinValue,
             NomeRepresentante = pedido.NomeRepresentante ?? string.Empty,
 
             Cliente = new RelatorioClientePedidoModel
@@ -39,11 +39,11 @@ internal sealed class RelatorioPedidoService(IEmailTemplateService templateServi
                 {
                     Cep = pedido.Cliente?.Endereco?.Cep ?? string.Empty,
                     Logradouro = pedido.Cliente?.Endereco?.Logradouro ?? string.Empty,
-                    Numero = pedido.Cliente?.Endereco?.Numero ?? string.Empty,
+                    Numero = pedido.Cliente?.Endereco?.Numero?.ToString() ?? string.Empty,
                     Complemento = pedido.Cliente?.Endereco?.Complemento,
                     Bairro = pedido.Cliente?.Endereco?.Bairro ?? string.Empty,
                     Cidade = pedido.Cliente?.Endereco?.Cidade ?? string.Empty,
-                    Estado = pedido.Cliente?.Endereco?.Estado ?? string.Empty
+                    Estado = pedido.Cliente?.Endereco?.Uf ?? string.Empty
                 }
             },
 
@@ -60,11 +60,11 @@ internal sealed class RelatorioPedidoService(IEmailTemplateService templateServi
             {
                 Cep = pedido.EnderecoEntrega.Cep ?? string.Empty,
                 Logradouro = pedido.EnderecoEntrega.Logradouro ?? string.Empty,
-                Numero = pedido.EnderecoEntrega.Numero ?? string.Empty,
+                Numero = pedido.EnderecoEntrega.Numero?.ToString() ?? string.Empty,
                 Complemento = pedido.EnderecoEntrega.Complemento,
                 Bairro = pedido.EnderecoEntrega.Bairro ?? string.Empty,
                 Cidade = pedido.EnderecoEntrega.Cidade ?? string.Empty,
-                Estado = pedido.EnderecoEntrega.Estado ?? string.Empty
+                Estado = pedido.EnderecoEntrega.Uf ?? string.Empty
             } : null,
 
             Produtos = (pedido.Produtos ?? []).Select((p, indice) => new RelatorioProdutoPedidoModel

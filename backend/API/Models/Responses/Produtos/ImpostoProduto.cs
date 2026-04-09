@@ -11,5 +11,6 @@ public sealed record ImpostoProduto
     public decimal? PercentualIPI { get; init; }
     public decimal? PercentualICMSST { get; init; }
     public decimal? ComissaoMaxima { get; init; }
-    public decimal? ValorTotal { get; init; }
+    public decimal? ValorMargem { get; init; }
+    public decimal? ValorCusto { get; init; }
 }

@@ -158,7 +158,7 @@ export default function templateRelatorioPedido(data: ReportTemplateOptions) {
                     {
                         'element': 'textField',
                         'label': 'Número',
-                        'content': order.cliente?.endereco?.numero ?? ''
+                        'content': order.cliente?.endereco?.numero?.toString() ?? ''
                     },
                     {
                         'element': 'colSpan',
@@ -182,7 +182,7 @@ export default function templateRelatorioPedido(data: ReportTemplateOptions) {
                     {
                         'element': 'textField',
                         'label': 'Estado',
-                        'content': order.cliente?.endereco?.estado ?? ''
+                        'content': order.cliente?.endereco?.uf ?? ''
                     }
                 ]
             },
@@ -216,7 +216,7 @@ export default function templateRelatorioPedido(data: ReportTemplateOptions) {
                     {
                         'element': 'textField',
                         'label': 'Número',
-                        'content': order.enderecoEntrega?.numero ?? ''
+                        'content': order.enderecoEntrega?.numero?.toString() ?? ''
                     },
                     {
                         'element': 'textField',
@@ -236,7 +236,7 @@ export default function templateRelatorioPedido(data: ReportTemplateOptions) {
                     {
                         'element': 'textField',
                         'label': 'Estado',
-                        'content': order.enderecoEntrega?.estado ?? ''
+                        'content': order.enderecoEntrega?.uf ?? ''
                     },
                     {
                         'element': 'textField',
@@ -351,7 +351,7 @@ export default function templateRelatorioPedido(data: ReportTemplateOptions) {
                         child: {
                             'element': 'textField',
                             'label': 'Data do faturamento',
-                            'content': formatarData(order.dataLancamento ?? ''),
+                            'content': formatarData(order.dataEmissao ?? ''),
                             'marginBottom': 1
                         }
                     }

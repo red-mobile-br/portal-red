@@ -301,7 +301,7 @@ onMounted(() => {
                     Acompanhamento do {{ titulo.toLowerCase() }}
                 </RmText>
                 <div class="bg-neutral-300 dark:bg-gray-600  rounded-md mb-4 p-4">
-                    <RmTimelineItem v-for="(note, index) in (state.pedidoSelecionado.notas ?? [])" :key="index"
+                    <RmTimelineItem v-for="(note, index) in (state.pedidoSelecionado.anotacoes ?? [])" :key="index"
                                     :date="note.dataHora ?? ''"
                                     :title="note.atividade ?? ''"
                                     :subtitle="note.detalhe ?? ''">
@@ -310,7 +310,7 @@ onMounted(() => {
                         </p>
                     </RmTimelineItem>
 
-                    <p v-if="!state.pedidoSelecionado.notas || state.pedidoSelecionado.notas.length == 0" class="text-center text-sm">
+                    <p v-if="!state.pedidoSelecionado.anotacoes || state.pedidoSelecionado.anotacoes.length == 0" class="text-center text-sm">
                         Não houve atualizações para este {{ titulo.toLowerCase() }}
                     </p>
                 </div>
@@ -355,7 +355,7 @@ onMounted(() => {
                         {{ state.pedidoSelecionado.cliente?.endereco?.cidade }}
                     </RmTextField>
                     <RmTextField label="Estado">
-                        {{ state.pedidoSelecionado.cliente?.endereco?.estado }}
+                        {{ state.pedidoSelecionado.cliente?.endereco?.uf }}
                     </RmTextField>
                 </div>
 
@@ -399,7 +399,7 @@ onMounted(() => {
                             {{ state.pedidoSelecionado.enderecoEntrega.cidade }}
                         </RmTextField>
                         <RmTextField label="Estado">
-                            {{ state.pedidoSelecionado.enderecoEntrega.estado }}
+                            {{ state.pedidoSelecionado.enderecoEntrega.uf }}
                         </RmTextField>
                     </div>
                     <RmDivider class="my-5" />
@@ -555,7 +555,7 @@ onMounted(() => {
 
                     <!-- Data do faturamento -->
                     <RmTextField label="Data do faturamento" class="mb-4">
-                        {{ formatarData(state.pedidoSelecionado.dataLancamento ?? '') }}
+                        {{ formatarData(state.pedidoSelecionado.dataEmissao ?? '') }}
                     </RmTextField>
                 </div>
 
@@ -708,9 +708,9 @@ onMounted(() => {
             </template>
             <template #content="{ data }">
                 <td>{{ data.id }}</td>
-                <td>{{ formatarData(data.dataLancamento ?? '') }}</td>
+                <td>{{ formatarData(data.dataEmissao ?? '') }}</td>
                 <td class="!text-left !px-3">
-                    {{ data.nome }}
+                    {{ data.nomeCliente }}
                 </td>
                 <td>{{ mascaraCnpj(data.cnpj ?? '') }}</td>
                 <td class="!text-right">

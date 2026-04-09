@@ -6,4 +6,5 @@ public sealed record OrcamentoDetalhado : PedidoDetalhado
 {
     public DateTime? DataImplementacao { get; init; }
     public DateTime? DataCancelamento { get; init; }
+    public decimal? MargemOrcamento { get; init; }
 }

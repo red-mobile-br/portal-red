@@ -1,10 +1,10 @@
 export default interface FaturamentoListaItemDTO {
-    pedido?: string;
-    cliente?: string;
-    dataHora?: string;
-    valorPedido?: number;
-    notaFiscal?: string;
-    representante?: string;
+    numeroPedido?: string;
+    nomeCliente?: string;
+    dataEmissao?: string;
+    valorBruto?: number;
+    numeroNota?: string;
+    idRepresentante?: string;
     nomeRepresentante?: string;
     valorBase?: number;
 }

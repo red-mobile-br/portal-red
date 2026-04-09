@@ -1,14 +1,14 @@
 export default interface TituloListaItemDTO {
-    titulo?: string;
+    numeroTitulo?: string;
     parcela?: number;
     nomeCliente?: string;
     dataPagamento?: string;
     dataVencimento?: string;
     cnpj?: string;
-    pedido?: string;
+    numeroPedido?: string;
     valorTitulo?: number;
-    status?: string;
-    representante?: string;
+    status?: number;
+    idRepresentante?: string;
     nomeRepresentante?: string;
-    dataVencimentoOriginal?: string;
+    vencimentoOriginal?: string;
 }

@@ -42,14 +42,14 @@ const { eGerente } = useAutorizacao();
         <td>{{ (order.idCliente ?? '').substr(0,6) }}</td>
         <td>{{ (order.idCliente ?? '').substr(6,2) }}</td>
         <td class="!text-left">
-            {{ order.nome }}
+            {{ order.nomeCliente }}
         </td>
         <td>{{ mascaraCnpj(order.cnpj ?? '') }}</td>
-        <td>{{ formatarData(order.dataLancamento ?? '') }}</td>
+        <td>{{ formatarData(order.dataEmissao ?? '') }}</td>
         <td>R$ {{ formatarDecimal(order.valorTotal ?? 0) }}</td>
         <td v-if="eGerente">
             <RmTooltip :text="order.nomeRepresentante ?? ''">
-                {{ order.representante }}
+                {{ order.idRepresentante }}
             </RmTooltip>
         </td>
         <td>

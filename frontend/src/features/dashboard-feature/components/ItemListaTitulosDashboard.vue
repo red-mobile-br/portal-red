@@ -13,7 +13,7 @@ defineProps({
 
 <template>
     <tr>
-        <td>{{ title.titulo }}</td>
+        <td>{{ title.numeroTitulo }}</td>
 
         <td class="!text-left">
             {{ title.nomeCliente }}

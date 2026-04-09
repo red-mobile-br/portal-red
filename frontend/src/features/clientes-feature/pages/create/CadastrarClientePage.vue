@@ -22,11 +22,11 @@ import type EnderecoDTO from '@/core/dtos/endereco/EnderecoDTO';
 import CepService from '@/services/cep-service';
 
 type ClienteFormulario = Required<Omit<ClienteDetalhadoDTO, 'comprovantes' | 'contratoSocial' | 'documentoSintegra' | 'notasComerciais' | 'idGerente' | 'nomeGerente' | 'endereco' | 'enderecoEntrega' | 'socios' | 'referenciasComerciais' | 'dadosBancarios'>> & {
-    endereco: Required<EnderecoDTO>;
-    enderecoEntrega: Required<EnderecoDTO>;
-    socios: Required<SocioInfoDTO>[];
+    endereco: Required<Omit<EnderecoDTO, 'numero'>> & { numero: number | '' };
+    enderecoEntrega: Required<Omit<EnderecoDTO, 'numero'>> & { numero: number | '' };
+    socios: (Required<Omit<SocioInfoDTO, 'percentual'>> & { percentual: number | '' })[];
     referenciasComerciais: Required<ReferenciaComercialDTO>[];
-    dadosBancarios: Required<DadosBancariosDTO>[];
+    dadosBancarios: Required<DadosBancariosDTO>;
     idGerente: string | null;
     nomeGerente: string | null;
 };
@@ -63,6 +63,7 @@ const refModalBuscarGerente = ref<BuscarGerenteModalInstancia | null>(null);
 const alert = useAlert();
 
 const form = reactive<ClienteFormulario>({
+    tipoCliente: '',
     ramoAtividade: '',
     endereco: {
         cep: '',
@@ -70,14 +71,14 @@ const form = reactive<ClienteFormulario>({
         complemento: '',
         bairro: '',
         numero: '',
-        estado: '',
+        uf: '',
         logradouro: ''
     },
     telefoneCobranca: '',
     cnae: '',
     cnpj: '',
     referenciasComerciais: [
-        { razaoSocial: '', nomeContato: '', celular: '', telefone: '' }
+        { nomeEmpresa: '', nomeContato: '', celular: '', telefone: '' }
     ],
     razaoSocial: '',
     nomeContato: '',
@@ -94,7 +95,7 @@ const form = reactive<ClienteFormulario>({
         complemento: '',
         bairro: '',
         numero: '',
-        estado: '',
+        uf: '',
         logradouro: ''
     },
     nomeContatoEntrega: '',
@@ -109,7 +110,13 @@ const form = reactive<ClienteFormulario>({
     idGerente: eGerente ? idRepresentanteUsuario.value : null,
     website: '',
     id: '',
-    dadosBancarios: [],
+    dadosBancarios: {
+        numeroConta: '',
+        nomeBanco: '',
+        numeroBanco: '',
+        nomeAgencia: '',
+        numeroAgencia: ''
+    },
 });
 
 function adicionarSocio() {
@@ -122,24 +129,15 @@ function adicionarSocio() {
 
 function adicionarReferencia() {
     form.referenciasComerciais.push({
-        razaoSocial: '',
+        nomeEmpresa: '',
         nomeContato: '',
         celular: '',
         telefone: '',
     });
 }
 
-function adicionarDadosBancarios() {
-    form.dadosBancarios.push({
-        numeroConta: '',
-        nomeBanco: '',
-        numeroBanco: '',
-        nomeAgencia: '',
-        numeroAgencia: ''
-    });
-}
-
 function limparFormulario() {
+    form.tipoCliente = '';
     form.ramoAtividade = '';
     form.endereco = {
         cep: '',
@@ -147,7 +145,7 @@ function limparFormulario() {
         complemento: '',
         bairro: '',
         numero: '',
-        estado: '',
+        uf: '',
         logradouro: ''
     };
     form.telefoneCobranca = '';
@@ -169,7 +167,7 @@ function limparFormulario() {
         complemento: '',
         bairro: '',
         numero: '',
-        estado: '',
+        uf: '',
         logradouro: ''
     };
     form.nomeContatoEntrega = '';
@@ -184,7 +182,13 @@ function limparFormulario() {
     form.idGerente = eGerente ? idRepresentanteUsuario.value : null;
     form.website = '';
     form.id = '';
-    form.dadosBancarios = [];
+    form.dadosBancarios = {
+        numeroConta: '',
+        nomeBanco: '',
+        numeroBanco: '',
+        nomeAgencia: '',
+        numeroAgencia: ''
+    };
 }
 
 /** Selecionar um representante */
@@ -259,7 +263,7 @@ watch(() => form.enderecoEntrega.cep, (newValue, oldValue) => {
                 form.enderecoEntrega.logradouro = resp.logradouro;
                 form.enderecoEntrega.bairro = resp.bairro;
                 form.enderecoEntrega.cidade = resp.localidade;
-                form.enderecoEntrega.estado = resp.uf;
+                form.enderecoEntrega.uf = resp.uf;
             });
     }
 });
@@ -271,7 +275,7 @@ watch(() => form.endereco.cep, (newValue, oldValue) => {
                 form.endereco.logradouro = resp.logradouro;
                 form.endereco.bairro = resp.bairro;
                 form.endereco.cidade = resp.localidade;
-                form.endereco.estado = resp.uf;
+                form.endereco.uf = resp.uf;
             });
     }
 });
@@ -460,7 +464,7 @@ watch(() => form.endereco.cep, (newValue, oldValue) => {
                              label="Cidade"
                              :rules="[obrigatorio]" />
 
-                    <RmSelect v-model="form.endereco.estado"
+                    <RmSelect v-model="form.endereco.uf"
                               name="estado faturamento"
                               placeholder="Selecione um estado"
                               label="Estado"
@@ -579,7 +583,7 @@ watch(() => form.endereco.cep, (newValue, oldValue) => {
                              label="Cidade"
                              :rules="[obrigatorio]" />
 
-                    <RmSelect v-model="form.enderecoEntrega.estado"
+                    <RmSelect v-model="form.enderecoEntrega.uf"
                               name="estado"
                               placeholder="Selecione um estado"
                               label="Estado"
@@ -605,7 +609,7 @@ watch(() => form.endereco.cep, (newValue, oldValue) => {
                                      :name="`contato ref ${indice + 1}`"
                                      :rules="[obrigatorio]" />
 
-                            <RmInput v-model="referencia.razaoSocial"
+                            <RmInput v-model="referencia.nomeEmpresa"
                                      placeholder="Empresa"
                                      label="Empresa"
                                      :name="`empresa ref ${indice + 1}`"
@@ -640,50 +644,33 @@ watch(() => form.endereco.cep, (newValue, oldValue) => {
                     Dados bancários
                 </RmText>
 
-                <div>
-                    <div v-for="(dadoBancario, indice) in form.dadosBancarios" :key="indice" class="flex items-center border-b last:border-b-0 border-gray-300 dark:border-gray-800 pt-2 pb-4 gap-2">
-                        <div class="grid grid-cols-4 gap-4 flex-1">
-                            <RmInput v-model="dadoBancario.nomeBanco"
-                                     placeholder="Nome do banco"
-                                     label="Nome do banco"
-                                     :name="`banco ${indice + 1}`"
-                                     class="col-span-4"
-                                     :rules="[obrigatorio]" />
+                <div class="grid grid-cols-4 gap-4">
+                    <RmInput v-model="form.dadosBancarios.nomeBanco"
+                             placeholder="Nome do banco"
+                             label="Nome do banco"
+                             name="banco"
+                             class="col-span-4" />
 
-                            <RmInput v-model="dadoBancario.numeroBanco"
-                                     placeholder="Nº do banco"
-                                     label="Nº do banco"
-                                     :name="`numero do banco ${indice + 1}`"
-                                     :rules="[obrigatorio]" />
+                    <RmInput v-model="form.dadosBancarios.numeroBanco"
+                             placeholder="Nº do banco"
+                             label="Nº do banco"
+                             name="numero do banco" />
 
-                            <RmInput v-model="dadoBancario.nomeAgencia"
-                                     placeholder="Nome da agência"
-                                     label="Nome da agência"
-                                     :name="`nome da agencia ${indice + 1}`"
-                                     :rules="[obrigatorio]" />
+                    <RmInput v-model="form.dadosBancarios.nomeAgencia"
+                             placeholder="Nome da agência"
+                             label="Nome da agência"
+                             name="nome da agencia" />
 
-                            <RmInput v-model="dadoBancario.numeroAgencia"
-                                     placeholder="Nº da agência"
-                                     label="Nº da agência"
-                                     :name="`agencia ${indice + 1}`"
-                                     :rules="[obrigatorio]" />
+                    <RmInput v-model="form.dadosBancarios.numeroAgencia"
+                             placeholder="Nº da agência"
+                             label="Nº da agência"
+                             name="agencia" />
 
-                            <RmInput v-model="dadoBancario.numeroConta"
-                                     placeholder="Nº da conta corrente"
-                                     label="Nº da conta corrente"
-                                     :name="`conta corrente ${indice + 1}`"
-                                     :rules="[obrigatorio]" />
-                        </div>
-
-                        <RmIconButton icon="TimesIcon"
-                                      class="w-6 mt-6 fill-red-500"
-                                      @click.stop.prevent="() => form.dadosBancarios.splice(indice, 1)" />
-                    </div>
+                    <RmInput v-model="form.dadosBancarios.numeroConta"
+                             placeholder="Nº da conta corrente"
+                             label="Nº da conta corrente"
+                             name="conta corrente" />
                 </div>
-
-                <RmButton type="hollow" @click.stop.prevent="() => adicionarDadosBancarios()">
-                    Adicionar dados bancários
-                </RmButton>
             </RmCard>
 
             <RmCard class="flex flex-col items-stretch gap-4">
@@ -712,7 +699,7 @@ watch(() => form.endereco.cep, (newValue, oldValue) => {
             </RmText>
             <RmDivider />
             <div class="flex-1">
-                <ValidacoesCliente :form="form" :trade-notes="notasComerciais" :sintegra-document="documentoSintegra" :receipts="comprovantes" :social-contract-document="contratoSocial" />
+                <ValidacoesCliente :form="(form as unknown as ClienteDetalhadoDTO)" :trade-notes="notasComerciais" :sintegra-document="documentoSintegra" :receipts="comprovantes" :social-contract-document="contratoSocial" />
             </div>
             <RmDivider />
                         

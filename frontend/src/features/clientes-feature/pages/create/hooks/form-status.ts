@@ -67,10 +67,10 @@ export function useFormStatus(form: ClienteDetalhadoDTO) {
             [
                 form.endereco?.cep ?? '',
                 form.endereco?.logradouro ?? '',
-                form.endereco?.numero ?? '',
+                String(form.endereco?.numero ?? ''),
                 form.endereco?.bairro ?? '',
                 form.endereco?.cidade ?? '',
-                form.endereco?.estado ?? '',
+                form.endereco?.uf ?? '',
             ],
             [
             ]
@@ -80,7 +80,7 @@ export function useFormStatus(form: ClienteDetalhadoDTO) {
     const partnersStatus = computed<FormGroupStatus>(() => {
         return _validate(
             (form.socios ?? []).flatMap(p => {
-                return [p.cpf ?? '', p.nome ?? '', p.percentual ?? ''];
+                return [p.cpf ?? '', p.nome ?? '', String(p.percentual ?? '')];
             }),
             (form.socios ?? []).flatMap(p => [!cpfValido(p.cpf ?? '').length])
         );
@@ -94,10 +94,10 @@ export function useFormStatus(form: ClienteDetalhadoDTO) {
                 form.emailEntrega ?? '',
                 form.enderecoEntrega?.cep ?? '',
                 form.enderecoEntrega?.logradouro ?? '',
-                form.enderecoEntrega?.numero ?? '',
+                String(form.enderecoEntrega?.numero ?? ''),
                 form.enderecoEntrega?.bairro ?? '',
                 form.enderecoEntrega?.cidade ?? '',
-                form.enderecoEntrega?.estado ?? ''
+                form.enderecoEntrega?.uf ?? ''
             ],
             [
                 !telefoneValido(form.telefoneEntrega ?? '').length,
@@ -111,7 +111,7 @@ export function useFormStatus(form: ClienteDetalhadoDTO) {
             (form.referenciasComerciais ?? []).flatMap(reference => {
                 return [
                     reference.nomeContato ?? '',
-                    reference.razaoSocial ?? '',
+                    reference.nomeEmpresa ?? '',
                     reference.celular ?? '',
                     reference.telefone ?? ''
                 ];
