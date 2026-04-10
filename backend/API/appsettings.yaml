@@ -18,14 +18,14 @@ Serilog:
 AllowedHosts: "*"
 
 ProtheusSettings:
-  BaseUrl: ""
-  Usuario: ""
-  Senha: ""
+  BaseUrl: "http://187.45.183.238:8091/rest-hom"
+  Usuario: "red-api"
+  Senha: "!ok$$L8GRb"
 
 JwtSettings:
   Audience: "http://localhost:5010"
   Issuer: "http://localhost:5010"
-  Secret: ""
+  Secret: "Elderly-Esophagus-Duly-Blouse8-Lethargy-Unbraided-Opacity"
   DefaultExpirationInHours: 24
 
 SmtpSettings:

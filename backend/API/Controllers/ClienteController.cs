@@ -71,17 +71,21 @@ public class ClienteController(IHttpClientFactory httpClientFactory, IOptions<Pr
         [FromBody] ConsultaImpostoLote model,
         CancellationToken cancellationToken)
     {
-        var protheusPayload = new
+        // Contrato do Protheus definido em protheus/WSTaxes.prw (WSRESTFUL ItensImpostos).
+        // Campos aceitos no body: idCliente, idRepresentante, tipoPedido, planoPagamento,
+        // itens[].{idProduto, quantidade, precoVenda, precoBase, comissao}.
+        // idGerente, modoFrete, idPedido e usuarioLogado são tolerados mas ignorados pelo Protheus.
+        var protheusPayload = new ConsultaImpostoLoteProtheus
         {
-            model.IdCliente,
-            UsuarioLogado,
-            model.TipoPedido,
-            model.PlanoPagamento,
+            IdCliente = model.IdCliente,
+            UsuarioLogado = UsuarioLogado,
+            TipoPedido = model.TipoPedido,
+            PlanoPagamento = model.PlanoPagamento,
             IdRepresentante = model.IdRepresentante ?? UsuarioLogado,
-            model.IdGerente,
-            model.ModoFrete,
-            model.IdPedido,
-            model.Itens
+            IdGerente = model.IdGerente,
+            ModoFrete = model.ModoFrete,
+            IdPedido = model.IdPedido,
+            Itens = model.Itens
         };
 
         var url = $"{CaminhoApiPadrao}/itens/impostos";

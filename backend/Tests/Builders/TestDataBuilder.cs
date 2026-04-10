@@ -92,9 +92,6 @@ public static class TestDataBuilder
                     PercentualIPI = f.Finance.Amount(0, 15),
                     PercentualICMSST = f.Finance.Amount(0, 5),
                     SaldoPendente = 0,
-                    ICMS = f.Finance.Amount(0, 200),
-                    ICMSST = f.Finance.Amount(0, 50),
-                    IPI = f.Finance.Amount(0, 100),
                     ComissaoMaxima = f.Finance.Amount(3, 10)
                 }
             })

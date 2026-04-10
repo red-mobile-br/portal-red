@@ -107,10 +107,10 @@ interface NovoPedidoState {
     },
     resumoPedido: {
         totalProdutos: number,
-        totalICMS: number,
-        totalIPI: number,
-        totalICMSST: number,
-        totalNF: number,
+        totalIcms: number,
+        totalIpi: number,
+        totalIcmsSt: number,
+        totalNota: number,
         pesoLiquido: number,
         pesoBruto: number,
         margemPedido: number,
@@ -189,10 +189,10 @@ const state = reactive<NovoPedidoState>({
     },
     resumoPedido: {
         totalProdutos: 0,
-        totalICMS: 0,
-        totalIPI: 0,
-        totalICMSST: 0,
-        totalNF: 0,
+        totalIcms: 0,
+        totalIpi: 0,
+        totalIcmsSt: 0,
+        totalNota: 0,
         pesoLiquido: 0,
         pesoBruto: 0,
         margemPedido: 0,
@@ -236,9 +236,6 @@ const dataEmissao = computed(() => format(new Date(), 'dd/MM/yyyy'));
 const aplicarImpostosProduto = (produto: ProdutoDTO, taxes: import('@/core/dtos/produto/ImpostoProdutoDTO').default) => {
     produto.comissaoMaxima = taxes.comissaoMaxima ?? 5;
     produto.comissao = taxes.comissao;
-    produto.icms = taxes.icms;
-    produto.icmsst = taxes.icmsst;
-    produto.ipi = taxes.ipi;
     produto.percentualICMSST = taxes.percentualICMSST ?? 0;
     produto.percentualICMS = taxes.percentualICMS ?? 0;
     produto.percentualIPI = taxes.percentualIPI ?? 0;
@@ -246,7 +243,7 @@ const aplicarImpostosProduto = (produto: ProdutoDTO, taxes: import('@/core/dtos/
     produto.percentualDesconto = produto.percentualDesconto ?? 0;
     produto.valorUnitario = produto.valorUnitario ?? produto.precoBase;
     produto.margem = taxes.margem ?? 0;
-    produto.valorTotal = (produto.valorUnitario ?? 0) * (produto.quantidade ?? 0);
+    produto.valorTotal = taxes.valorTotal ?? 0;
 };
 
 /** Cancelador de request anterior */
@@ -309,17 +306,18 @@ const recalcularImpostos = async (produtoPendente?: ProdutoDTO): Promise<boolean
             }
         }
 
+        // Todos os totais vêm do Protheus — nenhum cálculo client-side.
         state.resumoPedido = {
             totalProdutos: resposta.totalProdutos ?? 0,
-            totalICMS: resposta.totalICMS ?? 0,
-            totalIPI: resposta.totalIPI ?? 0,
-            totalICMSST: resposta.totalICMSST ?? 0,
-            totalNF: resposta.totalNF ?? 0,
+            totalIcms: resposta.totalIcms ?? 0,
+            totalIpi: resposta.totalIpi ?? 0,
+            totalIcmsSt: resposta.totalIcmsSt ?? 0,
+            totalNota: resposta.totalNota ?? 0,
             pesoLiquido: resposta.pesoLiquido ?? 0,
             pesoBruto: resposta.pesoBruto ?? 0,
             margemPedido: resposta.margemPedido ?? 0,
-            totalVolumes: resposta.totalItens ?? 0,
             totalItens: resposta.totalItens ?? 0,
+            totalVolumes: resposta.totalVolumes ?? 0,
         };
 
         dismissToast(idToast);
@@ -512,10 +510,10 @@ const limparFormulario = () => {
 
     state.resumoPedido = {
         totalProdutos: 0,
-        totalICMS: 0,
-        totalIPI: 0,
-        totalICMSST: 0,
-        totalNF: 0,
+        totalIcms: 0,
+        totalIpi: 0,
+        totalIcmsSt: 0,
+        totalNota: 0,
         pesoLiquido: 0,
         pesoBruto: 0,
         margemPedido: 0,
@@ -764,6 +762,21 @@ const carregarParaEdicao = async () => {
         state.form.dadosAgendamento.telefone = pedido.dadosAgendamento?.telefone ?? '';
         state.form.informacoesNota = pedido.informacoesNota ?? '';
         state.form.observacoesPedido = pedido.observacoesPedido ?? '';
+
+        // Inicializa o resumo do pedido com os totais vindos do próprio GET /Pedido/{id}.
+        // Todos os valores DEVEM vir do Protheus — nenhum cálculo client-side é feito aqui.
+        state.resumoPedido = {
+            totalProdutos: pedido.valorProdutos ?? 0,
+            totalIcms: pedido.valorICMS ?? 0,
+            totalIpi: pedido.valorIPI ?? 0,
+            totalIcmsSt: pedido.valorICMSST ?? 0,
+            totalNota: pedido.valorNota ?? 0,
+            pesoLiquido: pedido.pesoLiquido ?? 0,
+            pesoBruto: pedido.pesoBruto ?? 0,
+            margemPedido: pedido.margemPedido ?? 0,
+            totalItens: pedido.totalItens ?? 0,
+            totalVolumes: pedido.totalVolumes ?? 0,
+        };
 
         await mudarPlanoPagamento(pedido.planoPagamento ?? '');
 
@@ -1321,13 +1334,13 @@ onBeforeRouteLeave((_, __, next) => {
                             R$ {{ formatarDecimal(state.resumoPedido.totalProdutos) }}
                         </RmTextField>
                         <RmTextField label="Total ICMS">
-                            R$ {{ formatarDecimal(state.resumoPedido.totalICMS) }}
+                            R$ {{ formatarDecimal(state.resumoPedido.totalIcms) }}
                         </RmTextField>
                         <RmTextField label="Total IPI">
-                            R$ {{ formatarDecimal(state.resumoPedido.totalIPI) }}
+                            R$ {{ formatarDecimal(state.resumoPedido.totalIpi) }}
                         </RmTextField>
                         <RmTextField label="Total ICMS ST">
-                            R$ {{ formatarDecimal(state.resumoPedido.totalICMSST) }}
+                            R$ {{ formatarDecimal(state.resumoPedido.totalIcmsSt) }}
                         </RmTextField>
                         <RmTextField label="Peso líquido">
                             {{ formatarDecimal(state.resumoPedido.pesoLiquido) }} kg
@@ -1346,7 +1359,7 @@ onBeforeRouteLeave((_, __, next) => {
                         Total da nota fiscal:
                     </RmText>
                     <RmText type="display-large" class="mb-2">
-                        R$ {{ formatarDecimal(state.resumoPedido.totalNF) }}
+                        R$ {{ formatarDecimal(state.resumoPedido.totalNota) }}
                     </RmText>
                     <div class="flex items-center space-x-3">
                         <RmButton type="hollow" class="flex-1" @click="cancelarPedido">

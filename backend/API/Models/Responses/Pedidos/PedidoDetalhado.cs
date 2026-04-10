@@ -33,6 +33,8 @@ public record PedidoDetalhado
     public string? NomeGerente { get; init; }
     public decimal? PesoLiquido { get; init; }
     public decimal? PesoBruto { get; init; }
+    public int? TotalItens { get; init; }
+    public int? TotalVolumes { get; init; }
 }
 
 public sealed record ClientePedido
@@ -60,8 +62,5 @@ public sealed record ProdutoPedido
     public decimal? PercentualIPI { get; init; }
     public decimal? PercentualICMSST { get; init; }
     public int? SaldoPendente { get; init; }
-    public decimal? ICMS { get; init; }
-    public decimal? ICMSST { get; init; }
-    public decimal? IPI { get; init; }
     public decimal? ComissaoMaxima { get; init; }
 }

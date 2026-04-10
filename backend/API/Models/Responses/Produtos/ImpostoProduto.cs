@@ -13,4 +13,5 @@ public sealed record ImpostoProduto
     public decimal? ComissaoMaxima { get; init; }
     public decimal? ValorMargem { get; init; }
     public decimal? ValorCusto { get; init; }
+    public decimal? ValorTotal { get; init; }
 }

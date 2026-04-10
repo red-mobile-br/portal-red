@@ -301,9 +301,9 @@ export default function templateRelatorioPedido(data: ReportTemplateOptions) {
                         product.quantidade ?? 0,
                         formatarDecimal(product.valorUnitario ?? 0),
                         formatarDecimal(product.precoBase ?? 0),
-                        formatarDecimal(product.ipi ?? 0),
-                        formatarDecimal(product.icms ?? 0),
-                        formatarDecimal(product.icmsst ?? 0),
+                        formatarDecimal(product.percentualIPI ?? 0),
+                        formatarDecimal(product.percentualICMS ?? 0),
+                        formatarDecimal(product.percentualICMSST ?? 0),
                         formatarDecimal(product.valorTotal ?? 0),
                     ];
                 })

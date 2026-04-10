@@ -36,4 +36,6 @@ export default interface PedidoDTO {
     nomeGerente?: string;
     pesoLiquido?: number;
     pesoBruto?: number;
+    totalItens?: number;
+    totalVolumes?: number;
 }

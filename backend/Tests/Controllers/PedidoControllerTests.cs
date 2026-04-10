@@ -427,9 +427,6 @@ public class PedidoControllerTests : BaseControllerTests
             PercentualIPI = 5m,
             PercentualICMSST = 3m,
             SaldoPendente = 0,
-            ICMS = 25.20m,
-            ICMSST = 6.30m,
-            IPI = 10.50m,
             ComissaoMaxima = 5m
         };
         var pedidoEsperado = TestDataBuilder.OrderBuilder()
@@ -451,9 +448,9 @@ public class PedidoControllerTests : BaseControllerTests
         var okResult = result.Result.Should().BeOfType<OkObjectResult>().Subject;
         var order = okResult.Value.Should().BeOfType<PedidoDetalhado>().Subject;
         order.Produtos.Should().HaveCount(1);
-        order.Produtos[0].ICMS.Should().Be(25.20m);
-        order.Produtos[0].ICMSST.Should().Be(6.30m);
-        order.Produtos[0].IPI.Should().Be(10.50m);
+        order.Produtos[0].PercentualICMS.Should().Be(12m);
+        order.Produtos[0].PercentualICMSST.Should().Be(3m);
+        order.Produtos[0].PercentualIPI.Should().Be(5m);
         order.Produtos[0].ComissaoMaxima.Should().Be(5m);
     }
 }

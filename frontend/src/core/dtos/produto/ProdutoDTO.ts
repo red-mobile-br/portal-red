@@ -1,10 +1,7 @@
 export default interface ProdutoDTO {
     precoBase?: number;
     descricao?: string;
-    icms?: number;
-    icmsst?: number;
     id?: string;
-    ipi?: number;
     margem?: number;
     percentualICMS?: number;
     percentualIPI?: number;

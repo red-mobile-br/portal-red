@@ -10,4 +10,5 @@ export default interface ImpostoProdutoDTO {
     comissaoMaxima?: number;
     valorMargem?: number;
     valorCusto?: number;
+    valorTotal?: number;
 }
