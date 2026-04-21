@@ -1,8 +1,8 @@
 import ItemGraficoDTO from "../ItemGraficoDTO";
 
 export default interface DashboardComissoesDTO {
-    totalComissaoPeriodo?: number;
-    percentualComissaoPeriodo?: number;
-    comissoesPeriodo?: ItemGraficoDTO[];
-    maioresComissoesPeriodo?: ItemGraficoDTO[];
+    totalComissaoPorPeriodo?: number;
+    percentualComissaoPorPeriodo?: number;
+    comissoesPorPeriodo?: ItemGraficoDTO[];
+    maiorComissaoPorPeriodo?: ItemGraficoDTO[];
 }

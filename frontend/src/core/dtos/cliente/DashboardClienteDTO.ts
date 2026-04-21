@@ -3,10 +3,10 @@ import MelhorClienteDTO from "./MelhorClienteDTO";
 
 export default interface DashboardClienteDTO {
     clientesPorEstado?: {
-        estado?: string;
+        uf?: string;
         quantidadeClientes?: number;
     }[];
-    clientesPorEstatus?: ItemGraficoDTO[];
+    clientesPorStatus?: ItemGraficoDTO[];
     melhoresClientesPorPedidos?: MelhorClienteDTO[];
     melhoresClientesPorFaturamento?: MelhorClienteDTO[];
 }

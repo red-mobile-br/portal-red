@@ -63,8 +63,8 @@ async function carregarDados() {
 const clientesPorEstadoParaGrafico = computed(() => {
     if (!dadosDashboard.value?.clientesPorEstado) return [];
     return dadosDashboard.value.clientesPorEstado.map(item => ({
-        rotulo: item.estado ?? '',
-        series: [{ nome: item.estado ?? '', valor: item.quantidadeClientes ?? 0 }]
+        rotulo: item.uf ?? '',
+        series: [{ nome: item.uf ?? '', valor: item.quantidadeClientes ?? 0 }]
     }));
 });
 
@@ -120,7 +120,7 @@ onMounted(() => carregarDados());
                         Total de pedidos
                     </RmText>
                     <p class="font-semibold text-2xl text-primary-light">
-                        {{ dadosDashboard.totalPedidosPeriodo ?? 0 }}
+                        {{ dadosDashboard.totalPedidosNoPeriodo ?? 0 }}
                     </p>
                     <RmDivider class="mb-2 my-3" />
                     <RmText type="label-small">
@@ -138,7 +138,7 @@ onMounted(() => carregarDados());
                         Pedidos em aberto
                     </RmText>
                     <p class="font-semibold text-2xl text-accent">
-                        {{ dadosDashboard.pedidosAbertosPeriodo ?? 0 }}
+                        {{ dadosDashboard.pedidosAbertosNoPeriodo ?? 0 }}
                     </p>
                     <RmDivider class="mb-2 my-3" />
                     <RmText type="label-small">

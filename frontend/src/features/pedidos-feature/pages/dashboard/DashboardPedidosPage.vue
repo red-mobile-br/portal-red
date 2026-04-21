@@ -71,8 +71,8 @@ const state = reactive<EstadoGerenciarPedidos>({
     carregandoDashboard: true,
     carregandoLista: false,
     dashboard: {
-        totalPedidosPeriodo: 0,
-        pedidosAbertosPeriodo: 0,
+        totalPedidosNoPeriodo: 0,
+        pedidosAbertosNoPeriodo: 0,
         valorTotalPedidos: 0,
         pedidosPorPeriodo: [],
         pedidosPorTipo: []
@@ -302,7 +302,7 @@ onMounted(() => carregarDados());
                 </RmText>
 
                 <p class="font-semibold text-2xl text-primary-light mb-2.5">
-                    {{ state.dashboard.totalPedidosPeriodo }}
+                    {{ state.dashboard.totalPedidosNoPeriodo }}
                 </p>
 
                 <RmDivider class="mb-1" />
@@ -318,7 +318,7 @@ onMounted(() => carregarDados());
                     {{ titulo }} em aberto
                 </RmText>
                 <p class="font-semibold text-2xl text-accent mb-2.5">
-                    {{ state.dashboard.pedidosAbertosPeriodo }}
+                    {{ state.dashboard.pedidosAbertosNoPeriodo }}
                 </p>
                 <RmDivider class="mb-1" />
                 <RmText type="label-small">

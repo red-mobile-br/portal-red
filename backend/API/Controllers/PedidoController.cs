@@ -82,7 +82,7 @@ public class PedidoController(
         var html = servicoRelatorioPedido.GerarRelatorioHtml(pedido);
         var pdfBytes = await pdfService.GerarPdfDeHtmlAsync(html);
 
-        var assunto = $"Pedido #{pedido.Id} - {pedido.Cliente.RazaoSocial}";
+        var assunto = $"Pedido #{pedido.Id} - {pedido.Cliente?.RazaoSocial}";
         var corpoEmail = GerarCorpoEmail(pedido);
 
         await emailService.EnviarEmailAsync(
@@ -100,8 +100,8 @@ public class PedidoController(
     {
         var modeloEmail = new EmailPedidoModel
         {
-            IdPedido = pedido.Id,
-            RazaoSocialCliente = pedido.Cliente.RazaoSocial
+            IdPedido = pedido.Id ?? string.Empty,
+            RazaoSocialCliente = pedido.Cliente?.RazaoSocial ?? string.Empty
         };
 
         return emailTemplateService.RenderizarTemplate("EmailPedido", modeloEmail);

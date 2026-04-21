@@ -37,10 +37,10 @@ const { nomeUsuario: nome } = useAppStore();
 const state = reactive<EstadoImpressaoComissoes>({
     carregando: true,
     dashboard: {
-        totalComissaoPeriodo: 0,
-        percentualComissaoPeriodo: 0,
-        comissoesPeriodo: [],
-        maioresComissoesPeriodo: []
+        totalComissaoPorPeriodo: 0,
+        percentualComissaoPorPeriodo: 0,
+        comissoesPorPeriodo: [],
+        maiorComissaoPorPeriodo: []
     },
     comissoes: [],
 });
@@ -112,7 +112,7 @@ onMounted(() => carregarDados());
                                 Valor total de comissão:
                             </RmText>
                             <RmText type="display-medium">
-                                R$ {{ formatarDecimal(state.dashboard.totalComissaoPeriodo ?? 0) }}
+                                R$ {{ formatarDecimal(state.dashboard.totalComissaoPorPeriodo ?? 0) }}
                             </RmText>
                         </div>
                         <div class="mx-5 w-px bg-gray-300" />
@@ -121,7 +121,7 @@ onMounted(() => carregarDados());
                                 Porcentagem média
                             </RmText>
                             <RmText type="display-medium">
-                                {{ formatarDecimal(arredondarPreco(state.dashboard.percentualComissaoPeriodo ?? 0)) }}%
+                                {{ formatarDecimal(arredondarPreco(state.dashboard.percentualComissaoPorPeriodo ?? 0)) }}%
                             </RmText>
                         </div>
                     </div>
@@ -140,7 +140,7 @@ onMounted(() => carregarDados());
                         Desempenho no período
                     </RmText>
                     <div class="h-64 relative">
-                        <RmAreaChart :items="state.dashboard.comissoesPeriodo ?? []" />
+                        <RmAreaChart :items="state.dashboard.comissoesPorPeriodo ?? []" />
                     </div>
 
                     <!-- Maiores comissões no período-->
@@ -149,7 +149,7 @@ onMounted(() => carregarDados());
                         Maiores comissões no período
                     </RmText>
                     <div class="h-64 relative">
-                        <RmBarChart :items="state.dashboard.maioresComissoesPeriodo ?? []" :step-size="50" />
+                        <RmBarChart :items="state.dashboard.maiorComissaoPorPeriodo ?? []" />
                     </div>
 
                     <RmDivider class="mb-5" />

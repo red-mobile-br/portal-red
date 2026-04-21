@@ -8,7 +8,7 @@ import { coordenadasEstadosBrasileiros, estadosBrasileiros } from '@/utils/estad
 
 const props = defineProps({
     clients: {
-        type: Array as PropType<{estado: string; quantidadeClientes: number}[]>,
+        type: Array as PropType<{uf: string; quantidadeClientes: number}[]>,
         required: true
     }
 });
@@ -21,11 +21,11 @@ const loadClients = () => {
     const max = Math.max(...props.clients.map(el => el.quantidadeClientes));
 
     props.clients.forEach(client => {
-        const coordinates = coordenadasEstadosBrasileiros[client.estado];
+        const coordinates = coordenadasEstadosBrasileiros[client.uf];
 
         if(coordinates) {
             const pinPlaceholder = document.createElement('button');
-            pinPlaceholder.setAttribute('id', client.estado);
+            pinPlaceholder.setAttribute('id', client.uf);
             pinPlaceholder.setAttribute('class', 'map-pin');
             pinPlaceholder.onclick = () => {
                 const pins = document.querySelectorAll<HTMLElement>('.map-pin');
@@ -34,7 +34,7 @@ const loadClients = () => {
             };
 
             const scale = (1 + (client.quantidadeClientes / max) * 0.5).toFixed(2);
-            const state = client.estado;
+            const state = client.uf;
             const clientsAmount = client.quantidadeClientes;
             const stateName = estadosBrasileiros.find(el => el.initials == state)?.name;
             
@@ -58,7 +58,7 @@ const loadClients = () => {
             });
 
             nextTick(() => {
-                createApp(pin).mount('#'+client.estado);
+                createApp(pin).mount('#'+client.uf);
             });
         }
     });

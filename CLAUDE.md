@@ -105,3 +105,19 @@ Everything else — domain concepts, method names, variable names, route segment
 Backend uses xUnit + Moq + FluentAssertions + Bogus (faker). Tests live in `backend/Tests/`.
 
 No frontend test suite exists currently.
+
+## Arquivos Protheus (`.prw`)
+
+Os arquivos em `protheus/` usam encoding **Windows-1252** (ISO-8859). **Nunca use o Edit tool nem o Write tool** nesses arquivos — ambos reescrevem em UTF-8, corrompendo os caracteres especiais e podendo zerar o arquivo.
+
+Para editar arquivos `.prw`, use Python em modo binário:
+
+```python
+with open('protheus/WSXxx.prw', 'rb') as f:
+    data = f.read()
+data = data.replace(b'nomeAntigo', b'nomeNovo')
+with open('protheus/WSXxx.prw', 'wb') as f:
+    f.write(data)
+```
+
+Os originais limpos estão em `/home/hugo/Downloads/RepresentantesNew/` e servem como fonte de restauração caso um arquivo seja corrompido.

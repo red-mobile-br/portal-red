@@ -21,20 +21,20 @@ public class MetaController(IHttpClientFactory httpClientFactory, IOptions<Proth
 
         var url = ConstruirUrlMetasVigentes(UsuarioLogado, filtroAtualizado);
         var resultado = await ObterAsync<ListaMetas>(url, cancellationToken);
-        return resultado.Metas;
+        return resultado.Metas ?? [];
     }
 
     [HttpGet("historico")]
-    public async Task<IEnumerable<Meta>> ObterMetas([FromQuery] FiltroPadraoQuery queryObject, CancellationToken cancellationToken)
+    public async Task<IEnumerable<Meta>> ObterHistoricoMetas([FromQuery] FiltroPadraoQuery queryObject, CancellationToken cancellationToken)
     {
-        var url = ConstruirUrlMetas(UsuarioLogado, queryObject);
-        var resultado = await ObterAsync<ListaMetas>(url, cancellationToken);
-        return resultado.Metas;
+        var url = ConstruirUrlHistoricoMetas(UsuarioLogado, queryObject);
+        var resultado = await ObterAsync<ListaMetasPassadas>(url, cancellationToken);
+        return resultado.MetasPassadas ?? [];
     }
 
     private string ConstruirUrlMetasVigentes(string usuarioLogado, FiltroPadraoQuery queryObject)
         => string.Join('/', CaminhoApiPadrao, "Meta") + ConstruirQueryString(ObterDicionarioQueryString(usuarioLogado, queryObject));
 
-    private string ConstruirUrlMetas(string usuarioLogado, FiltroPadraoQuery queryObject)
-        => string.Join('/', CaminhoApiPadrao, "Meta") + ConstruirQueryString(ObterDicionarioQueryString(usuarioLogado, queryObject));
+    private string ConstruirUrlHistoricoMetas(string usuarioLogado, FiltroPadraoQuery queryObject)
+        => string.Join('/', CaminhoApiPadrao, "Meta", "historico") + ConstruirQueryString(ObterDicionarioQueryString(usuarioLogado, queryObject));
 }

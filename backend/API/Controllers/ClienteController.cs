@@ -148,7 +148,7 @@ public class ClienteController(IHttpClientFactory httpClientFactory, IOptions<Pr
             InscricaoEstadual = dto.InscricaoEstadual,
             Suframa = dto.Suframa,
             DataFundacao = dto.DataFundacao,
-            CNAE = dto.CNAE,
+            Cnae = dto.CNAE,
             RamoAtividade = dto.RamoAtividade,
             Telefone = dto.Telefone,
             Fax = dto.Fax,

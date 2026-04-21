@@ -10,5 +10,5 @@ export default interface DashboardFaturamentoDTO {
     vendasPorDia?: ItemGraficoDTO[];
     quantidadeVendas?: number;
     totalBase?: number;
-    totalFaturado?: number;
+    totalNF?: number;
 }

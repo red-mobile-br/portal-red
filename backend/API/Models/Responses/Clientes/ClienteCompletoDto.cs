@@ -22,7 +22,7 @@ public sealed record ClienteCompletoDto
     public string? InscricaoEstadual { get; init; }
     public string? Suframa { get; init; }
     public string? DataFundacao { get; init; }
-    public string? CNAE { get; init; }
+    public string? Cnae { get; init; }
     public string? RamoAtividade { get; init; }
 
     public string? Telefone { get; init; }

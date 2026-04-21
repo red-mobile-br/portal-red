@@ -57,7 +57,7 @@ const state = reactive<EstadoDashboardFaturamento>({
     carregandoLista: false,
     faturamentos: [],
     dashboard: {
-        totalFaturado: 0,
+        totalNF: 0,
         totalBase: 0,
         quantidadeVendas: 0,
         vendasPorCategoria: [],
@@ -231,7 +231,7 @@ onMounted(() => carregarDados());
                     Valor total NF
                 </RmText>
                 <p class="font-semibold text-2xl text-accent">
-                    R$ {{ formatarDecimal(state.dashboard.totalFaturado ?? 0) }}
+                    R$ {{ formatarDecimal(state.dashboard.totalNF ?? 0) }}
                 </p>
                 <RmDivider class="mb-2 my-3" />
                 <RmText type="label-small">

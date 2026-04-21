@@ -351,8 +351,8 @@ public class OrcamentoControllerTests : BaseControllerTests
         var queryObject = new FiltroPadraoQuery { Pagina = 1, Tamanho = 10 };
         var expectedDashboard = new DashboardPedidos
         {
-            TotalPedidosPeriodo = 10,
-            PedidosAbertosPeriodo = 5,
+            TotalPedidosNoPeriodo = 10,
+            PedidosAbertosNoPeriodo = 5,
             ValorTotalPedidos = 50000m,
             PedidosPorPeriodo = [],
             PedidosPorTipo = []
@@ -371,6 +371,6 @@ public class OrcamentoControllerTests : BaseControllerTests
 
         // Assert
         result.Should().NotBeNull();
-        result.TotalPedidosPeriodo.Should().Be(10);
+        result.TotalPedidosNoPeriodo.Should().Be(10);
     }
 }

@@ -122,7 +122,7 @@ public class MetaControllerTests : BaseControllerTests
     }
 
     [Fact]
-    public async Task ObterMetas_DeveRetornarHistoricoMetas()
+    public async Task ObterHistoricoMetas_DeveRetornarHistoricoMetas()
     {
         // Arrange
         var queryObject = new FiltroPadraoQuery
@@ -131,18 +131,18 @@ public class MetaControllerTests : BaseControllerTests
             Tamanho = 20
         };
         var metas = TestDataBuilder.MetaBuilder().Generate(10);
-        var listaMetas = new ListaMetas { Metas = metas };
+        var listaMetasPassadas = new ListaMetasPassadas { MetasPassadas = metas };
 
         var mockClient = MockHttpMessageHandler.CreateMockClient(
             HttpStatusCode.OK,
-            JsonSerializer.Serialize(listaMetas, _jsonOpcoes)
+            JsonSerializer.Serialize(listaMetasPassadas, _jsonOpcoes)
         );
         var factory = new MockHttpClientFactory(mockClient);
         var controller = CreateController(factory);
         SetupControllerContext(controller);
 
         // Act
-        var result = await controller.ObterMetas(queryObject, CancellationToken.None);
+        var result = await controller.ObterHistoricoMetas(queryObject, CancellationToken.None);
 
         // Assert
         result.Should().NotBeNull();
@@ -150,7 +150,7 @@ public class MetaControllerTests : BaseControllerTests
     }
 
     [Fact]
-    public async Task ObterMetas_DeveRetornarListaVazia_QuandoNaoExistemMetas()
+    public async Task ObterHistoricoMetas_DeveRetornarListaVazia_QuandoNaoExistemMetas()
     {
         // Arrange
         var queryObject = new FiltroPadraoQuery
@@ -158,18 +158,18 @@ public class MetaControllerTests : BaseControllerTests
             Pagina = 1,
             Tamanho = 10
         };
-        var listaMetas = new ListaMetas { Metas = new List<Meta>() };
+        var listaMetasPassadas = new ListaMetasPassadas { MetasPassadas = new List<Meta>() };
 
         var mockClient = MockHttpMessageHandler.CreateMockClient(
             HttpStatusCode.OK,
-            JsonSerializer.Serialize(listaMetas, _jsonOpcoes)
+            JsonSerializer.Serialize(listaMetasPassadas, _jsonOpcoes)
         );
         var factory = new MockHttpClientFactory(mockClient);
         var controller = CreateController(factory);
         SetupControllerContext(controller);
 
         // Act
-        var result = await controller.ObterMetas(queryObject, CancellationToken.None);
+        var result = await controller.ObterHistoricoMetas(queryObject, CancellationToken.None);
 
         // Assert
         result.Should().NotBeNull();

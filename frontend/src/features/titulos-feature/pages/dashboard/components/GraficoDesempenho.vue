@@ -17,6 +17,11 @@ function loadChart() {
     const labels = props.items.map(i => i.rotulo ?? '');
     
     const colors = ['#F66A70', '#98D8D5', '#E2CA4A'];
+    const isDark = () => document.documentElement.classList.contains('dark');
+    const textColor = () => isDark() ? 'white' : '#171717';
+
+    const nomeSeries = [0, 1, 2].map(i => props.items[0]?.series?.[i]?.nome ?? '');
+
     const chartEl = new Chart(ctx, {
         plugins: [],
         options: {
@@ -28,17 +33,24 @@ function loadChart() {
             responsive: true,
             plugins: {
                 legend: {
-                    display: false
+                    display: true,
+                    labels: {
+                        color: textColor(),
+                        font: { size: 11 },
+                        boxWidth: 12,
+                        boxHeight: 12,
+                        padding: 12,
+                    }
                 },
-         
             },
             scales: {
                 percentageScale: {
                     type: 'linear',
-                    min: 0,
-                    max: 100,
+                    position: 'right',
                     ticks: {
-                        display: false
+                        color: textColor(),
+                        font: { size: 10 },
+                        callback: (value) => `${value}%`,
                     },
                     grid: {
                         display: false,
@@ -50,11 +62,9 @@ function loadChart() {
                         display: false,
                     },
                     ticks: {
-                        color: document.documentElement.classList.contains('dark') ? 'white' : '#171717',
+                        color: textColor(),
                         count: 5,
-                        font: {
-                            size: 10
-                        }
+                        font: { size: 10 }
                     },
                     grid: {
                         lineWidth(ctx, _) {
@@ -68,10 +78,8 @@ function loadChart() {
                         display: false,
                     },
                     ticks: {
-                        color: document.documentElement.classList.contains('dark') ? 'white' : '#171717',
-                        font: {
-                            size: 10
-                        }
+                        color: textColor(),
+                        font: { size: 10 }
                     },
                     grid: {
                         display: false
@@ -100,6 +108,7 @@ function loadChart() {
             datasets:[
                 {
                     type: 'bar',
+                    label: nomeSeries[0],
                     data: props.items.flatMap(({ series }) => (series ?? [])[0]?.valor ?? 0),
                     backgroundColor: colors[0],
                     order: 3,
@@ -108,6 +117,7 @@ function loadChart() {
                 },
                 {
                     type: 'bar',
+                    label: nomeSeries[1],
                     data: props.items.flatMap(({ series }) => (series ?? [])[1]?.valor ?? 0),
                     backgroundColor: colors[1],
                     order: 2,
@@ -115,6 +125,7 @@ function loadChart() {
                 },
                 {
                     type: 'line',
+                    label: nomeSeries[2],
                     data: props.items.flatMap(({ series }) => (series ?? [])[2]?.valor ?? 0),
                     backgroundColor: colors[2],
                     borderColor: colors[2],
@@ -127,9 +138,11 @@ function loadChart() {
     
     window.addEventListener('darkModeToogle', () => {
         nextTick(() => {
-            chartEl.options.scales!['x']!.ticks!.color = document.documentElement.classList.contains('dark') ? 'white' : '#171717';
-            chartEl.options.scales!['y']!.ticks!.color = document.documentElement.classList.contains('dark') ? 'white' : '#171717';
-            chartEl.options.scales!['percentageScale']!.ticks!.color = document.documentElement.classList.contains('dark') ? 'white' : '#171717';
+            const cor = textColor();
+            chartEl.options.scales!['x']!.ticks!.color = cor;
+            chartEl.options.scales!['y']!.ticks!.color = cor;
+            chartEl.options.scales!['percentageScale']!.ticks!.color = cor;
+            chartEl.options.plugins!.legend!.labels!.color = cor;
             chartEl.update();
         });
     });

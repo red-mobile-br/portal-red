@@ -38,12 +38,12 @@ const trophy = computed(() => {
             <div class="flex items-center">
                 <img :src="trophy" class="w-6">
                 <p class="px-2 text-left text-xs">
-                    {{ client.nomeCliente ?? '' }}
+                    {{ client.nome ?? '' }}
                 </p>
             </div>
         </td>
         <td class="font-bold opacity-80">
-            {{ isRevenue ? `R$ ${formatarDecimal(client.valorTotal ?? 0)}` : client.valorTotal ?? 0 }}
+            {{ isRevenue ? `R$ ${formatarDecimal(client.valor ?? 0)}` : client.valor ?? 0 }}
         </td>
     </tr>
 </template>

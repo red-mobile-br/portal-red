@@ -99,11 +99,11 @@ function redefinirSenha(e: { isValid: boolean }) {
             <!--  CNPJ -->
             <RmInput v-model="state.nomeUsuario"
                      label="CNPJ"
-                     placeholder="Ex.: 00.000.000/0001-00"
+                     placeholder="Ex.: 00.000.000/0001-00 ou AB.CDE.FGH/1234-00"
                      name="cnpj"
                      type="tel"
                      :rules="[obrigatorio, cnpjValido]"
-                     mask="##.###.###/####-##"
+                     mask="**.***.***/****-##"
                      class="mb-3"
                      :disabled="state.carregando" />
 

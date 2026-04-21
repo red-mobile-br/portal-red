@@ -42,8 +42,8 @@ const state = reactive<EstadoImpressaoPedidos>({
     carregando: true,
     pedidos: [],
     dashboard: {
-        totalPedidosPeriodo: 0,
-        pedidosAbertosPeriodo: 0,
+        totalPedidosNoPeriodo: 0,
+        pedidosAbertosNoPeriodo: 0,
         valorTotalPedidos: 0,
         pedidosPorPeriodo: [],
         pedidosPorTipo: []
@@ -123,7 +123,7 @@ onMounted(() => carregarDados());
                                 Total de {{ titulo.toLowerCase() }}:
                             </RmText>
                             <RmText type="display-large">
-                                {{ state.dashboard.totalPedidosPeriodo }}
+                                {{ state.dashboard.totalPedidosNoPeriodo }}
                             </RmText>
                         </div>
                         <div class="mx-5 w-px bg-gray-300" />
@@ -132,7 +132,7 @@ onMounted(() => carregarDados());
                                 {{ titulo }} em aberto
                             </RmText>
                             <RmText type="display-large">
-                                {{ state.dashboard.pedidosAbertosPeriodo }}
+                                {{ state.dashboard.pedidosAbertosNoPeriodo }}
                             </RmText>
                         </div>
                     </div>

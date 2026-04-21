@@ -36,11 +36,12 @@ export const removerMascaraCnpj = (text: string) => {
 };
 
 export const mascaraCnpj = (value: string) => {
-    const part1 = value.substr(0, 2);
-    const part2 = value.substr(2,3);
-    const part3 = value.substr(5,3);
-    const part4 = value.substr(8,4);
-    const part5 = value.substr(12,2);
+    const upper = value.toUpperCase();
+    const part1 = upper.substr(0, 2);
+    const part2 = upper.substr(2, 3);
+    const part3 = upper.substr(5, 3);
+    const part4 = upper.substr(8, 4);
+    const part5 = upper.substr(12, 2);
     return `${part1}.${part2}.${part3}/${part4}-${part5}`;
 };
 

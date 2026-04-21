@@ -41,8 +41,8 @@ public class DashboardControllerTests : BaseControllerTests
 
         var orderDashboard = new DashboardPedidos
         {
-            TotalPedidosPeriodo = 100,
-            PedidosAbertosPeriodo = 25,
+            TotalPedidosNoPeriodo = 100,
+            PedidosAbertosNoPeriodo = 25,
             ValorTotalPedidos = 50000.00m,
             PedidosPorPeriodo = [],
             PedidosPorTipo = []
@@ -50,20 +50,20 @@ public class DashboardControllerTests : BaseControllerTests
 
         var commissionDashboard = new DashboardComissoes
         {
-            TotalComissaoPeriodo = 5000.00m,
-            PercentualComissaoPeriodo = 10.5m,
-            ComissoesPeriodo = [],
-            MaioresComissoesPeriodo = []
+            TotalComissaoPorPeriodo = 5000.00m,
+            PercentualComissaoPorPeriodo = 10.5m,
+            ComissoesPorPeriodo = [],
+            MaiorComissaoPorPeriodo = []
         };
 
         var clientDashboard = new DashboardClientes
         {
             ClientesPorEstado =
             [
-                new() { Estado = "SP", QuantidadeClientes = 10 },
-                new() { Estado = "RJ", QuantidadeClientes = 5 }
+                new() { Uf ="SP", QuantidadeClientes = 10 },
+                new() { Uf ="RJ", QuantidadeClientes = 5 }
             ],
-            ClientesPorEstatus = [],
+            ClientesPorStatus = [],
             MelhoresClientesPorPedidos = [],
             MelhoresClientesPorFaturamento = []
         };
@@ -100,8 +100,8 @@ public class DashboardControllerTests : BaseControllerTests
 
         // Assert
         result.Should().NotBeNull();
-        result.TotalPedidosPeriodo.Should().Be(100);
-        result.PedidosAbertosPeriodo.Should().Be(25);
+        result.TotalPedidosNoPeriodo.Should().Be(100);
+        result.PedidosAbertosNoPeriodo.Should().Be(25);
         result.TotalComissaoPeriodo.Should().Be(5000.00m);
         result.ClientesPorEstado.Should().HaveCount(2);
     }

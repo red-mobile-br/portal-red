@@ -48,7 +48,7 @@ const state = reactive<EstadoDashboardClientes>({
     tipoMelhoresClientes: 'revenues',
     dashboard: {
         clientesPorEstado: [],
-        clientesPorEstatus: [],
+        clientesPorStatus: [],
         melhoresClientesPorPedidos: [],
         melhoresClientesPorFaturamento: []
     },
@@ -202,7 +202,7 @@ onMounted(() => carregarDados());
             </div>
 
             <RmCard class="overflow-hidden !p-0 relative">
-                <MapaClientes :clients="(state.dashboard.clientesPorEstado ?? []).map(e => ({ estado: e.estado ?? '', quantidadeClientes: e.quantidadeClientes ?? 0 }))" />
+                <MapaClientes :clients="(state.dashboard.clientesPorEstado ?? []).map(e => ({ uf: e.uf ?? '', quantidadeClientes: e.quantidadeClientes ?? 0 }))" />
 
                 <div class="w-2/3 absolute top-0 left-0 h-full bg-gradient-to-r from-white to-transparent opacity-80 pointer-events-none" />
                 <div class="absolute top-4 left-4">
@@ -224,7 +224,7 @@ onMounted(() => carregarDados());
                     Status clientes
                 </RmText>
                 <div class="flex-1 relative">
-                    <RmDonutChart :items="state.dashboard.clientesPorEstatus ?? []" :display-legend="true" />
+                    <RmDonutChart :items="state.dashboard.clientesPorStatus ?? []" :display-legend="true" />
                 </div>
             </RmCard>
 

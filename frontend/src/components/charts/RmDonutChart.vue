@@ -39,7 +39,7 @@ function loadChart() {
                         if(!labels.length) {
                             return 'rgb(201, 203, 207)';
                         }
-                        return createRadialGradient3(context, colors[context.dataIndex]);
+                        return createRadialGradient3(context, colors[context.dataIndex % colors.length]);
                     }
                 }
             },

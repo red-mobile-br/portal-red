@@ -31,7 +31,7 @@ const percentual = computed(() => (((props.meta.valorRealizado ?? 0) / (props.me
 <template>
     <RmCard class="!p-0 border-l-4 border-gray-200 dark:border-gray-600" :class="{'!border-primary': percentual >= 100}">
         <div class="!py-2 !px-5 flex items-center">
-            <component :is="percentual >= 100 ? Trofeu : PreenchimentoTrofeu" :percentual="percentual" />
+            <component :is="percentual >= 100 ? Trofeu : PreenchimentoTrofeu" :percentage="percentual" />
 
             <div class="px-3 flex-1">
                 <p class="text-sm font-semibold mb-1">

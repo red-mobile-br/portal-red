@@ -27,7 +27,7 @@ const refModalBuscarRepresentante = ref<BuscarRepresentanteModalInstancia | null
 async function carregarHistoricoMetas() {
     carregando.value = true;
     try {
-        const [requisicao] = metaService.obterMetas({
+        const [requisicao] = metaService.obterHistorico({
             idRepresentante: filtros.idRepresentante,
             de: filtros.datas.start,
             ate: filtros.datas.end,

@@ -205,8 +205,8 @@ public class PedidoControllerTests : BaseControllerTests
         };
         var expectedDashboard = new DashboardPedidos
         {
-            TotalPedidosPeriodo = 50,
-            PedidosAbertosPeriodo = 10,
+            TotalPedidosNoPeriodo = 50,
+            PedidosAbertosNoPeriodo = 10,
             ValorTotalPedidos = 25000.00m,
             PedidosPorPeriodo = [],
             PedidosPorTipo = []
@@ -225,8 +225,8 @@ public class PedidoControllerTests : BaseControllerTests
 
         // Assert
         result.Should().NotBeNull();
-        result.TotalPedidosPeriodo.Should().Be(50);
-        result.PedidosAbertosPeriodo.Should().Be(10);
+        result.TotalPedidosNoPeriodo.Should().Be(50);
+        result.PedidosAbertosNoPeriodo.Should().Be(10);
     }
 
     [Fact]

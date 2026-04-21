@@ -6,5 +6,5 @@ public sealed record DashboardTitulos
 {
     public decimal? ValorRecebido { get; init; }
     public decimal? ValorAReceber { get; init; }
-    public List<ItemGrafico>? DesempenhoPeriodo { get; init; }
+    public List<ItemGrafico>? DesempenhoPorPeriodo { get; init; }
 }

@@ -326,7 +326,7 @@ watch(() => form.endereco.cep, (newValue, oldValue) => {
                              placeholder="CNPJ"
                              label="CNPJ"
                              name="cnpj do cliente"
-                             mask="##.###.###/####-##"
+                             mask="**.***.***/****-##"
                              :rules="[obrigatorio, cnpjValido]" />
 
                     <RmInput v-model="form.ramoAtividade"

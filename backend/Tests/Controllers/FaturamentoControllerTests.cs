@@ -145,7 +145,7 @@ public class FaturamentoControllerTests : BaseControllerTests
         };
         var expectedDashboard = new DashboardFaturamento
         {
-            TotalFaturado = 50000.00m,
+            TotalNF = 50000.00m,
             TotalBase = 45000.00m,
             QuantidadeVendas = 25,
             VendasPorCategoria = new List<ItemGrafico>
@@ -202,7 +202,7 @@ public class FaturamentoControllerTests : BaseControllerTests
 
         // Assert
         result.Should().NotBeNull();
-        result.TotalFaturado.Should().Be(50000.00m);
+        result.TotalNF.Should().Be(50000.00m);
         result.TotalBase.Should().Be(45000.00m);
         result.QuantidadeVendas.Should().Be(25);
         result.VendasPorCategoria.Should().HaveCount(1);
@@ -221,7 +221,7 @@ public class FaturamentoControllerTests : BaseControllerTests
         };
         var expectedDashboard = new DashboardFaturamento
         {
-            TotalFaturado = 0m,
+            TotalNF = 0m,
             TotalBase = 0m,
             QuantidadeVendas = 0,
             VendasPorCategoria = new List<ItemGrafico>(),
@@ -242,7 +242,7 @@ public class FaturamentoControllerTests : BaseControllerTests
 
         // Assert
         result.Should().NotBeNull();
-        result.TotalFaturado.Should().Be(0m);
+        result.TotalNF.Should().Be(0m);
         result.VendasPorCategoria.Should().BeEmpty();
         result.ProdutosMaisVendidos.Should().BeEmpty();
     }

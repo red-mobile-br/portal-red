@@ -15,7 +15,7 @@ export const cpfValido = (value: string): string => {
 };
 
 export const cnpjValido = (value: string): string => {
-    const isValid = (/\d{2}\.\d{3}\.\d{3}\/\d{4}\-\d{2}/i).test(value);
+    const isValid = (/^[A-Z0-9]{2}\.[A-Z0-9]{3}\.[A-Z0-9]{3}\/[A-Z0-9]{4}-\d{2}$/i).test(value);
     return !isValid ? "O campo $NAME precisa ser um cnpj válido" : "";
 };
 

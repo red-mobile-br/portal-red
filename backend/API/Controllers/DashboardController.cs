@@ -27,10 +27,10 @@ public class DashboardController(IHttpClientFactory httpClientFactory, IOptions<
         var resultado = new DashboardGeralDto
         {
             ClientesPorEstado = dashboardClientes.ClientesPorEstado,
-            ComissoesPeriodo = dashboardComissoes.ComissoesPeriodo,
-            TotalComissaoPeriodo = dashboardComissoes.TotalComissaoPeriodo,
-            TotalPedidosPeriodo = dashboardPedidos.TotalPedidosPeriodo,
-            PedidosAbertosPeriodo = dashboardPedidos.PedidosAbertosPeriodo
+            ComissoesPeriodo = dashboardComissoes.ComissoesPorPeriodo,
+            TotalComissaoPeriodo = dashboardComissoes.TotalComissaoPorPeriodo,
+            TotalPedidosNoPeriodo = dashboardPedidos.TotalPedidosNoPeriodo,
+            PedidosAbertosNoPeriodo = dashboardPedidos.PedidosAbertosNoPeriodo
         };
 
         return resultado;

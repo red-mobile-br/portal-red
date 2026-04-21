@@ -108,10 +108,10 @@ public class ComissaoControllerTests : BaseControllerTests
         };
         var expectedDashboard = new DashboardComissoes
         {
-            TotalComissaoPeriodo = 5000.00m,
-            PercentualComissaoPeriodo = 10.5m,
-            ComissoesPeriodo = [],
-            MaioresComissoesPeriodo = []
+            TotalComissaoPorPeriodo = 5000.00m,
+            PercentualComissaoPorPeriodo = 10.5m,
+            ComissoesPorPeriodo = [],
+            MaiorComissaoPorPeriodo = []
         };
 
         var mockClient = MockHttpMessageHandler.CreateMockClient(
@@ -127,8 +127,8 @@ public class ComissaoControllerTests : BaseControllerTests
 
         // Assert
         result.Should().NotBeNull();
-        result.TotalComissaoPeriodo.Should().Be(5000.00m);
-        result.PercentualComissaoPeriodo.Should().Be(10.5m);
+        result.TotalComissaoPorPeriodo.Should().Be(5000.00m);
+        result.PercentualComissaoPorPeriodo.Should().Be(10.5m);
     }
 
     [Theory]

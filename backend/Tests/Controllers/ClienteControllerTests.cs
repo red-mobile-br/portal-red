@@ -303,7 +303,7 @@ public class ClienteControllerTests : BaseControllerTests
         var dashboardEsperado = new DashboardClientes
         {
             ClientesPorEstado = [],
-            ClientesPorEstatus = [],
+            ClientesPorStatus = [],
             MelhoresClientesPorPedidos = [],
             MelhoresClientesPorFaturamento = []
         };

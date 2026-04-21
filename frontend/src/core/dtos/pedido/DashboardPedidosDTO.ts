@@ -1,8 +1,8 @@
 import ItemGraficoDTO from "../ItemGraficoDTO";
 
 export default interface DashboardPedidosDTO {
-    totalPedidosPeriodo?: number;
-    pedidosAbertosPeriodo?: number;
+    totalPedidosNoPeriodo?: number;
+    pedidosAbertosNoPeriodo?: number;
     valorTotalPedidos?: number;
     pedidosPorPeriodo?: ItemGraficoDTO[];
     pedidosPorTipo?: ItemGraficoDTO[];

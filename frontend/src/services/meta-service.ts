@@ -8,6 +8,9 @@ const metaService = {
     obterMetas: (query: FiltroPadraoQuery) => {
         return obter<MetaListaItemDTO[]>('/meta', query);
     },
+    obterHistorico: (query: FiltroPadraoQuery) => {
+        return obter<MetaListaItemDTO[]>('/meta/historico', query);
+    },
 };
 
 export { metaService };

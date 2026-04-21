@@ -46,10 +46,10 @@ const state = reactive<EstadoDashboardComissoes>({
     carregandoDashboard: true,
     carregandoLista: false,
     dashboard: {
-        totalComissaoPeriodo: 0,
-        percentualComissaoPeriodo: 0,
-        comissoesPeriodo: [],
-        maioresComissoesPeriodo: []
+        totalComissaoPorPeriodo: 0,
+        percentualComissaoPorPeriodo: 0,
+        comissoesPorPeriodo: [],
+        maiorComissaoPorPeriodo: []
     },
     comissoes: [],
 });
@@ -197,7 +197,7 @@ onMounted(() => carregarDados());
                     Valor total de comissão
                 </RmText>
                 <p class="font-semibold text-2xl text-primary-light">
-                    R$ {{ formatarDecimal(state.dashboard.totalComissaoPeriodo ?? 0) }}
+                    R$ {{ formatarDecimal(state.dashboard.totalComissaoPorPeriodo ?? 0) }}
                 </p>
                 <RmDivider class="mb-2 my-3" />
                 <RmText type="label-small">
@@ -211,7 +211,7 @@ onMounted(() => carregarDados());
                     Porcentagem média
                 </RmText>
                 <p class="font-semibold text-2xl text-accent">
-                    {{ formatarDecimal(arredondarPreco(state.dashboard.percentualComissaoPeriodo ?? 0)) }}%
+                    {{ formatarDecimal(arredondarPreco(state.dashboard.percentualComissaoPorPeriodo ?? 0)) }}%
                 </p>
                 <RmDivider class="mb-2 my-3" />
                 <RmText type="label-small">
@@ -225,7 +225,7 @@ onMounted(() => carregarDados());
                     Desempenho no período
                 </RmText>
                 <div class="flex-1 transition-opacity duration-300 relative">
-                    <RmAreaChart :items="state.dashboard.comissoesPeriodo ?? []" />
+                    <RmAreaChart :items="state.dashboard.comissoesPorPeriodo ?? []" />
                 </div>
             </RmCard>
 
@@ -235,7 +235,7 @@ onMounted(() => carregarDados());
                     Maiores comissões no período
                 </RmText>
                 <div class="flex-1 transition-opacity duration-300 relative">
-                    <RmBarChart :items="state.dashboard.maioresComissoesPeriodo ?? []" :step-size="50" />
+                    <RmBarChart :items="state.dashboard.maiorComissaoPorPeriodo ?? []" />
                 </div>
             </RmCard>
 

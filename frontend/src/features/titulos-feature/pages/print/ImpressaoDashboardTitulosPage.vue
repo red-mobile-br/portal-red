@@ -38,7 +38,7 @@ const state = reactive<EstadoImpressaoTitulos>({
     dashboard: {
         valorRecebido: 0,
         valorAReceber: 0,
-        desempenhoPeriodo: []
+        desempenhoPorPeriodo: []
     }
 });
 
@@ -139,7 +139,7 @@ onMounted(() => carregarDados());
                         Desempenho no período
                     </RmText>
                     <div class="h-64">
-                        <GraficoDesempenho :items="state.dashboard.desempenhoPeriodo ?? []" />
+                        <GraficoDesempenho :items="state.dashboard.desempenhoPorPeriodo ?? []" />
                     </div>
 
                     <!-- Titulos -->

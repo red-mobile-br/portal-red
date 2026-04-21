@@ -4,8 +4,8 @@ namespace RedMobilePedidos.API.Models.Responses.Comissao;
 
 public sealed record DashboardComissoes
 {
-    public decimal? TotalComissaoPeriodo { get; init; }
-    public decimal? PercentualComissaoPeriodo { get; init; }
-    public List<ItemGrafico>? ComissoesPeriodo { get; init; }
-    public List<ItemGrafico>? MaioresComissoesPeriodo { get; init; }
+    public decimal? TotalComissaoPorPeriodo { get; init; }
+    public decimal? PercentualComissaoPorPeriodo { get; init; }
+    public List<ItemGrafico>? ComissoesPorPeriodo { get; init; }
+    public List<ItemGrafico>? MaiorComissaoPorPeriodo { get; init; }
 }

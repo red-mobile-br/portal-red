@@ -4,7 +4,7 @@ namespace RedMobilePedidos.API.Models.Responses.DashboardFaturamentos;
 
 public sealed record DashboardFaturamento
 {
-    public decimal? TotalFaturado { get; init; }
+    public decimal? TotalNF { get; init; }
     public decimal? TotalBase { get; init; }
     public int? QuantidadeVendas { get; init; }
     public List<ItemGrafico>? VendasPorCategoria { get; init; }

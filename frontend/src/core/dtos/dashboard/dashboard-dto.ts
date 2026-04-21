@@ -1,12 +1,12 @@
 import ItemGraficoDTO from "../ItemGraficoDTO";
 
 export interface DashboardDTO {
-    totalPedidosPeriodo?: number;
+    totalPedidosNoPeriodo?: number;
     totalComissaoPeriodo?: number;
-    pedidosAbertosPeriodo?: number;
+    pedidosAbertosNoPeriodo?: number;
     comissoesPeriodo?: ItemGraficoDTO[];
     clientesPorEstado?: {
-        estado?: string;
+        uf?: string;
         quantidadeClientes?: number;
     }[];
 }

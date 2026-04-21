@@ -189,7 +189,7 @@ public class TituloControllerTests : BaseControllerTests
         {
             ValorRecebido = 25000.00m,
             ValorAReceber = 15000.00m,
-            DesempenhoPeriodo = new List<ItemGrafico>
+            DesempenhoPorPeriodo = new List<ItemGrafico>
             {
                 new()
                 {
@@ -243,7 +243,7 @@ public class TituloControllerTests : BaseControllerTests
         result.Should().NotBeNull();
         result.ValorRecebido.Should().Be(25000.00m);
         result.ValorAReceber.Should().Be(15000.00m);
-        result.DesempenhoPeriodo.Should().HaveCount(2);
+        result.DesempenhoPorPeriodo.Should().HaveCount(2);
     }
 
     [Fact]
@@ -259,7 +259,7 @@ public class TituloControllerTests : BaseControllerTests
         {
             ValorRecebido = 0m,
             ValorAReceber = 0m,
-            DesempenhoPeriodo = new List<ItemGrafico>()
+            DesempenhoPorPeriodo = new List<ItemGrafico>()
         };
 
         var mockClient = MockHttpMessageHandler.CreateMockClient(
@@ -277,7 +277,7 @@ public class TituloControllerTests : BaseControllerTests
         result.Should().NotBeNull();
         result.ValorRecebido.Should().Be(0m);
         result.ValorAReceber.Should().Be(0m);
-        result.DesempenhoPeriodo.Should().BeEmpty();
+        result.DesempenhoPorPeriodo.Should().BeEmpty();
     }
 
     [Fact]
