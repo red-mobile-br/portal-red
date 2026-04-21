@@ -40,7 +40,7 @@ const state = reactive<EstadoImpressaoClientes>({
     tipoMelhoresClientes: tipoMelhoresClientes,
     dashboard: {
         clientesPorEstado: [],
-        clientesPorEstatus: [],
+        clientesPorStatus: [],
         melhoresClientesPorPedidos: [],
         melhoresClientesPorFaturamento: []
     },
@@ -135,7 +135,7 @@ onMounted(() => carregarDados());
                         Clientes por status
                     </RmText>
                     <div class="h-72 relative">
-                        <RmDonutChart :items="state.dashboard.clientesPorEstatus ?? []" :display-legend="true" />
+                        <RmDonutChart :items="state.dashboard.clientesPorStatus ?? []" :display-legend="true" />
                     </div>
 
                     <RmDivider class="mb-5" />
